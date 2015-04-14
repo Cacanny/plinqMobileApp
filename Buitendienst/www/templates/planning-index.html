@@ -1,0 +1,23 @@
+<ion-view title="Planning">
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="getPhoto()"><i class="icon ion-android-camera"></i></button>
+        <button class="button" ng-click="refresh()"><i class="icon ion-refresh"></i></button>
+        <a class="button" href="#/order"><i class="icon ion-arrow-right-a"></i></a>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="item item-image">
+            <img ng-src="{{lastPhoto}}" style="max-width: 100%"/>
+        </div>
+        <div class="card list" ng-repeat="p in posts">
+            <div class="item item-avatar-left">
+                <img ng-src="{{ p.author.avatar_URL }}" alt=""/>
+                <h2>{{ p.author.nice_name }}</h2>
+                <p><a href="{{ p.author.URL }}">{{ p.author.URL }}</a></p>
+            </div>
+            <div class="item item-body">
+                <h1 ng-bind-html="p.title"></h1>
+                <div ng-bind-html="p.content"></div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
