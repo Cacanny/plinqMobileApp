@@ -8,10 +8,10 @@ angular.module('directory.controllers', [])
         $scope.orders = [];
 
         $scope.refresh = function() {
-            $scope.orders = PlanningService.getPlanning($scope);
+            $scope.orders = PlanningService.getOrder($scope);
         };
 
-        $scope.orders = PlanningService.getPlanning($scope);
+        $scope.orders = PlanningService.getOrders($scope);
 
         $scope.getPhoto = function() {
             Camera.getPicture().then(function(imageURI) {

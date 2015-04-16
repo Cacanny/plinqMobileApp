@@ -3,7 +3,7 @@ angular.module('directory.services', [])
     .factory('PlanningService', function($http) {
 
         return {
-            getPlanning: function($scope) {
+            getOrders: function($scope) {
                 $http.get("orders.json")
                     .success(function(response){
                     $scope.orders = response;
