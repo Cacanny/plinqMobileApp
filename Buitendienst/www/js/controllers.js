@@ -1,23 +1,25 @@
 angular.module('directory.controllers', [])
-
-    .config(function($compileProvider){
+    .config(function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     })
-
-    .controller('PlanningIndexCtrl', function ($scope, PlanningService, Camera) {
+    .controller('PlanningIndexCtrl', function ($scope, PlanningService, Camera, $state) {
         $scope.orders = [];
-
-        $scope.refresh = function() {
+ 
+        $scope.refresh = function () {
             $scope.orders = PlanningService.getPlanning($scope);
         };
 
         $scope.orders = PlanningService.getPlanning($scope);
 
-        $scope.getPhoto = function() {
-            Camera.getPicture().then(function(imageURI) {
+        $scope.details = function (id) {
+            $state.go('app.order', { orderId: id });
+        }
+
+        $scope.getPhoto = function () {
+            Camera.getPicture().then(function (imageURI) {
                 console.log(imageURI);
                 $scope.lastPhoto = imageURI;
-            }, function(err) {
+            }, function (err) {
                 console.err(err);
             }, {
                 quality: 75,
@@ -27,8 +29,21 @@ angular.module('directory.controllers', [])
             });
         };
 
+
+
+    })
+    .controller('OrderDetailCtrl', function ($scope, $stateParams, PlanningService) {
+        PlanningService.findByOrderId($stateParams.orderId).then(function (order) {
+            $scope.order = order;
+        });
     })
 
-    .controller('OrderDetailCtrl', function ($scope, PlanningService) {
+    .controller('ContentController', function ($scope, $ionicSideMenuDelegate) {
+        $scope.toggleLeft = function () {
+            $ionicSideMenuDelegate.toggleLeft();
+        };
 
+    })
+
+    .controller('AppCtrl', function ($scope, $stateParams) {
     });
