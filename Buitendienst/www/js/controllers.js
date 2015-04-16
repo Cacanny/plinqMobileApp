@@ -4,18 +4,12 @@ angular.module('directory.controllers', [])
     })
     .controller('PlanningIndexCtrl', function ($scope, PlanningService, Camera, $state) {
         $scope.orders = [];
-<<<<<<< HEAD
- 
-        $scope.refresh = function () {
-            $scope.orders = PlanningService.getPlanning($scope);
-=======
+
+        $scope.orders = PlanningService.getPlanning($scope);
 
         $scope.refresh = function() {
-            $scope.orders = PlanningService.getOrder($scope);
->>>>>>> a4be6267fc132aa00e5fdb06864b80d98e207404
+            $scope.orders = PlanningService.getPlanning($scope);
         };
-
-        $scope.orders = PlanningService.getOrders($scope);
 
         $scope.details = function (id) {
             $state.go('app.order', { orderId: id });

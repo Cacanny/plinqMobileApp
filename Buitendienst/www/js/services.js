@@ -5,16 +5,13 @@ angular.module('directory.services', [])
         var planning;
 
         return {
-<<<<<<< HEAD
+
             getPlanning: function ($scope) {
-=======
-            getOrders: function($scope) {
->>>>>>> a4be6267fc132aa00e5fdb06864b80d98e207404
                 $http.get("orders.json")
                     .success(function (response) {
                         $scope.orders = response;
                         planning = response;
-                })
+                    })
             },
 
             findByOrderId: function (orderId) {
@@ -23,7 +20,7 @@ angular.module('directory.services', [])
                     if (planning[x].orderid == orderId) {
                         var order = planning[x];
                         break;
-                    } 
+                    }
                 }
                 deferred.resolve(order);
                 return deferred.promise;
