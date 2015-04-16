@@ -4,9 +4,10 @@ angular.module('directory.services', [])
 
         return {
             getPlanning: function($scope) {
-                $http.jsonp("https://public-api.wordpress.com/rest/v1/freshly-pressed?callback=JSON_CALLBACK")
+                $http.get("orders.json")
                     .success(function(response){
-                    $scope.posts = response.posts;
+                    $scope.orders = response;
+
                 })
             }
         }

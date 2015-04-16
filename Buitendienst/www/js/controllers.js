@@ -5,11 +5,13 @@ angular.module('directory.controllers', [])
     })
 
     .controller('PlanningIndexCtrl', function ($scope, PlanningService, Camera) {
-        $scope.posts = [];
+        $scope.orders = [];
 
         $scope.refresh = function() {
-            $scope.posts = PlanningService.getPlanning($scope);
+            $scope.orders = PlanningService.getPlanning($scope);
         };
+
+        $scope.orders = PlanningService.getPlanning($scope);
 
         $scope.getPhoto = function() {
             Camera.getPicture().then(function(imageURI) {
@@ -28,9 +30,5 @@ angular.module('directory.controllers', [])
     })
 
     .controller('OrderDetailCtrl', function ($scope, PlanningService) {
-        $scope.posts = [];
 
-        $scope.refresh = function() {
-            $scope.posts = PlanningService.getPlanning($scope);
-        };
     });

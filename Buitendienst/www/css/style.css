@@ -1,19 +1,21 @@
-/* Empty. Add your own CSS if you like */
-
-.bar-positive {
+/*.bar-positive {*/
     /*box-shadow: 0px 5px 5px grey;*/
-}
+/*}*/
 
-.card.list {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
+/*.card.list {*/
+    /*border-top-left-radius: 10px;*/
+    /*border-top-right-radius: 10px;*/
+/*}*/
 
-.item.item-avatar-left {
-    background-color: #e0e2dc;
-}
+/*.item.item-avatar-left {*/
+    /*background-color: #e0e2dc;*/
+/*}*/
 
-.item.item-body img {
-    max-width: 100% !important;
-    max-height: 100% !important;
+/*.item.item-body img {*/
+    /*max-width: 100% !important;*/
+    /*max-height: 100% !important;*/
+/*}*/
+
+.item-divider {
+    font-weight: bold !important;
 }
