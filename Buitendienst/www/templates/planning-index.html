@@ -2,23 +2,9 @@
     <ion-nav-buttons side="right">
         <button class="button" ng-click="getPhoto()"><i class="icon ion-android-camera positive"></i></button>
         <button class="button" ng-click="refresh()"><i class="icon ion-refresh positive"></i></button>
-        <a class="button" href="#/order"><i class="icon ion-arrow-right-a positive"></i></a>
+        <a class="button" href="#/app/order"><i class="icon ion-arrow-right-a positive"></i></a>
     </ion-nav-buttons>
     <ion-content>
-        <!--<div class="item item-image">-->
-            <!--<img ng-src="{{lastPhoto}}" style="max-width: 100%"/>-->
-        <!--</div>-->
-        <!--<div class="card list" ng-repeat="o in orders">-->
-            <!--<div class="item item-avatar-left">-->
-                <!--<img ng-src="{{ p.author.avatar_URL }}" alt=""/>-->
-                <!--<h2>{{ p.author.nice_name }}</h2>-->
-                <!--<p><a href="{{ p.author.URL }}">{{ p.author.URL }}</a></p>-->
-            <!--</div>-->
-            <!--<div class="item item-body">-->
-                <!--<h1 ng-bind-html="p.title"></h1>-->
-                <!--<div ng-bind-html="p.content"></div>-->
-            <!--</div>-->
-        <!--</div>-->
         <ion-list type="card">
             <ion-item class="item-divider row responsive-lg positive">
                     <div class="col">Tijd</div>
@@ -30,15 +16,15 @@
                     <div class="col">Plaats</div>
                     <div class="col">Telefoon</div>
             </ion-item>
-            <ion-item class="row responsive-lg" ng-repeat="o in orders">
-                    <div class="col">{{o.tijd}}</div>
-                    <div class="col">{{o.status}}</div>
-                    <div class="col">{{o.orderid}}</div>
-                    <div class="col">{{o.klant.naam}}</div>
-                    <div class="col">{{o.klant.adres}}</div>
-                    <div class="col">{{o.klant.postcode}}</div>
-                    <div class="col">{{o.klant.plaats}}</div>
-                    <div class="col">{{o.klant.telefoon}}</div>
+            <ion-item class="row responsive-lg" ng-repeat="o in orders" ng-click="details(o.orderid)">
+                <div class="col">{{o.tijd}}</div>
+                <div class="col">{{o.status}}</div>
+                <div class="col">{{o.orderid}}</div>
+                <div class="col">{{o.klant.naam}}</div>
+                <div class="col">{{o.klant.adres}}</div>
+                <div class="col">{{o.klant.postcode}}</div>
+                <div class="col">{{o.klant.plaats}}</div>
+                <div class="col">{{o.klant.telefoon}}</div>
             </ion-item>
         </ion-list>
     </ion-content>

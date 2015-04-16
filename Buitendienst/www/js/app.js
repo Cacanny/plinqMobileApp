@@ -20,18 +20,25 @@ angular.module('directory', ['ionic', 'directory.services', 'directory.controlle
         // Each state's controller can be found in controllers.js
         $stateProvider
 
-            .state('planning-index', {
-                url: '/planning',
-                templateUrl: 'templates/planning-index.html',
+            .state('app', {
+                url: "/app",
+                abstract: true,
+                templateUrl: "templates/menu.html",
+                controller: 'AppCtrl'
+            })
+
+            .state('app.planning', {
+                url: "/planning",
+                templateUrl: "templates/planning-index.html",
                 controller: 'PlanningIndexCtrl'
             })
 
-            .state('order-details', {
-                url: '/order',
-                templateUrl: 'templates/order-details.html',
+            .state('app.order', {
+                url: "/order/:orderId",
+                templateUrl: "templates/order-details.html",
                 controller: 'OrderDetailCtrl'
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/planning');
+        $urlRouterProvider.otherwise('/app/planning');
     });
