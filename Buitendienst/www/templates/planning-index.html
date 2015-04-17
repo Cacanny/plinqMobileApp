@@ -1,20 +1,18 @@
 <ion-view side="left" title="Dashboard" align-title="center">
     <ion-nav-buttons side="right">
-        <button class="button" ng-click="getPhoto()"><i class="icon ion-android-camera positive"></i></button>
         <button class="button" ng-click="refresh()"><i class="icon ion-refresh positive"></i></button>
-        <a class="button" href="#/app/order"><i class="icon ion-arrow-right-a positive"></i></a>
     </ion-nav-buttons>
     <ion-content>
         <ion-list type="card">
             <ion-item class="item-divider row responsive-lg positive">
-                    <div class="col">Tijd</div>
-                    <div class="col">Status</div>
-                    <div class="col">Order No.</div>
-                    <div class="col">Naam</div>
-                    <div class="col">Adres</div>
-                    <div class="col">Postcode</div>
-                    <div class="col">Plaats</div>
-                    <div class="col">Telefoon</div>
+                <div class="col">Tijd</div>
+                <div class="col">Status</div>
+                <div class="col">Order No.</div>
+                <div class="col">Naam</div>
+                <div class="col">Adres</div>
+                <div class="col">Postcode</div>
+                <div class="col">Plaats</div>
+                <div class="col">Telefoon</div>
             </ion-item>
             <ion-item class="row responsive-lg" ng-repeat="o in orders" ng-click="details(o.orderid)">
                 <div class="col">{{o.tijd}}</div>

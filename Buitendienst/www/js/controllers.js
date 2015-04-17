@@ -36,6 +36,8 @@ angular.module('directory.controllers', [])
         PlanningService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
         });
+
+        $scope.date = new Date();
     })
 
     .controller('ContentController', function ($scope, $ionicSideMenuDelegate) {
