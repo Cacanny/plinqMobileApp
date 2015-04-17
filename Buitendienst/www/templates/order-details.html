@@ -42,7 +42,7 @@
                         <div class="col list-header">Datum</div>
                         <div class="col list-header">Ingevoerd door</div>
                     </ion-item>
-                    <ion-item class="row" ng-repeat="t in order.klant.tickets">
+                    <ion-item class="row item-text-wrap" ng-repeat="t in order.klant.tickets">
                         <div class="col col-10">{{t.ticketid}}</div>
                         <div class="col">{{t.beschrijving}}</div>
                         <div class="col">{{t.datum}}</div>
@@ -81,8 +81,6 @@
                         <div class="col col-20"> {{order.klant.abonnement.internet.wachtwoord}}</div>
                     </ion-item>
                 </ion-list>
-            </ion-item>
-            <ion-item>
                 <ion-list type="list list-inset">
                     <ion-item class="item-divider">
                         Televisie
@@ -100,8 +98,6 @@
                         <div class="col col-20"> {{order.klant.abonnement.televisie.pincode}}</div>
                     </ion-item>
                 </ion-list>
-            </ion-item>
-            <ion-item>
                 <ion-list type="list list-inset">
                     <ion-item class="item-divider">
                         Telefoon
@@ -138,8 +134,6 @@
                     <ion-item class="row">
                     </ion-item>
                 </ion-list>
-            </ion-item>
-            <ion-item>
                 <ion-list type="list list-inset">
                     <ion-item class="item-divider">
                         Uitgevoerde werkzaamheden
