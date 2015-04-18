@@ -23,36 +23,27 @@
                     "beschrijving": "Telefoon probleem opgelost",
                     "datum": "16-05-2014",
                     "supporter": "Jan Smith"
-
                 }
             ],
-            "abonnement": [
-                {
-                    "internet": [
-                        {
+            "abonnement": {                   
+					"internet": {
                             "netwerk": "KPN",
                             "snelheid": "20MBps",
-                            "ip-toewijzing": "DHCP",
+                            "iptoewijzing": "DHCP",
                             "login": "dsl1234",
                             "wachtwoord": "12341234"
-                        }
-                    ],
-                    "televisie": [
-                        {
+                        },
+                    "televisie": {
                             "soort": "IPTV",
                             "accountcode": "iptv1234",
                             "pincode": "12341234"
-                        }
-                    ],
-                    "telefoon": [
-                        {
+                        },
+                    "telefoon": {
                             "telefoonnummer": "0421-123455",
                             "login": "tel1234",
                             "wachtwoord": "12341234"
                         }
-                    ]
                 }
-            ]
         },
         "werkzaamheden": "TODO dropdownlist"
     },
@@ -75,7 +66,26 @@
                     "datum": "23-04-2015",
                     "supporter": "Gerrit Jansen"
                 }
-            ]
+            ],
+		"abonnement": {                   
+					"internet": {
+                            "netwerk": "KPN",
+                            "snelheid": "20MBps",
+                            "iptoewijzing": "DHCP",
+                            "login": "dsl1234",
+                            "wachtwoord": "12341234"
+                        },
+                    "televisie": {
+                            "soort": "IPTV",
+                            "accountcode": "iptv1234",
+                            "pincode": "12341234"
+                        },
+                    "telefoon": {
+                            "telefoonnummer": "0421-123455",
+                            "login": "tel1234",
+                            "wachtwoord": "12341234"
+                        }
+                }
         },
         "werkzaamheden": "TODO dropdownlist"
     }

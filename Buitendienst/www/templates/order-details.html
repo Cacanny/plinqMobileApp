@@ -1,9 +1,10 @@
-<ion-view title="Orderdetails Order No. {{order.orderid}}">
-    <ion-nav-buttons side="right">
-        <button class="button" ng-click="getPhoto()"><i class="icon ion-android-camera positive"></i></button>
-    </ion-nav-buttons>
+<ion-view>
+    <ion-nav-title>Order No. {{order.orderid}}</ion-nav-title>
+    <!--<ion-nav-buttons side="right">-->
+        <!--<button class="button" ng-click="getPhoto()"><i class="icon ion-android-camera positive"></i></button>-->
+    <!--</ion-nav-buttons>-->
     <ion-content>
-        <ion-list type="list list-inset">
+        <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Klantgegevens
             </ion-item>
@@ -32,12 +33,12 @@
                 <div class="col col-20"> {{order.klant.email}}</div>
             </ion-item>
             <ion-item>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Ticket Historie
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-10 list-header">TicketId</div>
+                        <div class="col col-10 list-header">Ticket ID</div>
                         <div class="col list-header">Beschrijving</div>
                         <div class="col list-header">Datum</div>
                         <div class="col list-header">Ingevoerd door</div>
@@ -51,12 +52,12 @@
                 </ion-list>
             </ion-item>
         </ion-list>
-        <ion-list type="list list-inset">
+        <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Installatiegegevens
             </ion-item>
             <ion-item>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Internet
                     </ion-item>
@@ -70,7 +71,7 @@
                     </ion-item>
                     <ion-item class="row responsive-lg">
                         <div class="col col-20 bold"> IP toewijzing: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.internet.ip-toewijzing}}</div>
+                        <div class="col col-20"> {{order.klant.abonnement.internet.iptoewijzing}}</div>
                     </ion-item>
                     <ion-item class="row responsive-lg">
                         <div class="col col-20 bold"> Login: </div>
@@ -81,7 +82,7 @@
                         <div class="col col-20"> {{order.klant.abonnement.internet.wachtwoord}}</div>
                     </ion-item>
                 </ion-list>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Televisie
                     </ion-item>
@@ -98,7 +99,7 @@
                         <div class="col col-20"> {{order.klant.abonnement.televisie.pincode}}</div>
                     </ion-item>
                 </ion-list>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Telefoon
                     </ion-item>
@@ -117,12 +118,12 @@
                 </ion-list>
             </ion-item>
         </ion-list>
-        <ion-list type="list list-inset">
+        <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Werkzaamheden
             </ion-item>
             <ion-item>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Artikelen
                     </ion-item>
@@ -132,9 +133,12 @@
                         <div class="col list-header">Specificaties</div>
                     </ion-item>
                     <ion-item class="row">
+                        <div class="col col-10"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
                     </ion-item>
                 </ion-list>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Uitgevoerde werkzaamheden
                     </ion-item>
@@ -143,11 +147,14 @@
                         <div class="col col-20 list-header">Specificaties</div>
                     </ion-item>
                     <ion-item class="row">
+                        <div class="col col-10"></div>
+                        <div class="col"></div>
+                        <div class="col"></div>
                     </ion-item>
                 </ion-list>
             </ion-item>
         </ion-list>
-        <ion-list type="list list-inset">
+        <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Foto's
             </ion-item>
@@ -155,7 +162,7 @@
                 <img ng-src="../img/ionic.png" />
             </ion-item>
         </ion-list>
-        <ion-list type="list list-inset">
+        <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Opmerkingen
             </ion-item>
@@ -165,7 +172,7 @@
                 </label>
             </ion-item>
         </ion-list>
-        <ion-list type="list list-inset">
+        <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Afronding
             </ion-item>
@@ -175,11 +182,12 @@
             </ion-item>
             <ion-item class="row responsive-lg">
                 <div class="col col-20 bold"> Naam Monteur: </div>
-                <div class="col col-10"> Arno </div>
+                <div class="col col-10"> Arno  </div>
+                <!-- TO DO: aan de hand van de inloggegevens!!!-->
             </ion-item>
             <ion-item class="row responsive-lg">
                 <div class="col col-20 bold"> Aantal gewerkte uren: </div>
-                <div class="col col-20"> 1 </div>
+                <div class="col col-20">1</div>
             </ion-item>
             <ion-item class="row responsive-lg">
                 <button class="button button-stable">
@@ -187,7 +195,7 @@
                 </button>
             </ion-item>
             <ion-item>
-                <ion-list type="list list-inset">
+                <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Handtekening
                     </ion-item>
@@ -198,7 +206,7 @@
             </ion-item>
         </ion-list>
         <ion-item>
-            <button class="button button-positive"> Opslaan</button> <button class="button button-positive"> Opslaan en Verzenden </button>
+            <button class="button button-positive">Opslaan</button> <button class="button button-positive">Opslaan en Verzenden</button>
         </ion-item>
     </ion-content>
 </ion-view>
