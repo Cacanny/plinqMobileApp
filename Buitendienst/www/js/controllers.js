@@ -52,6 +52,8 @@ angular.module('directory.controllers', [])
             $localstorage.setObject().then(function(){
                 getAll();
             });
+        $scope.refresh = function () {
+            $scope.orders = PlanningService.getPlanning($scope);
         };
 
         /* Navigate to other state using ng-click */
@@ -100,5 +102,8 @@ angular.module('directory.controllers', [])
 
     })
 
-    .controller('AppCtrl', function ($scope, $stateParams) {
+    .controller('AppCtrl', function ($scope) {
+        $scope.settings = {
+            friendsEnabled: true
+        }
     });
