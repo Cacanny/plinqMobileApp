@@ -5,7 +5,7 @@ angular.module('directory.controllers', [])
     .controller('PlanningIndexCtrl', function ($scope, PlanningService, $state) {
         $scope.orders = [];
         $scope.orders = PlanningService.getPlanning($scope);
-        $scope.refresh = function() {
+        $scope.refresh = function () {
             $scope.orders = PlanningService.getPlanning($scope);
         };
 
@@ -45,5 +45,8 @@ angular.module('directory.controllers', [])
 
     })
 
-    .controller('AppCtrl', function ($scope, $stateParams) {
+    .controller('AppCtrl', function ($scope) {
+        $scope.settings = {
+            friendsEnabled: true
+        }
     });
