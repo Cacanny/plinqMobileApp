@@ -23,7 +23,7 @@ angular.module('directory.controllers', [])
 
             /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
             $ionicLoading.show({
-                template: "<ion-spinner icon='android'></ion-spinner> Planning wordt geupdated..."
+                template: "<ion-spinner icon='android'></ion-spinner> Actuele planning wordt opgehaald..."
             });
             $localstorage.setObject().then(function(){
                 $ionicLoading.hide();

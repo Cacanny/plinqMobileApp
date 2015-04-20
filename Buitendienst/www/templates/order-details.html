@@ -8,29 +8,35 @@
             <ion-item class="item-divider positive">
                 Klantgegevens
             </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Naam: </div>
-                <div class="col col-20"> {{order.klant.naam}}</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Postcode: </div>
-                <div class="col col-10"> {{order.klant.postcode}}</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Adres: </div>
-                <div class="col col-20"> {{order.klant.adres}}</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Telefoonnr: </div>
-                <div class="col col-20"> {{order.klant.telefoon}}</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Woonplaats: </div>
-                <div class="col col-20"> {{order.klant.plaats}}</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> E-mailadres: </div>
-                <div class="col col-20"> {{order.klant.email}}</div>
+            <ion-item class="row">
+                <div class="col">
+                    <ion-item class="row">
+                        <div class="col bold"> Naam: </div>
+                        <div class="col"> {{order.klant.naam}}</div>
+                    </ion-item>
+                    <ion-item class="row">
+                        <div class="col bold"> Postcode: </div>
+                        <div class="col"> {{order.klant.postcode}}</div>
+                    </ion-item>
+                    <ion-item class="row">
+                        <div class="col bold"> Adres: </div>
+                        <div class="col"> {{order.klant.adres}}</div>
+                    </ion-item>
+                </div>
+                <div class="col">
+                    <ion-item class="row">
+                        <div class="col bold"> Telefoonnr: </div>
+                        <div class="col"> {{order.klant.telefoon}}</div>
+                    </ion-item>
+                    <ion-item class="row">
+                        <div class="col bold"> Woonplaats: </div>
+                        <div class="col"> {{order.klant.plaats}}</div>
+                    </ion-item>
+                    <ion-item class="row">
+                        <div class="col bold"> E-mailadres: </div>
+                        <div class="col"> {{order.klant.email}}</div>
+                    </ion-item>
+                </div>
             </ion-item>
             <ion-item>
                 <ion-list type="list-inset">
@@ -38,10 +44,10 @@
                         Ticket Historie
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-10 list-header">ID</div>
-                        <div class="col col-67 list-header">Beschrijving</div>
-                        <div class="col col-10 list-header">Datum</div>
-                        <div class="col list-header">Supporter</div>
+                        <div class="col col-10 bold">ID</div>
+                        <div class="col col-67 bold">Beschrijving</div>
+                        <div class="col col-10 bold">Datum</div>
+                        <div class="col bold">Supporter</div>
                     </ion-item>
                     <ion-item class="row item-text-wrap" ng-repeat="t in order.klant.tickets">
                         <div class="col col-10">{{t.ticketid}}</div>
@@ -61,59 +67,77 @@
                     <ion-item class="item-divider">
                         Internet
                     </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Netwerk: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.internet.netwerk}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Snelheid: </div>
-                        <div class="col col-10"> {{order.klant.abonnement.internet.snelheid}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> IP toewijzing: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.internet.iptoewijzing}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Login: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.internet.login}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Wachtwoord: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.internet.wachtwoord}}</div>
+                    <ion-item class="row">
+                        <div class="col">
+                            <ion-item class="row">
+                                <div class="col bold"> Netwerk: </div>
+                                <div class="col"> {{order.klant.abonnement.internet.netwerk}}</div>
+                            </ion-item>
+                            <ion-item class="row">
+                                <div class="col bold"> Snelheid: </div>
+                                <div class="col"> {{order.klant.abonnement.internet.snelheid}}</div>
+                            </ion-item>
+                            <ion-item class="row">
+                                <div class="col bold"> IP toewijzing: </div>
+                                <div class="col"> {{order.klant.abonnement.internet.iptoewijzing}}</div>
+                            </ion-item>
+                        </div>
+                        <div class="col">
+                            <ion-item class="row">
+                                <div class="col bold"> Login: </div>
+                                <div class="col"> {{order.klant.abonnement.internet.login}}</div>
+                            </ion-item>
+                            <ion-item class="row">
+                                <div class="col bold"> Wachtwoord: </div>
+                                <div class="col"> {{order.klant.abonnement.internet.wachtwoord}}</div>
+                            </ion-item>
+                        </div>
                     </ion-item>
                 </ion-list>
                 <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Televisie
                     </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Soort: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.televisie.soort}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Accountcode: </div>
-                        <div class="col col-10"> {{order.klant.abonnement.televisie.accountcode}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Pincode: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.televisie.pincode}}</div>
+                    <ion-item class="row">
+                        <div class="col">
+                            <ion-item class="row">
+                                <div class="col bold"> Soort: </div>
+                                <div class="col"> {{order.klant.abonnement.televisie.soort}}</div>
+                            </ion-item>
+                        </div>
+                        <div class="col">
+                            <ion-item class="row">
+                                <div class="col bold"> Accountcode: </div>
+                                <div class="col"> {{order.klant.abonnement.televisie.accountcode}}</div>
+                            </ion-item>
+                            <ion-item class="row">
+                                <div class="col bold"> Pincode: </div>
+                                <div class="col"> {{order.klant.abonnement.televisie.pincode}}</div>
+                            </ion-item>
+                        </div>
                     </ion-item>
                 </ion-list>
                 <ion-list type="list-inset">
                     <ion-item class="item-divider">
                         Telefoon
                     </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Telefoonnummer: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.telefoon.telefoonnummer}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Login: </div>
-                        <div class="col col-10"> {{order.klant.abonnement.telefoon.login}}</div>
-                    </ion-item>
-                    <ion-item class="row responsive-lg">
-                        <div class="col col-20 bold"> Wachtwoord: </div>
-                        <div class="col col-20"> {{order.klant.abonnement.telefoon.wachtwoord}}</div>
+                    <ion-item class="row">
+                        <div class="col">
+                            <ion-item class="row">
+                                <div class="col bold"> Telefoonnummer: </div>
+                                <div class="col"> {{order.klant.abonnement.telefoon.telefoonnummer}}</div>
+                            </ion-item>
+                        </div>
+                        <div class="col">
+                            <ion-item class="row">
+                                <div class="col bold"> Login: </div>
+                                <div class="col"> {{order.klant.abonnement.telefoon.login}}</div>
+                            </ion-item>
+                            <ion-item class="row">
+                                <div class="col bold"> Wachtwoord: </div>
+                                <div class="col"> {{order.klant.abonnement.telefoon.wachtwoord}}</div>
+                            </ion-item>
+                        </div>
                     </ion-item>
                 </ion-list>
             </ion-item>
@@ -128,14 +152,14 @@
                         Artikelen
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-10 list-header">Aantal</div>
-                        <div class="col list-header">Naam</div>
-                        <div class="col list-header">Specificaties</div>
+                        <div class="col col-10 bold">Aantal</div>
+                        <div class="col bold">Naam</div>
+                        <div class="col bold">Specificaties</div>
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-10"></div>
-                        <div class="col"></div>
-                        <div class="col"></div>
+                        <div class="col col-10">1</div>
+                        <div class="col">Kabels gelegd</div>
+                        <div class="col">20M</div>
                     </ion-item>
                 </ion-list>
                 <ion-list type="list-inset">
@@ -143,12 +167,15 @@
                         Uitgevoerde werkzaamheden
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-20 list-header">Beschrijving</div>
-                        <div class="col col-20 list-header">Specificaties</div>
+                        <div class="col col-67 bold">Beschrijving</div>
+                        <div class="col bold">Specificaties</div>
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-10"></div>
+                        <div class="col col-67">Installatie uitgevoerd</div>
                         <div class="col"></div>
+                    </ion-item>
+                    <ion-item class="row">
+                        <div class="col col-67">Modem configuratie</div>
                         <div class="col"></div>
                     </ion-item>
                 </ion-list>
@@ -176,33 +203,37 @@
             <ion-item class="item-divider positive">
                 Afronding
             </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Datum: </div>
-                <div class="col col-20"> {{date | date:'dd-MM-yyyy'}}</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Naam Monteur: </div>
-                <div class="col col-10"> Arno  </div>
-                <!-- TO DO: aan de hand van de inloggegevens!!!-->
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <div class="col col-20 bold"> Aantal gewerkte uren: </div>
-                <div class="col col-20">1</div>
-            </ion-item>
-            <ion-item class="row responsive-lg">
-                <button class="button button-stable">
-                    Werkbon invullen
-                </button>
-            </ion-item>
-            <ion-item>
-                <ion-list type="list-inset">
-                    <ion-item class="item-divider">
-                        Handtekening
+            <ion-item class="row">
+                <div class="col">
+                    <ion-item class="row">
+                        <div class="col bold"> Datum: </div>
+                        <div class="col"> {{date | date:'dd-MM-yyyy'}}</div>
                     </ion-item>
-                    <ion-item>
-                        <canvas id='signatureCanvas' width='300' height='180' style='border: 1px solid black;'></canvas>
+                    <ion-item class="row">
+                        <div class="col bold">Naam Monteur:</div>
+                        <div class="col">Arno</div>
+                        <!-- TO DO: aan de hand van de inloggegevens!!!-->
                     </ion-item>
-                </ion-list>
+                    <ion-item class="row">
+                        <div class="col bold">Aantal gewerkte uren:</div>
+                        <div class="col">1</div>
+                    </ion-item>
+                    <ion-item class="row">
+                        <button class="button button-block button-stable">
+                            Werkbon invullen
+                        </button>
+                    </ion-item>
+                </div>
+                <div class="col">
+                        <div class="list list-inset" style="margin: 0px !important;">
+                            <ion-item class="item-divider">
+                                Handtekening
+                            </ion-item>
+                            <ion-item>
+                                <canvas id='signatureCanvas' style='width: 100%; height: 150px; border: 1px solid #545454;'></canvas>
+                            </ion-item>
+                        </div>
+                </div>
             </ion-item>
         </ion-list>
         <ion-item>
