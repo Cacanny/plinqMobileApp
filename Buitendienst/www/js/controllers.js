@@ -39,7 +39,6 @@ angular.module('directory.controllers', [])
             getAll();
         });
 
-
         /* Fill orders with the planning */
         function getAll() {
             PlanningService.getPlanning().then(function (planning) {
@@ -49,12 +48,10 @@ angular.module('directory.controllers', [])
 
         /* Manual refresh to get the new JSON */
         $scope.refresh = function() {
-            $localstorage.setObject().then(function(){
+            $localstorage.setObject().then(function () {
                 getAll();
             });
-        $scope.refresh = function () {
-            $scope.orders = PlanningService.getPlanning($scope);
-        };
+        }
 
         /* Navigate to other state using ng-click */
         $scope.details = function (id) {
