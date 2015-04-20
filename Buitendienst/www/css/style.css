@@ -15,11 +15,67 @@
     /*max-width: 100% !important;*/
     /*max-height: 100% !important;*/
 /*}*/
-
 .item-divider {
-    font-weight: bold !important;
+    background-color: #FAFAFA !important;
+}
+
+.ion-content {
+    background-color: black !important;
 }
 
 .bold {
     font-weight: bold !important;
+}
+
+.somepadding {
+    padding: 15px 0px !important;
+}
+
+.title {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.card .item {
+    /*border: 1px solid #387ef5 !important;*/
+    border-top: 5px solid #387ef5 !important;
+    color: #565656 !important;
+    background-color: #FAFAFA !important;
+}
+
+.card .item .row .col h1, .card .item .row .col h4{
+    color: #565656 !important;
+}
+
+.cardwrap {
+    padding-top: 5px;
+    padding-bottom: 0;
+}
+
+.arrow {
+    text-align: right;
+}
+
+.listpadding .list {
+    padding-bottom: 40px !important;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #eaeaea;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.connection {
+    position: fixed;
+    z-index: 2000;
+    bottom: 0;
+    display: block;
+    padding: 5px 10px;
+    margin-left: 20px;
+    color: white;
+    background-color: #387ef5;
 }

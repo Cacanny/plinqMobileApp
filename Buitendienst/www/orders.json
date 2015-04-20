@@ -2,8 +2,8 @@
     {
         "orderid": "123",
         "status": "Voltooid",
-        "datum": "9-05-2015",
-        "tijd": "9:00",
+        "datum": "18-04-2015",
+        "tijd": "09:00",
         "klant": {
             "naam": "Pieter Versteeg",
             "adres": "Gruppenlaan 17",
@@ -23,10 +23,11 @@
                     "beschrijving": "Telefoon probleem opgelost",
                     "datum": "16-05-2014",
                     "supporter": "Jan Smith"
+
                 }
             ],
-            "abonnement": {                   
-					"internet": {
+            "abonnement": {
+                    "internet": {
                             "netwerk": "KPN",
                             "snelheid": "20MBps",
                             "iptoewijzing": "DHCP",
@@ -44,19 +45,20 @@
                             "wachtwoord": "12341234"
                         }
                 }
+           
         },
         "werkzaamheden": "TODO dropdownlist"
     },
     {
         "orderid": "124",
         "status": "In Behandeling",
-        "datum": "09-05-2015",
+        "datum": "18-04-2015",
         "tijd": "10:00",
         "klant": {
             "naam": "Klaas Pieterson",
             "adres": "Vinkenstraat 44B",
             "postcode": "1012KL",
-            "plaats": "Uitrecht",
+            "plaats": "Utrecht",
             "telefoon": "0326-143238",
             "email": "klaaspietserson@hotmail.com",
             "tickets": [
@@ -66,27 +68,31 @@
                     "datum": "23-04-2015",
                     "supporter": "Gerrit Jansen"
                 }
-            ],
-		"abonnement": {                   
-					"internet": {
-                            "netwerk": "KPN",
-                            "snelheid": "20MBps",
-                            "iptoewijzing": "DHCP",
-                            "login": "dsl1234",
-                            "wachtwoord": "12341234"
-                        },
-                    "televisie": {
-                            "soort": "IPTV",
-                            "accountcode": "iptv1234",
-                            "pincode": "12341234"
-                        },
-                    "telefoon": {
-                            "telefoonnummer": "0421-123455",
-                            "login": "tel1234",
-                            "wachtwoord": "12341234"
-                        }
-                }
+            ]
         },
         "werkzaamheden": "TODO dropdownlist"
+    },
+    {
+      "orderid": "125",
+      "status": "In Behandeling",
+      "datum": "18-04-2015",
+      "tijd": "11:00",
+      "klant": {
+        "naam": "Jan van Dijk",
+        "adres": "Oude straat 14",
+        "postcode": "4356GH",
+        "plaats": "Zwolle",
+        "telefoon": "0534-478374",
+        "email": "j.vandijk@hotmail.nl",
+        "tickets": [
+          {
+            "ticketid": "45",
+            "beschrijving": "Oplossing van een probleem!",
+            "datum": "25-04-2015",
+            "supporter": "Henk de Vries"
+          }
+        ]
+      },
+      "werkzaamheden": "TODO dropdownlist"
     }
 ]

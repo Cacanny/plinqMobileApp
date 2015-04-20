@@ -1,30 +1,71 @@
-<ion-view side="left" title="Dashboard" align-title="center">
+<ion-view side="left">
+    <ion-nav-title>Dashboard</ion-nav-title>
     <ion-nav-buttons side="left">
         <button class="button" ng-click="refresh()"><i class="icon ion-refresh positive"></i></button>
     </ion-nav-buttons>
-    <ion-content>
-        {{date | date:'yyyy-MM-dd'}}
-        <ion-list type="list-inset">
-            <ion-item class="item-divider row responsive-lg positive">
-                <div class="col">Tijd</div>
-                <div class="col">Status</div>
-                <div class="col">Order No.</div>
-                <div class="col">Naam</div>
-                <div class="col">Adres</div>
-                <div class="col">Postcode</div>
-                <div class="col">Plaats</div>
-                <div class="col">Telefoon</div>
-            </ion-item>
-            <ion-item class="row responsive-lg" ng-repeat="o in orders" ng-click="details(o.orderid)">
-                <div class="col">{{o.tijd}}</div>
-                <div class="col">{{o.status}}</div>
-                <div class="col">{{o.orderid}}</div>
-                <div class="col">{{o.klant.naam}}</div>
-                <div class="col">{{o.klant.adres}}</div>
-                <div class="col">{{o.klant.postcode}}</div>
-                <div class="col">{{o.klant.plaats}}</div>
-                <div class="col">{{o.klant.telefoon}}</div>
-            </ion-item>
-        </ion-list>
+    <ion-content has-bouncing="true" padding="true">
+        <!--<ion-slide-box on-slide-changed="slideHasChanged($index)" show-pager="true">-->
+            <!--<ion-slide>-->
+                <!--<ion-list class="listpadding" type="list-inset" ng-repeat="(key, value) in orders | groupBy:'datum':true">-->
+                    <!--<div class="title">-->
+                        <!--<h3 ng-if="key == date">Vandaag, {{key}}</h3>-->
+                        <!--<h3 ng-if="key != date">{{key}}</h3>-->
+                    <!--</div>-->
+                    <!--<hr/>-->
+                    <!--<ion-item class="item-divider row responsive-lg positive">-->
+                        <!--<div class="col">Tijd</div>-->
+                        <!--<div class="col">Status</div>-->
+                        <!--<div class="col">Order No.</div>-->
+                        <!--<div class="col">Naam</div>-->
+                        <!--<div class="col">Adres</div>-->
+                        <!--<div class="col">Postcode</div>-->
+                        <!--<div class="col">Plaats</div>-->
+                        <!--<div class="col">Telefoon</div>-->
+                    <!--</ion-item>-->
+                    <!--<ion-item class="row responsive-lg somepadding" ng-repeat="o in value" ng-click="details(o.orderid)">-->
+                        <!--<div class="col">{{o.tijd}}</div>-->
+                        <!--<div class="col">{{o.status}}</div>-->
+                        <!--<div class="col">{{o.orderid}}</div>-->
+                        <!--<div class="col">{{o.klant.naam}}</div>-->
+                        <!--<div class="col">{{o.klant.adres}}</div>-->
+                        <!--<div class="col">{{o.klant.postcode}}</div>-->
+                        <!--<div class="col">{{o.klant.plaats}}</div>-->
+                        <!--<div class="col">{{o.klant.telefoon}}</div>-->
+                    <!--</ion-item>-->
+                <!--</ion-list>-->
+            <!--</ion-slide>-->
+        <!--</ion-slide-box>-->
+        <div ng-repeat="(key, value) in orders | groupBy:'datum':true">
+            <div class="title">
+                <h3 ng-if="key == date">Vandaag, {{key}}</h3>
+                <h3 ng-if="key != date" style="margin-top: 40px;">{{key}}</h3>
+            </div>
+            <hr/>
+            <div class="card" ng-repeat="o in value" ng-click="details(o.orderid)">
+                <div class="item item-text-wrap cardwrap">
+                    <div class="row">
+                        <div class="col col-center"><h1> {{o.tijd}}</h1></div>
+                        <div class="col col-25 col-center">
+                            <h4>ORDER NR: {{o.orderid}}</h4>
+                            <h4>STATUS: {{o.status}}</h4>
+                        </div>
+                        <div class="col col-25 col-top">
+                            <h2 class="positive">{{o.klant.naam}}</h2>
+                            <h4 class="icon ion-ios-telephone"> TEL: {{o.klant.telefoon}}</h4>
+                        </div>
+                        <div class="col col-25 col-center">
+                            <h4>ADRES: {{o.klant.adres}}</h4>
+                            <h4>POSTCODE: {{o.klant.postcode}}</h4>
+                            <h4>PLAATS: {{o.klant.plaats}}</h4>
+                        </div>
+                        <div class="col col-10 col-center arrow"><h1 class="icon ion-chevron-right"></h1></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </ion-content>
+    <div class="connection">
+        <i ng-class="{Online: 'balanced', Offline: 'assertive'}[connection]" class="icon ion-ios-circle-filled"></i>
+         {{connection}}
+    </div>
 </ion-view>

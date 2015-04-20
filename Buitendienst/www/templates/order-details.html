@@ -3,7 +3,7 @@
     <!--<ion-nav-buttons side="right">-->
         <!--<button class="button" ng-click="getPhoto()"><i class="icon ion-android-camera positive"></i></button>-->
     <!--</ion-nav-buttons>-->
-    <ion-content>
+    <ion-content has-bouncing="true">
         <ion-list type="list-inset">
             <ion-item class="item-divider positive">
                 Klantgegevens
@@ -38,15 +38,15 @@
                         Ticket Historie
                     </ion-item>
                     <ion-item class="row">
-                        <div class="col col-10 list-header">Ticket ID</div>
-                        <div class="col list-header">Beschrijving</div>
-                        <div class="col list-header">Datum</div>
-                        <div class="col list-header">Ingevoerd door</div>
+                        <div class="col col-10 list-header">ID</div>
+                        <div class="col col-67 list-header">Beschrijving</div>
+                        <div class="col col-10 list-header">Datum</div>
+                        <div class="col list-header">Supporter</div>
                     </ion-item>
                     <ion-item class="row item-text-wrap" ng-repeat="t in order.klant.tickets">
                         <div class="col col-10">{{t.ticketid}}</div>
-                        <div class="col">{{t.beschrijving}}</div>
-                        <div class="col">{{t.datum}}</div>
+                        <div class="col col-67">{{t.beschrijving}}</div>
+                        <div class="col col-10">{{t.datum}}</div>
                         <div class="col">{{t.supporter}}</div>
                     </ion-item>
                 </ion-list>
