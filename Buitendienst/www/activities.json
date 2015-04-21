@@ -1,0 +1,18 @@
+{
+	"werkzaamheden":
+		[
+			"werkzaamheid1",
+			"werkzaamheid2",
+			"werkzaamheid3",
+			"werkzaamheid4",
+			"werkzaamheid5"
+		],
+	"materialen":
+		[
+			"materiaal1",
+			"materiaal2",
+			"materiaal3",
+			"materiaal4",
+			"materiaal5"
+		]
+}

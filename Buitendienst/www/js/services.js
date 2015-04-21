@@ -3,6 +3,18 @@ angular.module('directory.services', [])
     .factory('$localstorage', function($window, $http) {
 
         return {
+            setActivities: function() {
+                return $http.get("activities.json")
+                    .success(function (response) {
+                        $window.localStorage['activities'] = JSON.stringify(response);
+                    })
+                    .error(function () {
+                        alert('ERROR: Werkzaamheden konden niet worden opgehaald, herstart de applicatie.');
+                    });
+            },
+            getActivities: function() {
+                return JSON.parse($window.localStorage['activities'] || '{}');
+            },
             setPlanning: function() {
                 return $http.get("orders.json")
                     .success(function (response) {

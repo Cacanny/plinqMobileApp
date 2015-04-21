@@ -3,7 +3,14 @@ angular.module('directory.controllers', [])
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     })
     .controller('PlanningIndexCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, $localstorage, OrderService, $state) {
+        /* Get the 'werkzaamheden' and the 'materialen' */
+        $scope.activities = '';
+        $localstorage.setActivities().then(function() {
+            $scope.activities = $localstorage.getActivities();
+        });
+
         $scope.orders = [];
+        $scope.orderstatus = 'In behandeling';
 
         /* !!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! */
         /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
