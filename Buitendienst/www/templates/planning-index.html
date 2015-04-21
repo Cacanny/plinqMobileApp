@@ -1,5 +1,5 @@
-<ion-view side="left">
-    <ion-nav-title>Dashboard</ion-nav-title>
+<ion-view side="center">
+    <ion-nav-title side="center">Dashboard</ion-nav-title>
     <ion-nav-buttons side="left">
         <button class="button" ng-click="refresh()"><i class="icon ion-refresh positive"></i></button>
     </ion-nav-buttons>
@@ -49,9 +49,10 @@
                             <h4>ORDER NR: {{o.orderid}}</h4>
                             <h4>STATUS: {{o.status}}</h4>
                         </div>
-                        <div class="col col-25 col-top">
+                        <div class="col col-25 col-center">
                             <h2 class="positive">{{o.klant.naam}}</h2>
                             <h4 class="icon ion-ios-telephone"> TEL: {{o.klant.telefoon}}</h4>
+                            <h4 class="icon ion-ios-email-outline"> E: {{o.klant.email}}</h4>
                         </div>
                         <div class="col col-25 col-center">
                             <h4>ADRES: {{o.klant.adres}}</h4>

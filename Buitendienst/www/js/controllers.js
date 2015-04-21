@@ -2,15 +2,15 @@ angular.module('directory.controllers', [])
     .config(function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     })
-    .controller('PlanningIndexCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, $localstorage, PlanningService, $state) {
+    .controller('PlanningIndexCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, $localstorage, OrderService, $state) {
         $scope.orders = [];
 
         /* !!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! */
         /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
         $ionicLoading.show({
-            template: "<ion-spinner icon='android'></ion-spinner><br/> Planning wordt geupdated..."
+            template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
         });
-        $localstorage.setObject().then(function(){
+        $localstorage.setPlanning().then(function(){
             $ionicLoading.hide();
             getAll();
             $scope.connection = 'Online';
@@ -23,9 +23,9 @@ angular.module('directory.controllers', [])
 
             /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
             $ionicLoading.show({
-                template: "<ion-spinner icon='android'></ion-spinner> Actuele planning wordt opgehaald..."
+                template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
             });
-            $localstorage.setObject().then(function(){
+            $localstorage.setPlanning().then(function(){
                 $ionicLoading.hide();
                 getAll();
             });
@@ -41,17 +41,17 @@ angular.module('directory.controllers', [])
 
         /* Fill orders with the planning */
         function getAll() {
-            PlanningService.getPlanning().then(function (planning) {
-                $scope.orders = planning;
+            OrderService.getOrders().then(function (orders) {
+                $scope.orders = orders;
             });
         }
 
         /* Manual refresh to get the new JSON */
         $scope.refresh = function() {
-            $localstorage.setObject().then(function () {
+            $localstorage.setPlanning().then(function () {
                 getAll();
             });
-        }
+        };
 
         /* Navigate to other state using ng-click */
         $scope.details = function (id) {
@@ -70,8 +70,8 @@ angular.module('directory.controllers', [])
         }
     })
 
-    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, PlanningService) {
-        PlanningService.findByOrderId($stateParams.orderId).then(function (order) {
+    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService) {
+        OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
         });
 
@@ -90,13 +90,14 @@ angular.module('directory.controllers', [])
                 saveToPhotoAlbum: false
             });
         };
-    })
 
-    .controller('ContentController', function ($scope, $ionicSideMenuDelegate) {
-        $scope.toggleLeft = function () {
-            $ionicSideMenuDelegate.toggleLeft();
-        };
+        $scope.toShowArr = [
+            true, true, true, true, true, true
+        ];
 
+        $scope.toggle = function(index) {
+            $scope.toShowArr[index] = !$scope.toShowArr[index];
+        }
     })
 
     .controller('AppCtrl', function ($scope) {

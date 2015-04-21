@@ -3,41 +3,44 @@ angular.module('directory.services', [])
     .factory('$localstorage', function($window, $http) {
 
         return {
-            setObject: function() {
-                return $http.get("orders.json").success(function (response) {
-                    $window.localStorage.clear();
-                    $window.localStorage['planning'] = JSON.stringify(response);
-                });
+            setPlanning: function() {
+                return $http.get("orders.json")
+                    .success(function (response) {
+                        $window.localStorage['planning'] = JSON.stringify(response);
+                    })
+                    .error(function() {
+                        alert('ERROR: Planning kon niet worden opgehaald, herstart de applicatie.');
+                    });
             },
-            getObject: function() {
+            getPlanning: function() {
                 return JSON.parse($window.localStorage['planning'] || '{}');
             },
-            saveObject: function() {
+            savePlanning: function() {
                 //TODO save in localstorage
             },
-            postObject: function() {
+            postPlanning: function() {
                 //TODO JSON request
             }
         }
     })
 
-    .factory('PlanningService', function ($localstorage, $q) {
+    .factory('OrderService', function ($localstorage, $q) {
 
-        var planning;
+        var orders;
 
         return {
-            getPlanning: function () {
-                planning = $localstorage.getObject();
+            getOrders: function () {
+                orders = $localstorage.getPlanning();
                 var deferred = $q.defer();
-                deferred.resolve(planning);
+                deferred.resolve(orders);
                 return deferred.promise;
             },
 
             findByOrderId: function (orderId) {
                 var deferred = $q.defer();
-                for (var x = 0; x < planning.length; x++) {
-                    if (planning[x].orderid == orderId) {
-                        var order = planning[x];
+                for (var x = 0; x < orders.length; x++) {
+                    if (orders[x].orderid == orderId) {
+                        var order = orders[x];
                         break;
                     }
                 }

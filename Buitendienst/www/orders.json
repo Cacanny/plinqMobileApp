@@ -46,8 +46,7 @@
                         }
                 }
            
-        },
-        "werkzaamheden": "TODO dropdownlist"
+        }
     },
     {
         "orderid": "124",
@@ -69,8 +68,7 @@
                     "supporter": "Gerrit Jansen"
                 }
             ]
-        },
-        "werkzaamheden": "TODO dropdownlist"
+        }
     },
     {
       "orderid": "125",
@@ -92,7 +90,6 @@
             "supporter": "Henk de Vries"
           }
         ]
-      },
-      "werkzaamheden": "TODO dropdownlist"
+      }
     }
 ]
