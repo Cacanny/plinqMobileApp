@@ -10,7 +10,7 @@ angular.module('directory.controllers', [])
         $ionicLoading.show({
             template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
         });
-        $localstorage.setPlanning().then(function(){
+        $localstorage.setPlanning().then(function () {
             $ionicLoading.hide();
             getAll();
             $scope.connection = 'Online';
@@ -18,21 +18,21 @@ angular.module('directory.controllers', [])
 
         /* Watch if the Internet Connection changes */
         // listen for Online event
-        $rootScope.$on('$cordovaNetwork:online', function(event, networkState){
+        $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
             $scope.connection = 'Online';
 
             /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
             $ionicLoading.show({
                 template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
             });
-            $localstorage.setPlanning().then(function(){
+            $localstorage.setPlanning().then(function () {
                 $ionicLoading.hide();
                 getAll();
             });
         });
 
         // listen for Offline event
-        $rootScope.$on('$cordovaNetwork:offline', function(event, networkState){
+        $rootScope.$on('$cordovaNetwork:offline', function (event, networkState) {
             $scope.connection = 'Offline';
 
             $window.localStorage.clear();
@@ -47,7 +47,7 @@ angular.module('directory.controllers', [])
         }
 
         /* Manual refresh to get the new JSON */
-        $scope.refresh = function() {
+        $scope.refresh = function () {
             $localstorage.setPlanning().then(function () {
                 getAll();
             });
@@ -66,7 +66,7 @@ angular.module('directory.controllers', [])
         function convertDate(inputFormat) {
             function pad(s) { return (s < 10) ? '0' + s : s; }
             var d = new Date(inputFormat);
-            return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-');
+            return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
         }
     })
 
@@ -92,10 +92,21 @@ angular.module('directory.controllers', [])
         };
 
         $scope.toShowArr = [
-            klantgegevens = true, true, true, true, true, true
+            klantgegevens = true,
+            tickethistorie = true,
+            installatiegegevens = true,
+            internet = true,
+            televisie = true,
+            telefoon = true,
+            werkzaamheden = true,
+            artikelen = true,
+            uitgevoerd = true,
+            fotos = true,
+            opmerkingen = true,
+            afronding = true
         ];
 
-        $scope.toggle = function(index) {
+        $scope.toggle = function (index) {
             $scope.toShowArr[index] = !$scope.toShowArr[index];
         }
     })
