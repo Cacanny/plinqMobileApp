@@ -39,7 +39,7 @@
     background-color: #FAFAFA !important;
 }
 
-.card .item .row .col h1, .card .item .row .col h4{
+.card .item .row .col h1, .card .item .row .col h3{
     color: #565656 !important;
 }
 
@@ -74,4 +74,17 @@ hr {
     margin-left: 20px;
     color: white;
     background-color: #387ef5;
+}
+
+.ng-hide-add, .ng-hide-remove {
+    /* ensure visibility during the transition */
+    display: block !important;
+}
+
+.cssFade {
+    transition: 0.25s linear all;
+    opacity: 1;
+}
+.cssFade.ng-hide {
+    opacity: 0;
 }

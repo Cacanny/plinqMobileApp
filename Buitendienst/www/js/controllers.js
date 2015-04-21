@@ -92,7 +92,7 @@ angular.module('directory.controllers', [])
         };
 
         $scope.toShowArr = [
-            true, true, true, true, true, true
+            klantgegevens = true, true, true, true, true, true
         ];
 
         $scope.toggle = function(index) {

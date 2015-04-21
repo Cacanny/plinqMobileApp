@@ -1,5 +1,5 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
-angular.module('directory', ['ionic', 'angular.filter', 'ngCordova', 'directory.services', 'directory.controllers'])
+angular.module('directory', ['ionic', 'angular.filter', 'ngCordova', 'ngAnimate', 'directory.services', 'directory.controllers'])
 
     .config(function($compileProvider){
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
