@@ -39,6 +39,38 @@
     background-color: #FAFAFA !important;
 }
 
+.noborder {
+    border: 0px !important;
+}
+
+.nopadding {
+    padding: 0 !important;
+}
+
+.nomargin-top {
+    margin-top: 0 !important;
+}
+
+.fixedwidth {
+    max-width: 120px !important;
+    width: 120px !important;
+}
+
+.fixedwidth-50 {
+    max-width: 50px !important;
+    width: 50px !important;
+}
+
+.fixedwidth-60 {
+    max-width: 60px !important;
+    width: 60px !important;
+}
+
+.fixedwidth-175 {
+    max-width: 175px !important;
+    width: 175px !important;
+}
+
 .card .item .row .col h1, .card .item .row .col h3{
     color: #565656 !important;
 }
@@ -87,4 +119,31 @@ hr {
 }
 .cssFade.ng-hide {
     opacity: 0;
+}
+
+.modal {
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+}
+
+.custombtn {
+    right: 16px;
+    padding: 0 15px;
+    margin: -8px -16px;
+    height: 100% !important;
+    position: absolute;
+    border-color: #b2b2b2;
+    background-color: #f8f8f8;
+    color: #444;
+    font-size: 25px;
+    border-width: 0px 0px 0px 1px;
+    border-style: solid;
+    border-radius: 2px;
+    text-align: center;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }

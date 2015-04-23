@@ -9,6 +9,7 @@ angular.module('directory.controllers', [])
             $scope.activities = $localstorage.getActivities();
         });
 
+        /* Some variables */
         $scope.orders = [];
         $scope.orderstatus = 'In behandeling';
 
@@ -46,14 +47,14 @@ angular.module('directory.controllers', [])
             getAll();
         });
 
-        /* Fill orders with the planning */
+        /* Fill $scope.orders with the orders from the LocalStorage */
         function getAll() {
             OrderService.getOrders().then(function (orders) {
                 $scope.orders = orders;
             });
         }
 
-        /* Manual refresh to get the new JSON */
+        /* Manual refresh to get the new JSON file */
         $scope.refresh = function () {
             $localstorage.setPlanning().then(function () {
                 getAll();
@@ -77,14 +78,27 @@ angular.module('directory.controllers', [])
         }
     })
 
-    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService) {
+    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
+            $scope.showTickets = true;
+            if(JSON.stringify($scope.order.ticket) === '{}'){
+                $scope.showTickets = false;
+            }
         });
 
+        /* Initial state of ng-show for the Ticketnotities*/
+        $scope.showme = true;
+
+        /* Get the date of today */
         $scope.date = new Date();
 
-        $scope.getPhoto = function () {
+
+        $scope.photoArr = [];
+
+        /* Camera function */
+        $scope.getPhoto = function($event) {
+            $event.stopPropagation();
             Camera.getPicture().then(function (imageURI) {
                 console.log(imageURI);
                 $scope.lastPhoto = imageURI;
@@ -98,8 +112,32 @@ angular.module('directory.controllers', [])
             });
         };
 
+
+        $ionicModal.fromTemplateUrl('modal', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+        $scope.openModal = function(include, $event) {
+            $event.stopPropagation();
+            $scope.include = include;
+            $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        //Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        });
+
+        /*  Keep track of all the elements that are collapsed or not
+            True = expanded, False = collapsed
+            The names are just for clarification */
         $scope.toShowArr = [
-            klantgegevens = true,
+            abonnementregels = true,
             tickethistorie = true,
             installatiegegevens = true,
             internet = true,
@@ -110,12 +148,16 @@ angular.module('directory.controllers', [])
             uitgevoerd = true,
             fotos = true,
             opmerkingen = true,
-            afronding = true
+            afronding = true,
         ];
 
         $scope.toggle = function (index) {
             $scope.toShowArr[index] = !$scope.toShowArr[index];
-        }
+        };
+    })
+
+    .controller('ModalCtrl', function($scope) {
+
     })
 
     .controller('AppCtrl', function ($scope) {

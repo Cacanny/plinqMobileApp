@@ -6,104 +6,156 @@
         <button class="button">Verzenden</button>
     </ion-nav-buttons>
     <ion-content has-bouncing="true">
-        <ion-list type="list-inset">
-            <ion-item class="item-divider positive" ng-click="toggle(0)">
-                Klantgegevens
+        <div class="row nopadding">
+            <ion-item class="col noborder nopadding">
+                <ion-list type="list-inset">
+                    <ion-item class="item-divider positive">
+                        Werkordergegevens
+                    </ion-item>
+                    <div>
+                        <ion-item class="row">
+                            <div class="col">
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth">Order No.: </div>
+                                    <div class="col bold"> {{order.orderid}}</div>
+                                </ion-item>
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth"> Plandatum: </div>
+                                    <div class="col bold"> {{order.plandatum}}</div>
+                                </ion-item>
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth"> Omschrijving: </div>
+                                    <div class="col bold"> {{order.omschrijving}}</div>
+                                </ion-item>
+                            </div>
+                        </ion-item>
+                    </div>
+                </ion-list>
             </ion-item>
-            <div ng-show="toShowArr[0]" class="cssFade">
+            <ion-item class="col noborder nopadding">
+                <ion-list type="list-inset">
+                    <ion-item class="item-divider positive">
+                        Klantgegevens
+                    </ion-item>
+                    <div>
+                        <ion-item class="row">
+                            <div class="col">
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth"> Naam: </div>
+                                    <div class="col bold"> {{order.klant.naam}}</div>
+                                </ion-item>
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth"> Telefoonnr: </div>
+                                    <div class="col bold"> {{order.klant.telefoon}}</div>
+                                </ion-item>
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth"> E-mailadres: </div>
+                                    <div class="col bold"> {{order.klant.email}}</div>
+                                </ion-item>
+                                <ion-item class="row  noborder">
+                                    <div class="col fixedwidth"> Aansluitadres: </div>
+                                    <div class="col bold">{{order.klant.straat}}</div>
+                                </ion-item>
+                                <ion-item class="row item-text-wrap noborder">
+                                    <div class="col fixedwidth"></div>
+                                    <div class="col bold">{{order.klant.postcode}}, {{order.klant.plaats}}</div>
+                                </ion-item>
+                            </div>
+                        </ion-item>
+                    </div>
+                </ion-list>
+            </ion-item>
+        </div>
+        <ion-list type="list-inset" ng-show="showTickets">
+            <ion-item class="item-divider positive" ng-click="toggle(1)">
+                Ticketdetails
+            </ion-item>
+            <div ng-show="toShowArr[1]" class="cssFade">
                 <ion-item class="row">
                     <div class="col">
-                        <ion-item class="row">
-                            <div class="col bold"> Naam: </div>
-                            <div class="col"> {{order.klant.naam}}</div>
-                        </ion-item>
-                        <ion-item class="row">
-                            <div class="col bold"> Telefoonnr: </div>
-                            <div class="col"> {{order.klant.telefoon}}</div>
-                        </ion-item>
-                        <ion-item class="row">
-                            <div class="col bold"> E-mailadres: </div>
-                            <div class="col"> {{order.klant.email}}</div>
-                        </ion-item>
-                    </div>
-                    <div class="col">
-                        <ion-item class="row">
-                            <div class="col bold"> Adres: </div>
-                            <div class="col"> {{order.klant.adres}}</div>
-                        </ion-item>
-                        <ion-item class="row">
-                            <div class="col bold"> Postcode: </div>
-                            <div class="col"> {{order.klant.postcode}}</div>
-                        </ion-item>
-                        <ion-item class="row">
-                            <div class="col bold"> Woonplaats: </div>
-                            <div class="col"> {{order.klant.plaats}}</div>
-                        </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth">Ticket ID:</div>
+                        <div class="col bold">{{order.ticket.ticketid}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth">Datum</div>
+                        <div class="col bold">{{order.ticket.datum}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth">Omschrijving:</div>
+                        <div class="col bold">{{order.ticket.omschrijving}}</div>
+                    </ion-item>
                     </div>
                 </ion-item>
-                <ion-item>
-                    <div class="list list-inset" style="margin: 0px !important;">
-                        <ion-item class="item-divider" ng-click="toggle(1)">
-                            <i class="icon ion-ios-chatboxes-outline"></i> Tickethistorie
-                        </ion-item>
-                        <div ng-show="toShowArr[1]" class="cssFade">
-                            <ion-item class="row">
-                                <div class="col col-10 bold">ID</div>
-                                <div class="col col-67 bold">Beschrijving</div>
-                                <div class="col col-10 bold">Datum</div>
-                                <div class="col bold">Supporter</div>
-                            </ion-item>
-                            <ion-item class="row item-text-wrap" ng-repeat="t in order.klant.tickets">
-                                <div class="col col-10">{{t.ticketid}}</div>
-                                <div class="col col-67">{{t.beschrijving}}</div>
-                                <div class="col col-10">{{t.datum}}</div>
-                                <div class="col">{{t.supporter}}</div>
-                            </ion-item>
-                        </div>
-                    </div>
+                <ion-item class="row item-text-wrap">
+                    <div class="col bold fixedwidth-175">Datum</div>
+                    <div class="col bold">Notitie</div>
+                    <div class="col bold fixedwidth-175">Verantw.</div>
+                </ion-item>
+                <ion-item class="row item-text-wrap" ng-repeat="t in order.ticket.ticketregels" >
+                    <div class="col fixedwidth-175">{{t.datum}}</div>
+                    <div class="col" ng-click="showme = !showme" ng-show="showme">{{t.notitie | getSlice}}</div>
+                    <div class="col" ng-click="showme = !showme" ng-show="!showme">{{t.notitie}}</div>
+                    <div class="col fixedwidth-175">{{t.verantw}}</div>
                 </ion-item>
             </div>
         </ion-list>
         <ion-list type="list-inset">
             <ion-item class="item-divider positive" ng-click="toggle(2)">
-                Installatiegegevens
+                Abonnementgegevens
             </ion-item>
             <div ng-show="toShowArr[2]" class="cssFade">
                 <ion-item>
-                    <div class="list list-inset" style="margin-top: 0px !important;">
+                    <div class="list list-inset nomargin-top">
+                        <ion-item class="item-divider" ng-click="toggle(0)">
+                            <i class="icon ion-ios-list-outline"></i> Abonnementregels
+                        </ion-item>
+                        <div ng-show="toShowArr[0]" class="cssFade">
+                                <ion-item class="row item-text-wrap">
+                                    <div class="col fixedwidth bold">Type</div>
+                                    <div class="col bold">Product</div>
+                                    <div class="col fixedwidth bold">Status</div>
+                                </ion-item>
+                                <ion-item class="row item-text-wrap" ng-repeat="ar in order.klant.abonnement.abonnementregels">
+                                    <div class="col fixedwidth">{{ar.type}}</div>
+                                    <div class="col">{{ar.product}}</div>
+                                    <div class="col fixedwidth">{{ar.status}}</div>
+                                </ion-item>
+                        </div>
+                    </div>
+                    <ion-list type="list-inset">
                         <ion-item class="item-divider" ng-click="toggle(3)">
-                            <i class="icon ion-wifi">
-                            </i> Internet
+                            <i class="icon ion-wifi"></i> Internet
                         </ion-item>
                         <div ng-show="toShowArr[3]" class="cssFade">
                             <ion-item class="row">
                                 <div class="col">
-                                    <ion-item class="row">
-                                        <div class="col bold"> Netwerk: </div>
-                                        <div class="col"> {{order.klant.abonnement.internet.netwerk}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Netwerk: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.internet.netwerk}}</div>
                                     </ion-item>
-                                    <ion-item class="row">
-                                        <div class="col bold"> Snelheid: </div>
-                                        <div class="col"> {{order.klant.abonnement.internet.snelheid}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Snelheid: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.internet.snelheid}}</div>
                                     </ion-item>
-                                    <ion-item class="row">
-                                        <div class="col bold"> IP toewijzing: </div>
-                                        <div class="col"> {{order.klant.abonnement.internet.iptoewijzing}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> IP toewijzing: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.internet.iptoewijzing}}</div>
                                     </ion-item>
                                 </div>
                                 <div class="col">
-                                    <ion-item class="row">
-                                        <div class="col bold"> Login: </div>
-                                        <div class="col"> {{order.klant.abonnement.internet.login}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Login: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.internet.login}}</div>
                                     </ion-item>
-                                    <ion-item class="row">
-                                        <div class="col bold"> Wachtwoord: </div>
-                                        <div class="col"> {{order.klant.abonnement.internet.wachtwoord}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Wachtwoord: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.internet.wachtwoord}}</div>
                                     </ion-item>
                                 </div>
                             </ion-item>
                         </div>
-                    </div>
+                    </ion-list>
                     <ion-list type="list-inset">
                         <ion-item class="item-divider" ng-click="toggle(4)">
                             <i class="icon ion-ios-monitor-outline"></i> Televisie
@@ -111,19 +163,19 @@
                         <div ng-show="toShowArr[4]" class="cssFade">
                             <ion-item class="row">
                                 <div class="col">
-                                    <ion-item class="row">
-                                        <div class="col bold"> Soort: </div>
-                                        <div class="col"> {{order.klant.abonnement.televisie.soort}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Soort: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.televisie.soort}}</div>
                                     </ion-item>
                                 </div>
                                 <div class="col">
-                                    <ion-item class="row">
-                                        <div class="col bold"> Accountcode: </div>
-                                        <div class="col"> {{order.klant.abonnement.televisie.accountcode}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Accountcode: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.televisie.accountcode}}</div>
                                     </ion-item>
-                                    <ion-item class="row">
-                                        <div class="col bold"> Pincode: </div>
-                                        <div class="col"> {{order.klant.abonnement.televisie.pincode}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Pincode: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.televisie.pincode}}</div>
                                     </ion-item>
                                 </div>
                             </ion-item>
@@ -136,19 +188,19 @@
                         <div ng-show="toShowArr[5]" class="cssFade">
                             <ion-item class="row">
                                 <div class="col">
-                                    <ion-item class="row">
-                                        <div class="col bold"> Telefoonnr: </div>
-                                        <div class="col"> {{order.klant.abonnement.telefoon.telefoonnummer}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Telefoonnr: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.telefoon.telefoonnummer}}</div>
                                     </ion-item>
                                 </div>
                                 <div class="col">
-                                    <ion-item class="row">
-                                        <div class="col bold"> Login: </div>
-                                        <div class="col"> {{order.klant.abonnement.telefoon.login}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Login: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.telefoon.login}}</div>
                                     </ion-item>
-                                    <ion-item class="row">
-                                        <div class="col bold"> Wachtwoord: </div>
-                                        <div class="col"> {{order.klant.abonnement.telefoon.wachtwoord}}</div>
+                                    <ion-item class="row item-text-wrap noborder">
+                                        <div class="col fixedwidth"> Wachtwoord: </div>
+                                        <div class="col bold"> {{order.klant.abonnement.telefoon.wachtwoord}}</div>
                                     </ion-item>
                                 </div>
                             </ion-item>
@@ -163,18 +215,21 @@
             </ion-item>
             <div ng-show="toShowArr[6]" class="cssFade">
                 <ion-item>
-                    <div class="list list-inset" style="margin-top: 0px !important;">
+                    <div class="list list-inset nomargin-top">
                         <ion-item class="item-divider" ng-click="toggle(7)">
                             <i class="icon ion-ios-list-outline"></i> Materialen
+                                <button class="custombtn" ng-click="openModal('templates/materialen-modal.html', $event)">
+                                    <i class="icon ion-plus"></i>
+                                </button>
                         </ion-item>
                         <div ng-show="toShowArr[7]" class="cssFade">
-                            <ion-item class="row">
-                                <div class="col col-10 bold">Aantal</div>
+                            <ion-item class="row item-text-wrap">
+                                <div class="col fixedwidth-60 bold">Aantal</div>
                                 <div class="col bold">Naam</div>
                                 <div class="col bold">Specificaties</div>
                             </ion-item>
-                            <ion-item class="row">
-                                <div class="col col-10">1</div>
+                            <ion-item class="row item-text-wrap">
+                                <div class="col fixedwidth-60">1</div>
                                 <div class="col">Kabels gelegd</div>
                                 <div class="col">20M</div>
                             </ion-item>
@@ -183,17 +238,20 @@
                     <ion-list type="list-inset">
                         <ion-item class="item-divider" ng-click="toggle(8)">
                             <i class="icon ion-wrench"></i> Uitgevoerde werkzaamheden
+                            <button class="custombtn" ng-click="openModal('templates/werkzaamheden-modal.html', $event)">
+                                <i class="icon ion-plus"></i>
+                            </button>
                         </ion-item>
                         <div ng-show="toShowArr[8]" class="cssFade">
-                            <ion-item class="row">
+                            <ion-item class="row item-text-wrap">
                                 <div class="col col-67 bold">Beschrijving</div>
                                 <div class="col bold">Specificaties</div>
                             </ion-item>
-                            <ion-item class="row">
+                            <ion-item class="row item-text-wrap">
                                 <div class="col col-67">Installatie uitgevoerd</div>
                                 <div class="col"></div>
                             </ion-item>
-                            <ion-item class="row">
+                            <ion-item class="row item-text-wrap">
                                 <div class="col col-67">Modem configuratie</div>
                                 <div class="col"></div>
                             </ion-item>
@@ -205,6 +263,9 @@
         <ion-list type="list-inset">
             <ion-item class="item-divider positive" ng-click="toggle(9)">
                 Foto's
+                <button class="custombtn" ng-click="getPhoto($event)">
+                    <i class="icon ion-plus"></i>
+                </button>
             </ion-item>
             <div ng-show="toShowArr[9]" class="cssFade">
                 <ion-item>
@@ -219,7 +280,7 @@
             <div ng-show="toShowArr[10]" class="cssFade">
                 <ion-item>
                     <label class="item item-input">
-                        <textarea placeholder="Hier is ruimte voor eventuele opmerkingen"></textarea>
+                        <textarea rows="5" placeholder="Hier is ruimte voor eventuele opmerkingen"></textarea>
                     </label>
                 </ion-item>
             </div>
@@ -231,27 +292,28 @@
             <div ng-show="toShowArr[11]" class="cssFade">
                 <ion-item class="row">
                     <div class="col">
-                        <ion-item class="row">
-                            <div class="col bold"> Datum: </div>
-                            <div class="col"> {{date | date:'dd-MM-yyyy'}}</div>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"> Datum: </div>
+                            <div class="col bold"> {{date | date:'dd-MM-yyyy'}}</div>
                         </ion-item>
-                        <ion-item class="row">
-                            <div class="col bold">Naam monteur:</div>
-                            <div class="col">Arno</div>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth">Naam monteur:</div>
+                            <div class="col bold">Arno</div>
                             <!-- TO DO: aan de hand van de inloggegevens!!!-->
                         </ion-item>
-                        <ion-item class="row">
-                            <div class="col bold">Gewerkte uren:</div>
-                            <div class="col">1</div>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth">Gewerkte uren:</div>
+                            <div class="col bold">1</div>
                         </ion-item>
-                        <ion-item class="row" style="padding: 0;">
-                            <button class="button button-block button-stable" style="margin: 0;">
+                        <ion-item class="noborder"></ion-item>
+                        <ion-item class="row noborder nopadding">
+                            <button class="button button-block button-stable nomargin-top">
                                 Werkbon invullen
                             </button>
                         </ion-item>
                     </div>
                     <div class="col">
-                        <div class="list list-inset" style="margin-top: 0px !important;">
+                        <div class="list list-inset nomargin-top">
                             <ion-item class="item-divider">
                                 <i class="icon ion-ios-compose-outline"></i> Handtekening
                             </ion-item>
@@ -265,3 +327,7 @@
         </ion-list>
     </ion-content>
 </ion-view>
+
+<script id="modal" type="text/ng-template">
+    <div ng-include="include"></div>
+</script>

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.buitendienst2725580" 
-		version="0.0.1" 
-		xmlns="http://www.w3.org/ns/widgets" 
-		xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Buitendienst</name>
-  <description>
+<widget id="com.ionicframework.buitendienst2725580"
+        version="0.0.1"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Buitendienst</name>
+    <description>
         Buitendienst Mobile App - PLINQ BV
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Danny Hoeve en Mike Mijnheer
+    <author email="hi@ionicframework" href="http://ionicframework.com/">
+        Danny Hoeve en Mike Mijnheer
     </author>
-  <content src="index.html"/>
-  <access origin="*"/>
-  <preference name="webviewbounce" value="true"/>
-  <preference name="UIWebViewBounce" value="true"/>
-  <preference name="DisallowOverscroll" value="true"/>
-  <preference name="BackupWebStorage" value="none"/>  
-  <preference name="Orientation" value="landscape" />
-  <feature name="StatusBar">
-    <param name="ios-package" value="CDVStatusBar" onload="true"/>
-  </feature>
+    <content src="index.html"/>
+    <access origin="*"/>
+    <preference name="phonegap-version" value="3.7.0" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true"/>
+    <preference name="UIWebViewBounce" value="true"/>
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="BackupWebStorage" value="none"/>
+    <preference name="Orientation" value="landscape" />
+    <feature name="StatusBar">
+        <param name="ios-package" value="CDVStatusBar" onload="true"/>
+    </feature>
+    <gap:plugin name="org.apache.cordova.camera" source="plugins.cordova.io"/>
+
 </widget>

@@ -4,7 +4,7 @@
         <button class="button" ng-click="refresh()"><i class="icon ion-refresh positive"></i></button>
     </ion-nav-buttons>
     <ion-content has-bouncing="true" padding="true">
-        <div ng-repeat="(key, value) in orders | groupBy:'datum':true">
+        <div ng-repeat="(key, value) in orders | groupBy:'plandatum':true">
             <div class="title">
                 <h3 ng-if="key == date">Vandaag, {{key}}</h3>
                 <h3 ng-if="key != date" style="margin-top: 40px;">{{key}}</h3>
@@ -15,18 +15,18 @@
                     <div class="row">
                         <div class="col col-center"><h1> {{o.tijd}}</h1></div>
                         <div class="col col-25 col-center">
-                            <h3>ORDER NR: {{o.orderid}}</h3>
-                            <h3>STATUS: {{orderstatus}}</h3>
+                            <h3>Order No.: {{o.orderid}}</h3>
+                            <h3>Status: {{orderstatus}}</h3>
                         </div>
                         <div class="col col-25 col-center">
-                            <h2 class="positive">{{o.klant.naam}}</h2>
-                            <h3 class="icon ion-ios-telephone"> TEL: {{o.klant.telefoon}}</h3>
-                            <h3 class="icon ion-ios-email-outline"> E: {{o.klant.email}}</h3>
+                            <h3>{{o.klant.naam}}</h3>
+                            <h3 class="icon ion-ios-telephone"> {{o.klant.telefoon}}</h3>
+                            <h3 class="icon ion-ios-email-outline"> {{o.klant.email}}</h3>
                         </div>
                         <div class="col col-25 col-center">
-                            <h3>ADRES: {{o.klant.adres}}</h3>
-                            <h3>POSTCODE: {{o.klant.postcode}}</h3>
-                            <h3>PLAATS: {{o.klant.plaats}}</h3>
+                            <h3>Aansluitadres:</h3>
+                            <h3>{{o.klant.straat}}</h3>
+                            <h3>{{o.klant.postcode}}, {{o.klant.plaats}}</h3>
                         </div>
                         <div class="col col-10 col-center arrow"><h1 class="icon ion-chevron-right"></h1></div>
                     </div>

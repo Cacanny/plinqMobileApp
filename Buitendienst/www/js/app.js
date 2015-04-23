@@ -1,5 +1,5 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
-angular.module('directory', ['ionic', 'angular.filter', 'ngCordova', 'ngAnimate', 'directory.services', 'directory.controllers'])
+angular.module('directory', ['ionic', 'angular.filter', 'ngCordova', 'directory.services', 'directory.controllers'])
 
     .config(function($compileProvider){
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
@@ -11,7 +11,26 @@ angular.module('directory', ['ionic', 'angular.filter', 'ngCordova', 'ngAnimate'
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
         });
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+            function onDeviceReady() {
+                alert('deviceready');
+                        navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                            destinationType: Camera.DestinationType.FILE_URI });
+
+                        function onSuccess(imageURI) {
+                            var image = document.getElementById('myImage');
+                            image.src = imageURI;
+                        }
+
+                        function onFail(message) {
+                            alert('Failed because: ' + message);
+                        }
+            }
+
     })
 
     .config(function ($stateProvider, $urlRouterProvider){

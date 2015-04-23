@@ -1,31 +1,44 @@
 [
     {
         "orderid": "123",
-        "datum": "18-04-2015",
+        "plandatum": "18-04-2015",
         "tijd": "09:00",
+        "omschrijving": "Installatie",
         "klant": {
             "naam": "Pieter Versteeg",
-            "adres": "Gruppenlaan 17",
+            "straat": "Gruppenlaan 17",
             "postcode": "1236AB",
             "plaats": "Amsterdam",
             "telefoon": "0421-123455",
             "email": "pietervg@mail.nl",
-            "tickets": [
-                {
-                    "ticketid": "12",
-                    "beschrijving": "Probleem met het internet opgelost d.m.v. router reset",
-                    "datum": "12-05-2014",
-                    "supporter": "Gerrit Jansen"
-                },
-                {
-                    "ticketid": "13",
-                    "beschrijving": "Telefoon probleem opgelost",
-                    "datum": "16-05-2014",
-                    "supporter": "Jan Smith"
-
-                }
-            ],
             "abonnement": {
+                    "abonnementregels": [
+                      {
+                        "type": "Internet",
+                        "product": "VDSL 40000/30721:40",
+                        "status": "Actief"
+                      },
+                      {
+                        "type": "Hosting",
+                        "product": "Domeinnaam met 5 e-mailboxen",
+                        "status": "Actief"
+                      },
+                      {
+                        "type": "Telefonie",
+                        "product": "Bellen basis",
+                        "status": "Beëindigen"
+                      },
+                      {
+                        "type": "Televisie",
+                        "product": "Interactieve TV voor 1 TV (iTV)",
+                        "status": "Actief"
+                      },
+                      {
+                        "type": "Hardware",
+                        "product": "Extra iTV settupbox in bruikleen",
+                        "status": "Actief"
+                      }
+                    ],
                     "internet": {
                             "netwerk": "KPN",
                             "snelheid": "20MBps",
@@ -45,48 +58,58 @@
                         }
                 }
            
-        }
-    },
-    {
-        "orderid": "124",
-        "datum": "18-04-2015",
-        "tijd": "10:00",
-        "klant": {
-            "naam": "Klaas Pieterson",
-            "adres": "Vinkenstraat 44B",
-            "postcode": "1012KL",
-            "plaats": "Utrecht",
-            "telefoon": "0326-143238",
-            "email": "klaaspietserson@hotmail.com",
-            "tickets": [
-                {
-                    "ticketid": "44",
-                    "beschrijving": "Er is een probleem opgelost op deze manier",
-                    "datum": "23-04-2015",
-                    "supporter": "Gerrit Jansen"
-                }
+        },
+        "ticket": {
+            "ticketid": "1201",
+            "datum": "2014-08-18 09:00:21",
+            "omschrijving": "TEST 1 2 3",
+            "ticketregels": [
+              {
+                "datum": "2014-08-21 14:54:09",
+                "notitie": "Dit is een notitie",
+                "verantw": "Maarten G. Kempe"
+              },
+              {
+                "datum": "2014-08-22 07:24:16",
+                "notitie": "Dit is een tweede notitie",
+                "verantw": "Huib Kuyt"
+              },
+              {
+                "datum": "2014-08-24 18:21:59",
+                "notitie": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.",
+                "verantw": "Jan Klaassen"
+              }
             ]
         }
     },
     {
-      "orderid": "125",
-      "datum": "18-04-2015",
-      "tijd": "11:00",
-      "klant": {
-        "naam": "Jan van Dijk",
-        "adres": "Oude straat 14",
-        "postcode": "4356GH",
-        "plaats": "Zwolle",
-        "telefoon": "0534-478374",
-        "email": "j.vandijk@hotmail.nl",
-        "tickets": [
-          {
-            "ticketid": "45",
-            "beschrijving": "Oplossing van een probleem!",
-            "datum": "25-04-2015",
-            "supporter": "Henk de Vries"
-          }
-        ]
+        "orderid": "124",
+        "plandatum": "18-04-2015",
+        "tijd": "10:00",
+        "omschrijving": "Installatie",
+        "klant": {
+            "naam": "Klaas Pieterson",
+            "straat": "Vinkenstraat 44B",
+            "postcode": "1012KL",
+            "plaats": "Utrecht",
+            "telefoon": "0326-143238",
+            "email": "klaaspietserson@hotmail.com"
+        },
+        "ticket": {}
+    },
+    {
+        "orderid": "125",
+        "plandatum": "18-04-2015",
+        "omschrijving": "Reparatie",
+        "tijd": "11:00",
+        "klant": {
+          "naam": "Jan van Dijk",
+          "straat": "Oude straat 14",
+          "postcode": "4356GH",
+          "plaats": "Zwolle",
+          "telefoon": "0534-478374",
+          "email": "j.vandijk@hotmail.nl"
+        },
+        "ticket": {}
       }
-    }
 ]
