@@ -381,27 +381,15 @@
                         <ion-item class="item-divider">
                             <i class="icon ion-ios-compose-outline"></i> Handtekening
                         </ion-item>
-                        <ion-item>
-                            <canvas id='signatureCanvas' style='width: 100%; height: 150px; border: 1px solid #bebebe;'></canvas>
+                        <ion-item ng-click="openModal('templates/signaturepad.html', $event)">
+                            <div class="signature padding" ng-switch="_signatureImage || '_undefined_'">
+                                <img ng-switch-when="_undefined_" ng-src="img/signature_placeholder.png" alt="" />
+                                <img ng-switch-default ng-src="{{_signatureImage}}"  alt="" />
+                            </div>
                         </ion-item>
                     </div>
                 </div>
             </ion-item>
-                    <div class="col">
-                        <div class="list list-inset nomargin-top">
-                            <ion-item class="item-divider">
-                                <i class="icon ion-ios-compose-outline"></i> Handtekening
-                            </ion-item>
-                            <ion-item ng-click="openModal('templates/signaturepad.html', $event)">
-                                <div class="signature padding" ng-switch="_signatureImage || '_undefined_'">
-                                    <img ng-switch-when="_undefined_" ng-src="img/signature_placeholder.png" alt="" />
-                                    <img ng-switch-default ng-src="{{_signatureImage}}"  alt="" />
-                                </div>
-                            </ion-item>
-                        </div>
-                    </div>
-                </ion-item>
-            </div>
         </ion-list>
     </ion-content>
 </ion-view>

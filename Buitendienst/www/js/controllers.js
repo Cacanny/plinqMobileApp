@@ -271,9 +271,9 @@ angular.module('directory.controllers', [])
             $scope.modal.remove();
         });
 
-        /*  Keep track of all the elements that are collapsed or not
-            True = expanded, False = collapsed
-            The names are just for clarification */
+        // Keep track of all the elements that are collapsed or not
+        // True = expanded, False = collapsed
+        // The names are just for clarification
 
         $scope.toShowArr = [
             true, true, true, false, false, false, false, false, false
@@ -308,9 +308,6 @@ angular.module('directory.controllers', [])
             canvas.width = window.innerWidth; //document.width is obsolete
             canvas.height = window.innerHeight - 100; //document.height is obsolete
         };
-    })
-    .controller('ModalCtrl', function ($scope) {
-
     })
 
     .controller('AppCtrl', function ($scope) {
