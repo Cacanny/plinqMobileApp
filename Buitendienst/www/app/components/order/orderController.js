@@ -1,18 +1,5 @@
 ﻿angular.module('orderController', [])
-
-    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, PlanningService) {
-
-<<<<<<< HEAD:Buitendienst/www/js/controllers.js
-        function convertDate(inputFormat) {
-            function pad(s) { return (s < 10) ? '0' + s : s; }
-            var d = new Date(inputFormat);
-            return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
-        }
-    })
-
-    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, $localstorage, SplitArrayService) {
-=======
->>>>>>> d3a25d5002e44c32a77d3dddd2db15f6a054ce77:Buitendienst/www/app/components/order/orderController.js
+    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, PlanningService, SplitArrayService) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
             $scope.showTickets = true;
