@@ -1,0 +1,10 @@
+diff a/Buitendienst/www/app/components/order/orderController.js b/Buitendienst/www/app/components/order/orderController.js	(rejected hunks)
+@@ -0,6 +0,8 @@
+     })
+ 
+     .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, $localstorage, SplitArrayService) {
++=======
++>>>>>>> d3a25d5002e44c32a77d3dddd2db15f6a054ce77:Buitendienst/www/app/components/order/orderController.js
+         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
+             $scope.order = order;
+             $scope.showTickets = true;

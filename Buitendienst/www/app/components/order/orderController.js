@@ -1,78 +1,8 @@
-angular.module('directory.controllers', [])
-    //.config(function ($compileProvider) {
-    //    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-    //})
-    .controller('PlanningIndexCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, $localstorage, OrderService, $state) {
-        //Get the 'werkzaamheden' and the 'materialen' 
-        $scope.activities = '';
-        $localstorage.setActivities().then(function () {
-            $scope.activities = $localstorage.getActivities();
-        });
+﻿angular.module('orderController', [])
 
-        //Some variables 
-        $scope.orders = [];
-        $scope.orderstatus = 'In behandeling';
+    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, PlanningService) {
 
-        //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
-        //setObject will call the JSON file, if it takes some time, then a loading screen will appear 
-        $ionicLoading.show({
-            template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
-        });
-        $localstorage.setPlanning().then(function () {
-            $ionicLoading.hide();
-            getAll();
-            $scope.connection = 'Online';
-        });
-
-        //Watch if the Internet Connection changes 
-        // listen for Online event
-        $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
-            $scope.connection = 'Online';
-
-            // setObject will call the JSON file, if it takes some time, then a loading screen will appear 
-            $ionicLoading.show({
-                template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
-            });
-            $localstorage.setPlanning().then(function () {
-                $ionicLoading.hide();
-                getAll();
-            });
-            $localstorage.setActivities();
-        });
-
-        // listen for Offline event
-        $rootScope.$on('$cordovaNetwork:offline', function (event, networkState) {
-            $scope.connection = 'Offline';
-
-            $window.localStorage.clear();
-            getAll();
-        });
-
-        // Fill $scope.orders with the orders from the LocalStorage 
-        function getAll() {
-            OrderService.getOrders().then(function (orders) {
-                $scope.orders = orders;
-            });
-        }
-
-        // Manual refresh to get the new JSON files
-        $scope.refresh = function () {
-            $localstorage.setPlanning().then(function () {
-                getAll();
-            });
-            $localstorage.setActivities();
-        };
-
-        // Navigate to other state using ng-click
-        $scope.details = function (id) {
-            $state.go('app.order', { orderId: id });
-        };
-
-        // Get the current date and convert it to dd-mm-yyyy format
-        var date = new Date();
-        $scope.date = "18-04-2015";
-        //$scope.date = convertDate(date);
-
+<<<<<<< HEAD:Buitendienst/www/js/controllers.js
         function convertDate(inputFormat) {
             function pad(s) { return (s < 10) ? '0' + s : s; }
             var d = new Date(inputFormat);
@@ -81,6 +11,8 @@ angular.module('directory.controllers', [])
     })
 
     .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, $localstorage, SplitArrayService) {
+=======
+>>>>>>> d3a25d5002e44c32a77d3dddd2db15f6a054ce77:Buitendienst/www/app/components/order/orderController.js
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
             $scope.showTickets = true;
@@ -97,15 +29,15 @@ angular.module('directory.controllers', [])
 
         // Count the total 'Aantal' at Materialen input
         $scope.total = 1;
-        $scope.count = function(minplus) {
+        $scope.count = function (minplus) {
             $scope.total += minplus;
-            if($scope.total < 1) {
+            if ($scope.total < 1) {
                 $scope.total = 1;
             }
         }
 
         // Get the activities stored in localStorage
-        $scope.activities = $localstorage.getActivities();
+        $scope.activities = PlanningService.getActivities();
 
         // Push an extra option for the dropdown list
         $scope.activities.materialen.push('Anders, namelijk:');
@@ -116,22 +48,22 @@ angular.module('directory.controllers', [])
         $scope.activities.werkzaamheden = SplitArrayService.SplitArray($scope.activities.werkzaamheden, 3);
 
         // This was needed to get value of the selected radio button
-        $scope.materiaal = {naam: ''};
+        $scope.materiaal = { naam: '' };
 
         // To save all the materialen in
-        $scope.materialen = {materialen: []};
+        $scope.materialen = { materialen: [] };
 
-        $scope.savemateriaal = function() {
+        $scope.savemateriaal = function () {
             var savesucces = false;
-            
+
             // Get specificatie
             var specificatie = document.getElementById('specificatie_materiaal').value;
 
-            if($scope.materiaal.naam !== '') {
+            if ($scope.materiaal.naam !== '') {
 
-                if($scope.materiaal.naam == 'Anders, namelijk:') {
+                if ($scope.materiaal.naam == 'Anders, namelijk:') {
                     var naam = document.getElementById('naam').value;
-                    if(naam) {
+                    if (naam) {
                         // Add to the materialen array
                         $scope.materialen.materialen.push({
                             aantal: $scope.total, naam: naam, specificatie: specificatie
@@ -144,11 +76,11 @@ angular.module('directory.controllers', [])
                     $scope.materialen.materialen.push({
                         aantal: $scope.total, naam: $scope.materiaal.naam, specificatie: specificatie
                     });
-                    
+
                     savesucces = true;
                 }
 
-                if(savesucces) {
+                if (savesucces) {
                     // And show the header
                     $scope.toShowArr[4] = true;
 
@@ -157,42 +89,42 @@ angular.module('directory.controllers', [])
                     $scope.materiaal.naam = '';
                     document.getElementById('specificatie_materiaal').value = '';
                     var selection = document.getElementsByName("materialen");
-                        for(var i=0;i<selection.length;i++) {
-                            selection[i].checked = false;
-                        }
+                    for (var i = 0; i < selection.length; i++) {
+                        selection[i].checked = false;
+                    }
                 }
             }
         }
 
-        $scope.resetmateriaal = function() {
+        $scope.resetmateriaal = function () {
             // Reset all values
             $scope.total = 1;
             $scope.materiaal.naam = '';
             document.getElementById('specificatie_materiaal').value = '';
             var selection = document.getElementsByName("materialen");
-                for(var i=0;i<selection.length;i++) {
-                    selection[i].checked = false;
-                }
+            for (var i = 0; i < selection.length; i++) {
+                selection[i].checked = false;
+            }
         }
 
         // This was needed to get value of the selected radio button
-        $scope.werkzaamheid = {beschrijving: ''};
+        $scope.werkzaamheid = { beschrijving: '' };
 
         // To save all the materialen in
-        $scope.werkzaamheden = {werkzaamheden: []};
+        $scope.werkzaamheden = { werkzaamheden: [] };
 
-        $scope.savewerkzaamheid = function() {
+        $scope.savewerkzaamheid = function () {
             var savesucces = false;
 
             // Get specificatie
             var specificatie = document.getElementById('specificatie_werkzaamheid').value;
 
-            if($scope.werkzaamheid.beschrijving !== '') {
+            if ($scope.werkzaamheid.beschrijving !== '') {
 
-                if($scope.werkzaamheid.beschrijving == 'Anders, namelijk:') {
+                if ($scope.werkzaamheid.beschrijving == 'Anders, namelijk:') {
                     var beschrijving = document.getElementById('beschrijving').value;
 
-                    if(beschrijving) {
+                    if (beschrijving) {
                         // Add to the werkzaamheden array
                         $scope.werkzaamheden.werkzaamheden.push({
                             beschrijving: beschrijving, specificatie: specificatie
@@ -209,7 +141,7 @@ angular.module('directory.controllers', [])
                     savesucces = true;
                 }
 
-                if(savesucces) {
+                if (savesucces) {
                     // And show the header
                     $scope.toShowArr[7] = true;
 
@@ -217,28 +149,28 @@ angular.module('directory.controllers', [])
                     $scope.werkzaamheid.beschrijving = '';
                     document.getElementById('specificatie_werkzaamheid').value = '';
                     var selection = document.getElementsByName("werkzaamheden");
-                        for(var i=0;i<selection.length;i++) {
-                            selection[i].checked = false;
-                        }
+                    for (var i = 0; i < selection.length; i++) {
+                        selection[i].checked = false;
+                    }
                 }
             }
         }
 
-        $scope.resetwerkzaamheid = function() {
+        $scope.resetwerkzaamheid = function () {
             // Reset all values
             $scope.werkzaamheid.beschrijving = '';
             document.getElementById('specificatie_werkzaamheid').value = '';
             var selection = document.getElementsByName("werkzaamheden");
-                for(var i=0;i<selection.length;i++) {
-                    selection[i].checked = false;
-                }
+            for (var i = 0; i < selection.length; i++) {
+                selection[i].checked = false;
+            }
         }
 
         // Array to save the photo's 
         $scope.photoArr = [];
 
         // Camera function 
-        $scope.getPhoto = function($event) {
+        $scope.getPhoto = function ($event) {
             $event.stopPropagation();
             Camera.getPicture().then(function (imageURI) {
                 console.log(imageURI);
@@ -267,7 +199,7 @@ angular.module('directory.controllers', [])
         };
         $scope.closeModal = function () {
             $scope.modal.hide();
-            $scope._signatureImage = OrderService.getSignatureImage();            
+            $scope._signatureImage = OrderService.getSignatureImage();
         };
 
         // Cleanup the modal when we're done with it!
@@ -288,34 +220,3 @@ angular.module('directory.controllers', [])
             $scope.toShowArr[index] = !$scope.toShowArr[index];
         };
     })
-
-    .controller('SignatureCtrl', function ($scope, OrderService) {
-        var canvas = document.getElementById('signatureCanvas');
-        resizeCanvas();
-        var signaturePad = new SignaturePad(canvas);
-
-        signaturePad.minWidth = 2.5;
-        signaturePad.maxWidth = 3.5;
-
-        $scope.clearCanvas = function () {
-            signaturePad.clear();
-        }
-
-        $scope.saveCanvas = function () {
-            var sigImg = signaturePad.toDataURL();
-            $scope.signature = sigImg;
-            OrderService.setSignatureImage(sigImg);
-        }
-
-        function resizeCanvas() {
-            var ratio = window.devicePixelRatio || 1;
-            canvas.width = window.innerWidth; //document.width is obsolete
-            canvas.height = window.innerHeight - 100; //document.height is obsolete
-        };
-    })
-
-    .controller('AppCtrl', function ($scope) {
-        $scope.settings = {
-            friendsEnabled: true
-        }
-    });

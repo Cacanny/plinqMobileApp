@@ -5,23 +5,24 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Buitendienst</title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="assets/lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="assets/lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- ngCordova script-->
-    <script src="lib/ng-cordova.min.js"></script>
+    <script src="assets/lib/ng-cordova.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- other js -->
-    <script src="lib/angular-filter/angular-filter.min.js"></script>
-    <script src="lib/angular-elastic/elastic.js"></script>
+    <script src="assets/lib/angular-filter/angular-filter.min.js"></script>
+    <script src="assets/lib/angular-elastic/elastic.js"></script>
 
     <!-- signature script -->
+<<<<<<< HEAD
     <script src='lib/signature_pad/signature_pad.js'></script>
 
     <!-- your app's js -->
@@ -29,7 +30,18 @@
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
 
+=======
+    <script src='assets/lib/signature_pad/signature_pad.js'></script>
+>>>>>>> d3a25d5002e44c32a77d3dddd2db15f6a054ce77
 
+    <!-- your app's js -->
+    <script src="app/app.module.js"></script>
+    <script src="app/app.routes.js"></script>
+    <script src="app/components/planning/planningController.js"></script>
+    <script src="app/components/planning/planningService.js"></script>
+    <script src="app/components/order/orderController.js"></script>
+    <script src="app/components/order/orderService.js"></script>
+    <script src="app/components/order/signature/signatureController.js"></script>
 </head>
 <body ng-app="directory">
     <!-- where the initial view template will be rendered -->
