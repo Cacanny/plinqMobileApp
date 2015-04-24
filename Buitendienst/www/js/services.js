@@ -18,14 +18,14 @@ angular.module('directory.services', [])
             setPlanning: function() {
                 return $http.get("orders.json")
                     .success(function (response) {
-                        $window.localStorage['planning'] = JSON.stringify(response);
+                        $window.localStorage['getplanning'] = JSON.stringify(response);
                     })
                     .error(function() {
                         alert('ERROR: Planning kon niet worden opgehaald, herstart de applicatie.');
                     });
             },
             getPlanning: function() {
-                return JSON.parse($window.localStorage['planning'] || '{}');
+                return JSON.parse($window.localStorage['getplanning'] || '{}');
             },
             savePlanning: function() {
                 //TODO save in localstorage
