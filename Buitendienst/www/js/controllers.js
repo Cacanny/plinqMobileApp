@@ -80,7 +80,7 @@ angular.module('directory.controllers', [])
         }
     })
 
-    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, $localstorage) {
+    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, $localstorage, SplitArrayService) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
             $scope.showTickets = true;
@@ -110,6 +110,10 @@ angular.module('directory.controllers', [])
         // Push an extra option for the dropdown list
         $scope.activities.materialen.push('Anders, namelijk:');
         $scope.activities.werkzaamheden.push('Anders, namelijk:');
+
+        // Split the arrays into X amount of rows for displaying
+        $scope.activities.materialen = SplitArrayService.SplitArray($scope.activities.materialen, 3);
+        $scope.activities.werkzaamheden = SplitArrayService.SplitArray($scope.activities.werkzaamheden, 3);
 
         // This was needed to get value of the selected radio button
         $scope.materiaal = {naam: ''};

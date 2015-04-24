@@ -244,15 +244,19 @@
                                         <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(5)">
                                             {{materiaal.naam || "Selecteer een materiaal..."}} <i class="icon ion-arrow-down-b"></i>
                                         </button>
-                                        <div class="list cssFade" ng-show="toShowArr[5]">
-                                            <label class="item item-radio" ng-click="toShowArr[5]=false" ng-repeat="m in activities.materialen">
-                                                <input type="radio" ng-model="$parent.materiaal.naam" name="materialen" ng-value="m">
-                                                <div class="item-content">
-                                                    {{m}}
+                                        <ion-item class="row noborder nopadding">
+                                            <div class="col nopadding cssFade" ng-repeat="row in activities.materialen" ng-show="toShowArr[5]">
+                                                <div class="list">
+                                                    <label class="item item-radio" ng-click="toShowArr[5]=false" ng-repeat="m in row">
+                                                        <input type="radio" ng-model="$parent.materiaal.naam" name="materialen" ng-value="m">
+                                                        <div class="item-content">
+                                                            {{m}}
+                                                        </div>
+                                                        <i class="radio-icon ion-checkmark"></i>
+                                                    </label>
                                                 </div>
-                                                <i class="radio-icon ion-checkmark"></i>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </ion-item>
                                         <label class="item item-input" ng-if="materiaal.naam == 'Anders, namelijk:'">
                                             <textarea id="naam" msd-elastic="\n" ng-model="foo" placeholder="Geef de naam van het materiaal op"></textarea>         
                                         </label>
@@ -297,15 +301,19 @@
                                         <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(8)">
                                             {{werkzaamheid.beschrijving || "Selecteer een werkzaamheid..."}} <i class="icon ion-arrow-down-b"></i>
                                         </button>
-                                        <div class="list cssFade" ng-show="toShowArr[8]">
-                                            <label class="item item-radio" ng-click="toShowArr[8]=false" ng-repeat="w in activities.werkzaamheden">
-                                                <input type="radio" ng-model="$parent.werkzaamheid.beschrijving" name="werkzaamheden" ng-value="w">
-                                                <div class="item-content">
-                                                    {{w}}
+                                        <ion-item class="row noborder nopadding">
+                                            <div class="col nopadding cssFade" ng-repeat="row in activities.werkzaamheden"  ng-show="toShowArr[8]">
+                                                <div class="list">
+                                                    <label class="item item-radio" ng-click="toShowArr[8]=false" ng-repeat="w in row">
+                                                        <input type="radio" ng-model="$parent.werkzaamheid.beschrijving" name="werkzaamheden" ng-value="w">
+                                                        <div class="item-content">
+                                                            {{w}}
+                                                        </div>
+                                                        <i class="radio-icon ion-checkmark"></i>
+                                                    </label>
                                                 </div>
-                                                <i class="radio-icon ion-checkmark"></i>
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </ion-item>
                                         <label class="item item-input" ng-if="werkzaamheid.beschrijving == 'Anders, namelijk:'">
                                             <textarea id="beschrijving" msd-elastic="\n" ng-model="foo" placeholder="Beschrijving van de uitgevoerde werkzaamheid"></textarea>         
                                         </label>
