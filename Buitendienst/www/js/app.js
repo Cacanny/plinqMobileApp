@@ -1,13 +1,13 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 angular.module('directory', ['ionic', 'angular.filter', 'monospaced.elastic', 'ngCordova', 'directory.services', 'directory.controllers'])
 
-    .config(function($compileProvider){
-        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+    .config(function ($compileProvider) {
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content):|data:image\//);
     })
 
-    .run(function($ionicPlatform) {
-        $ionicPlatform.ready(function() {
-            if(window.StatusBar) {
+    .run(function ($ionicPlatform) {
+        $ionicPlatform.ready(function () {
+            if (window.StatusBar) {
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
@@ -33,7 +33,7 @@ angular.module('directory', ['ionic', 'angular.filter', 'monospaced.elastic', 'n
 
     })
 
-    .config(function ($stateProvider, $urlRouterProvider){
+    .config(function ($stateProvider, $urlRouterProvider) {
 
         // Set up the various states which the app can be in.
         // Each state's controller can be found in controllers.js
@@ -56,6 +56,11 @@ angular.module('directory', ['ionic', 'angular.filter', 'monospaced.elastic', 'n
                 url: "/order/:orderId",
                 templateUrl: "templates/order-details.html",
                 controller: 'OrderDetailCtrl'
+            })
+
+            .state('signature', {
+                url: "/signature",
+                templateUrl: "templates/signaturepad.html"
             });
 
         // if none of the above states are matched, use this as the fallback

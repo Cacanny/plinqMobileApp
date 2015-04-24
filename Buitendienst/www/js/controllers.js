@@ -1,20 +1,20 @@
 angular.module('directory.controllers', [])
-    .config(function ($compileProvider) {
-        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-    })
+    //.config(function ($compileProvider) {
+    //    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+    //})
     .controller('PlanningIndexCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, $localstorage, OrderService, $state) {
-        /* Get the 'werkzaamheden' and the 'materialen' */
+        //Get the 'werkzaamheden' and the 'materialen' 
         $scope.activities = '';
-        $localstorage.setActivities().then(function() {
+        $localstorage.setActivities().then(function () {
             $scope.activities = $localstorage.getActivities();
         });
 
-        /* Some variables */
+        //Some variables 
         $scope.orders = [];
         $scope.orderstatus = 'In behandeling';
 
-        /* !!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! */
-        /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
+        //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
+        //setObject will call the JSON file, if it takes some time, then a loading screen will appear 
         $ionicLoading.show({
             template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
         });
@@ -24,12 +24,12 @@ angular.module('directory.controllers', [])
             $scope.connection = 'Online';
         });
 
-        /* Watch if the Internet Connection changes */
+        //Watch if the Internet Connection changes 
         // listen for Online event
         $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
             $scope.connection = 'Online';
 
-            /* setObject will call the JSON file, if it takes some time, then a loading screen will appear */
+            // setObject will call the JSON file, if it takes some time, then a loading screen will appear 
             $ionicLoading.show({
                 template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
             });
@@ -48,7 +48,7 @@ angular.module('directory.controllers', [])
             getAll();
         });
 
-        /* Fill $scope.orders with the orders from the LocalStorage */
+        // Fill $scope.orders with the orders from the LocalStorage 
         function getAll() {
             OrderService.getOrders().then(function (orders) {
                 $scope.orders = orders;
@@ -63,12 +63,12 @@ angular.module('directory.controllers', [])
             $localstorage.setActivities();
         };
 
-        /* Navigate to other state using ng-click */
+        // Navigate to other state using ng-click
         $scope.details = function (id) {
             $state.go('app.order', { orderId: id });
         };
 
-        /* Get the current date and convert it to dd-mm-yyyy format*/
+        // Get the current date and convert it to dd-mm-yyyy format
         var date = new Date();
         $scope.date = "18-04-2015";
         //$scope.date = convertDate(date);
@@ -84,7 +84,7 @@ angular.module('directory.controllers', [])
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
             $scope.showTickets = true;
-            if(JSON.stringify($scope.order.ticket) === '{}'){
+            if (JSON.stringify($scope.order.ticket) === '{}') {
                 $scope.showTickets = false;
             }
         });
@@ -253,20 +253,21 @@ angular.module('directory.controllers', [])
         $ionicModal.fromTemplateUrl('modal', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.modal = modal;
         });
-        $scope.openModal = function(include, $event) {
+        $scope.openModal = function (include, $event) {
             $event.stopPropagation();
             $scope.include = include;
             $scope.modal.show();
         };
-        $scope.closeModal = function() {
+        $scope.closeModal = function () {
             $scope.modal.hide();
+            $scope._signatureImage = OrderService.getSignatureImage();            
         };
 
-        //Cleanup the modal when we're done with it!
-        $scope.$on('$destroy', function() {
+        // Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function () {
             $scope.modal.remove();
         });
 
@@ -278,12 +279,37 @@ angular.module('directory.controllers', [])
             true, true, true, false, false, false, false, false, false
         ];
 
+        // Toggles the state of a window to true or false
         $scope.toggle = function (index) {
             $scope.toShowArr[index] = !$scope.toShowArr[index];
         };
     })
 
-    .controller('ModalCtrl', function($scope) {
+    .controller('SignatureCtrl', function ($scope, OrderService) {
+        var canvas = document.getElementById('signatureCanvas');
+        resizeCanvas();
+        var signaturePad = new SignaturePad(canvas);
+
+        signaturePad.minWidth = 2.5;
+        signaturePad.maxWidth = 3.5;
+
+        $scope.clearCanvas = function () {
+            signaturePad.clear();
+        }
+
+        $scope.saveCanvas = function () {
+            var sigImg = signaturePad.toDataURL();
+            $scope.signature = sigImg;
+            OrderService.setSignatureImage(sigImg);
+        }
+
+        function resizeCanvas() {
+            var ratio = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth; //document.width is obsolete
+            canvas.height = window.innerHeight - 100; //document.height is obsolete
+        };
+    })
+    .controller('ModalCtrl', function ($scope) {
 
     })
 
