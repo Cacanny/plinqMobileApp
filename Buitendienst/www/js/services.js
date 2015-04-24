@@ -39,6 +39,7 @@ angular.module('directory.services', [])
     .factory('OrderService', function ($localstorage, $q) {
 
         var orders;
+        var _signature;
 
         return {
             getOrders: function () {
@@ -58,7 +59,20 @@ angular.module('directory.services', [])
                 }
                 deferred.resolve(order);
                 return deferred.promise;
+            },
+            
+
+            // Getter for the Image from the Signature Pad
+            getSignatureImage: function () {      
+                return _signature;
+            },
+
+            // Setter for the Image from the Signature Pad
+            setSignatureImage: function (signature) {     
+                _signature = signature;
             }
+
+           
         }
     })
 
