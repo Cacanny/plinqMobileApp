@@ -1,4 +1,5 @@
-﻿angular.module('signatureController', [])
+﻿angular.module('directory.signatureController', [])
+
     .controller('SignatureCtrl', function($scope, OrderService) {
         var canvas = document.getElementById('signatureCanvas');
         resizeCanvas();

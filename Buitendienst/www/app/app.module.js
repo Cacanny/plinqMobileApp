@@ -4,13 +4,14 @@ angular.module('directory', [
         'angular.filter',
         'monospaced.elastic',
         'ngCordova',
-        'appRoutes',
-        'planningService',
-        'planningController',
-        'orderService',
-        'orderController',
-        'signatureController'
-
+        'directory.appRoutes',
+        'directory.planningService',
+        'directory.planningController',
+        'directory.orderService',
+        'directory.orderController',
+        'directory.signatureController',
+        'directory.cameraService',
+        'directory.photoDirective'
 ])
     .config(function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content):|data:image\//);

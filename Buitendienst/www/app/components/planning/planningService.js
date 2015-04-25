@@ -1,4 +1,4 @@
-﻿angular.module('planningService', [])
+﻿angular.module('directory.planningService', [])
 
     .factory('PlanningService', function ($window, $http) {
 

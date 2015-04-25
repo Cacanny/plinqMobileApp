@@ -1,6 +1,6 @@
-﻿angular.module('planningController', [])
+﻿angular.module('directory.planningController', [])
 
-    .controller('PlanningIndexCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, PlanningService, OrderService, $state) {
+    .controller('PlanningCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, PlanningService, OrderService, $state) {
         //Get the 'werkzaamheden' and the 'materialen' 
         $scope.activities = '';
         PlanningService.setActivities().then(function () {

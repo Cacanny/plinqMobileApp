@@ -1,5 +1,6 @@
-﻿angular.module('orderController', [])
-    .controller('OrderDetailCtrl', function ($scope, $stateParams, Camera, OrderService, $ionicModal, PlanningService, SplitArrayService) {
+﻿angular.module('directory.orderController', [])
+
+    .controller('OrderCtrl', function ($scope, $stateParams, CameraService, OrderService, $ionicModal, PlanningService, SplitArrayService) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
             $scope.showTickets = true;
@@ -159,7 +160,7 @@
         // Camera function 
         $scope.getPhoto = function ($event) {
             $event.stopPropagation();
-            Camera.getPicture().then(function (imageURI) {
+            CameraService.getPicture().then(function (imageURI) {
                 console.log(imageURI);
                 $scope.lastPhoto = imageURI;
             }, function (err) {

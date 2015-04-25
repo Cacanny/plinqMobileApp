@@ -1,5 +1,5 @@
 ﻿
-angular.module('appRoutes', [])
+angular.module('directory.appRoutes', [])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -16,13 +16,13 @@ angular.module('appRoutes', [])
             .state('app.planning', {
                 url: "/planning",
                 templateUrl: "app/components/planning/planningView.html",
-                controller: 'PlanningIndexCtrl'
+                controller: 'PlanningCtrl'
             })
 
             .state('app.order', {
                 url: "/order/:orderId",
                 templateUrl: "app/components/order/orderView.html",
-                controller: 'OrderDetailCtrl'
+                controller: 'OrderCtrl'
             })
 
             .state('signature', {
