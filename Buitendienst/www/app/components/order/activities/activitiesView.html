@@ -1,0 +1,132 @@
+﻿<ion-list type="list-inset">
+    <ion-item class="item-divider positive" ng-click="toggle(2)">
+        Werkzaamheden
+    </ion-item>
+    <div ng-show="toShowArr[2]" class="cssFade">
+        <ion-item>
+            <div class="list list-inset nomargin-top">
+                <ion-item class="item-divider">
+                    <i class="icon ion-ios-list-outline"></i> Materialen
+                    <button class="custombtn" ng-click="toggle(3);$event.stopPropagation()">
+                        <i class="icon ion-plus"></i>
+                    </button>
+                </ion-item>
+                <ion-item class="row item-text-wrap" ng-show="toShowArr[4]">
+                    <div class="col fixedwidth-60 bold">Aantal</div>
+                    <div class="col bold">Naam</div>
+                    <div class="col bold">Specificaties</div>
+                </ion-item>
+                <ion-item class="row item-text-wrap" ng-repeat="m in materialen.materialen">
+                    <div class="col fixedwidth-60">{{m.aantal}}</div>
+                    <div class="col">{{m.naam}}</div>
+                    <div class="col">{{m.specificatie}}</div>
+                </ion-item>
+                <ion-item ng-show="toShowArr[3]" class="row item-text-wrap">
+                    <div class="col">
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col col-center fixedwidth">Aantal:</div>
+                            <div class="col">
+                                <button class="aantal_btn left" ng-click="count(-1)"><i class="icon ion-minus"></i></button>
+                                <div class="aantal_input left bold">{{total}}</div>
+                                <button class="aantal_btn left" ng-click="count(1)"><i class="icon ion-plus"></i></button>
+                            </div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col col-center fixedwidth">Naam:</div>
+                            <div class="col">
+                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(5)">
+                                    {{materiaal.naam || "Selecteer een materiaal..."}} <i class="icon ion-arrow-down-b"></i>
+                                </button>
+                                <ion-item class="row noborder nopadding">
+                                    <div class="col nopadding cssFade" ng-repeat="row in activities.materialen" ng-show="toShowArr[5]">
+                                        <div class="list">
+                                            <label class="item item-radio" ng-click="toShowArr[5]=false" ng-repeat="m in row">
+                                                <input type="radio" ng-model="$parent.materiaal.naam" name="materialen" ng-value="m">
+                                                <div class="item-content">
+                                                    {{m}}
+                                                </div>
+                                                <i class="radio-icon ion-checkmark"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                                <label class="item item-input" ng-if="materiaal.naam == 'Anders, namelijk:'">
+                                    <textarea id="naam" msd-elastic="\n" ng-model="foo" placeholder="Geef de naam van het materiaal op"></textarea>
+                                </label>
+                            </div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth">Specificatie:</div>
+                            <div class="col">
+                                <label class="item item-input">
+                                    <textarea id="specificatie_materiaal" msd-elastic="\n" ng-model="foo" placeholder="(Optioneel)"></textarea>
+                                </label>
+                            </div>
+                        </ion-item>
+                    </div>
+                    <div class="col col-center fixedwidth-60">
+                        <button class="input_btn" ng-click="savemateriaal();toShowArr[5]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
+                        <button class="input_btn" ng-click="resetmateriaal()"><h1 class="icon ion-ios-close assertive"></h1></button>
+                    </div>
+                </ion-item>
+            </div>
+
+            <ion-list type="list-inset">
+                <ion-item class="item-divider">
+                    <i class="icon ion-wrench"></i> Uitgevoerde werkzaamheden
+                    <button class="custombtn" ng-click="toggle(6);$event.stopPropagation()">
+                        <i class="icon ion-plus"></i>
+                    </button>
+                </ion-item>
+                <ion-item class="row item-text-wrap" ng-show="toShowArr[7]">
+                    <div class="col col-67 bold">Beschrijving</div>
+                    <div class="col bold">Specificaties</div>
+                </ion-item>
+                <ion-item class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden">
+                    <div class="col col-67">{{w.beschrijving}}</div>
+                    <div class="col">{{w.specificatie}}</div>
+                </ion-item>
+                <ion-item ng-show="toShowArr[6]" class="row item-text-wrap">
+                    <div class="col">
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col col-center fixedwidth">Beschrijving:</div>
+                            <div class="col">
+                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(8)">
+                                    {{werkzaamheid.beschrijving || "Selecteer een werkzaamheid..."}} <i class="icon ion-arrow-down-b"></i>
+                                </button>
+                                <ion-item class="row noborder nopadding">
+                                    <div class="col nopadding cssFade" ng-repeat="row in activities.werkzaamheden" ng-show="toShowArr[8]">
+                                        <div class="list">
+                                            <label class="item item-radio" ng-click="toShowArr[8]=false" ng-repeat="w in row">
+                                                <input type="radio" ng-model="$parent.werkzaamheid.beschrijving" name="werkzaamheden" ng-value="w">
+                                                <div class="item-content">
+                                                    {{w}}
+                                                </div>
+                                                <i class="radio-icon ion-checkmark"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                                <label class="item item-input" ng-if="werkzaamheid.beschrijving == 'Anders, namelijk:'">
+                                    <textarea id="beschrijving" msd-elastic="\n" ng-model="foo" placeholder="Beschrijving van de uitgevoerde werkzaamheid"></textarea>
+                                </label>
+                            </div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth">Specificatie:</div>
+                            <div class="col">
+                                <label class="item item-input">
+                                    <textarea id="specificatie_werkzaamheid" msd-elastic="\n" ng-model="foo" placeholder="(Optioneel)"></textarea>
+                                </label>
+                            </div>
+                        </ion-item>
+                    </div>
+                    <div class="col col-center fixedwidth-60">
+                        <button class="input_btn" ng-click="savewerkzaamheid();toShowArr[8]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
+                        <button class="input_btn" ng-click="resetwerkzaamheid()"><h1 class="icon ion-ios-close assertive"></h1></button>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </ion-item>
+    </div>
+</ion-list>

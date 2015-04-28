@@ -5,8 +5,8 @@
         resizeCanvas();
         var signaturePad = new SignaturePad(canvas);
 
-        signaturePad.minWidth = 1.5;
-        signaturePad.maxWidth = 2.5;
+        signaturePad.minWidth = 2;
+        signaturePad.maxWidth = 4.5;
 
         $scope.clearCanvas = function() {
             signaturePad.clear();
@@ -21,6 +21,6 @@
         function resizeCanvas() {
             var ratio = window.devicePixelRatio || 1;
             canvas.width = window.innerWidth; //document.width is obsolete
-            canvas.height = window.innerHeight - 100; //document.height is obsolete
+            canvas.height = window.innerHeight - 96; //document.height is obsolete
         };
     });

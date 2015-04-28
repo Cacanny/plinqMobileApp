@@ -1,10 +1,9 @@
-﻿
-angular.module('directory.photoDirective', [])
+﻿angular.module('directory.photoDirective', [])
+    .directive('photoView', function() {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/order/photo/photoView.html',
+            controller: 'OrderCtrl'
+        }
 
-.directive('photoGrid', function () {
-    return {
-        restrict: 'E',
-        templateUrl: 'app/components/order/photo/photo-grid.html',
-        controller: 'OrderCtrl'
-    };
-});
+    });

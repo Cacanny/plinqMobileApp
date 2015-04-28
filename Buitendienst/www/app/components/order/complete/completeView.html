@@ -1,0 +1,41 @@
+﻿<ion-list type="list-inset">
+    <ion-item class="item-divider positive">
+        Afronding
+    </ion-item>
+    <ion-item class="row">
+        <div class="col">
+            <ion-item class="row item-text-wrap noborder">
+                <div class="col fixedwidth"> Datum: </div>
+                <div class="col bold"> {{date | date:'dd-MM-yyyy'}}</div>
+            </ion-item>
+            <ion-item class="row item-text-wrap noborder">
+                <div class="col fixedwidth">Naam monteur:</div>
+                <div class="col bold">Arno</div>
+                <!-- TO DO: aan de hand van de inloggegevens!!!-->
+            </ion-item>
+            <ion-item class="row item-text-wrap noborder">
+                <div class="col fixedwidth">Gewerkte uren:</div>
+                <div class="col bold">1</div>
+            </ion-item>
+            <ion-item class="noborder"></ion-item>
+            <ion-item class="row noborder nopadding">
+                <button class="button button-block button-stable nomargin-top">
+                    Werkbon invullen
+                </button>
+            </ion-item>
+        </div>
+        <div class="col">
+            <div class="list list-inset nomargin-top">
+                <ion-item class="item-divider">
+                    <i class="icon ion-ios-compose-outline"></i> Handtekening
+                </ion-item>
+                <ion-item ng-click="openModal('app/components/order/signature/signaturepadView.html', $event)">
+                    <div class="signature padding" ng-switch="_signatureImage || '_undefined_'">
+                        <img ng-switch-when="_undefined_" ng-src="assets/img/signature_placeholder.png" alt="" />
+                        <img ng-switch-default ng-src="{{_signatureImage}}" alt="" />
+                    </div>
+                </ion-item>
+            </div>
+        </div>
+    </ion-item>
+</ion-list>
