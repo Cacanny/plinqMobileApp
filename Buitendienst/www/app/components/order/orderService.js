@@ -59,14 +59,14 @@
                     return [array];
                 };
 
-                var rowsNum = Math.ceil(array.length / columns);
+                var rowsNum = Math.ceil(array.length / columns); 
 
-                var rowsArray = new Array(rowsNum);
+                var rowsArray = new Array(columns);
 
-                for (var i = 0; i < rowsNum; i++) {
-                    var columnsArray = new Array(columns);
-                    for (j = 0; j < columns; j++) {
-                        var index = i * columns + j;
+                for (var i = 0; i < columns; i++) {
+                    var columnsArray = new Array(rowsNum);
+                    for (j = 0; j < rowsNum; j++) {
+                        var index = i * rowsNum + j;
 
                         if (index < array.length) {
                             columnsArray[j] = array[index];
@@ -77,6 +77,8 @@
                     rowsArray[i] = columnsArray;
                 }
                 return rowsArray;
+
+
             }
         }
     });

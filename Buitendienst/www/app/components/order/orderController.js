@@ -32,8 +32,8 @@
         $scope.activities.werkzaamheden.push('Anders, namelijk:');
 
         // Split the arrays into X amount of rows for displaying
-        $scope.activities.materialen = SplitArrayService.SplitArray($scope.activities.materialen, 3);
-        $scope.activities.werkzaamheden = SplitArrayService.SplitArray($scope.activities.werkzaamheden, 3);
+        $scope.activities.materialen = SplitArrayService.SplitArray($scope.activities.materialen, 2);
+        $scope.activities.werkzaamheden = SplitArrayService.SplitArray($scope.activities.werkzaamheden, 2);
 
         // This was needed to get value of the selected radio button
         $scope.materiaal = { naam: '' };

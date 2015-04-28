@@ -1,13 +1,13 @@
 ﻿angular.module('directory.planningController', [])
 
     .controller('PlanningCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, PlanningService, OrderService, $state) {
-        //Get the 'werkzaamheden' and the 'materialen' 
+        // Get the 'werkzaamheden' and the 'materialen' 
         $scope.activities = '';
         PlanningService.setActivities().then(function () {
             $scope.activities = PlanningService.getActivities();
         });
 
-        //Some variables 
+        // Some variables 
         $scope.orders = [];
         $scope.orderstatus = 'In behandeling';
 
@@ -22,7 +22,7 @@
             $scope.connection = 'Online';
         });
 
-        //Watch if the Internet Connection changes 
+        // Watch if the Internet Connection changes 
         // listen for Online event
         $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
             $scope.connection = 'Online';
