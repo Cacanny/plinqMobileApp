@@ -1,18 +1,19 @@
 ﻿angular.module('directory.signatureController', [])
 
-    .controller('SignatureCtrl', function($scope, OrderService) {
+    .controller('SignatureCtrl', function ($scope, OrderService) {
         var canvas = document.getElementById('signatureCanvas');
         resizeCanvas();
         var signaturePad = new SignaturePad(canvas);
+        signaturePad.backgroundColor = "white";
 
         signaturePad.minWidth = 2;
         signaturePad.maxWidth = 4.5;
 
-        $scope.clearCanvas = function() {
+        $scope.clearCanvas = function () {
             signaturePad.clear();
         }
 
-        $scope.saveCanvas = function() {
+        $scope.saveCanvas = function () {
             var sigImg = signaturePad.toDataURL();
             $scope.signature = sigImg;
             OrderService.setSignatureImage(sigImg);
