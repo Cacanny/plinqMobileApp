@@ -6,7 +6,7 @@
         xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Buitendienst</name>
     <description>
-        Buitendienst Mobile App - PLINQ BV - TEST
+        Buitendienst Mobile App - PLINQ BV (main)
     </description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">
         Danny Hoeve en Mike Mijnheer
@@ -22,5 +22,4 @@
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true"/>
     </feature>
-    <gap:plugin name="org.apache.cordova.camera" version="0.3.2" />
 </widget>
