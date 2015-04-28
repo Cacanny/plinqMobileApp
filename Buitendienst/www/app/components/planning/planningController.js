@@ -1,18 +1,12 @@
 ﻿angular.module('directory.planningController', [])
 
     .controller('PlanningCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, PlanningService, OrderService, $state) {
-        // Get the 'werkzaamheden' and the 'materialen' 
-        $scope.activities = '';
-        PlanningService.setActivities().then(function () {
-            $scope.activities = PlanningService.getActivities();
-        });
-
-        // Some variables 
+        // Some initial variables
         $scope.orders = [];
         $scope.orderstatus = 'In behandeling';
 
         //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
-        //setObject will call the JSON file, if it takes some time, then a loading screen will appear 
+        //setPlanning will call the JSON file, if it takes some time, then a loading screen will appear 
         $ionicLoading.show({
             template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
         });
@@ -21,29 +15,33 @@
             getAll();
             $scope.connection = 'Online';
         });
+        PlanningService.setActivities();
 
         // Watch if the Internet Connection changes 
         // listen for Online event
         $rootScope.$on('$cordovaNetwork:online', function (event, networkState) {
             $scope.connection = 'Online';
 
-            // setObject will call the JSON file, if it takes some time, then a loading screen will appear 
+            // setPlanning will call the JSON file, if it takes some time, then a loading screen will appear 
             $ionicLoading.show({
                 template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
             });
             PlanningService.setPlanning().then(function () {
-                $ionicLoading.hide();
+                // Get the orders
                 getAll();
+
+                $ionicLoading.hide();
             });
+
+            // Get the 'werkzaamheden' and the 'materialen' 
             PlanningService.setActivities();
         });
 
         // listen for Offline event
         $rootScope.$on('$cordovaNetwork:offline', function (event, networkState) {
             $scope.connection = 'Offline';
-
-            $window.localStorage.clear();
-            getAll();
+            // $window.localStorage.clear();
+            // getAll();
         });
 
         // Fill $scope.orders with the orders from the LocalStorage 
@@ -68,8 +66,7 @@
 
         // Get the current date and convert it to dd-mm-yyyy format
         var date = new Date();
-        $scope.date = "18-04-2015";
-        //$scope.date = convertDate(date);
+        $scope.date = convertDate(date);
 
         function convertDate(inputFormat) {
             function pad(s) { return (s < 10) ? '0' + s : s; }

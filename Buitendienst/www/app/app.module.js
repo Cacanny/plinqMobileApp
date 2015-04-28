@@ -10,16 +10,22 @@ angular.module('directory', [
         'directory.orderService',
         'directory.orderController',
         'directory.activitiesDirective',
+        'directory.activitiesController',
+        'directory.activitiesService',
         'directory.commentDirective',
         'directory.completeDirective',
         'directory.detailsDirective',
-        'directory.photoDirective',
         'directory.subscriptionDirective',
         'directory.ticketDirective',
+        'directory.ticketController',
+        'directory.ticketFilter',
         'directory.signatureController',
-        'directory.photoService'
+        'directory.photoDirective',
+        'directory.photoService',
+        'directory.photoController'
 
 ])
+
     .config(function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content):|data:image\//);
     })

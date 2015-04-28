@@ -15,6 +15,7 @@
             getActivities: function () {
                 return JSON.parse($window.localStorage['activities'] || '{}');
             },
+            
             setPlanning: function () {
                 return $http.get("orders.json")
                     .success(function (response) {
@@ -26,12 +27,6 @@
             },
             getPlanning: function () {
                 return JSON.parse($window.localStorage['getplanning'] || '{}');
-            },
-            savePlanning: function () {
-                //TODO save in localstorage
-            },
-            postPlanning: function () {
-                //TODO JSON request
             }
         }
     })

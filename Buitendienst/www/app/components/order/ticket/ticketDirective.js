@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/order/ticket/ticketView.html',
-            controller: 'OrderCtrl'
+            controller: 'TicketCtrl'
         }
 
     });

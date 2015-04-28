@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/order/photo/photoView.html',
-            controller: 'OrderCtrl'
+            controller: 'PhotoCtrl'
         }
 
     });

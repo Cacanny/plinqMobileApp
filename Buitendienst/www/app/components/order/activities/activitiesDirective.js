@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/order/activities/activitiesView.html',
-            controller: 'OrderCtrl'
+            controller: 'ActivitiesCtrl'
         }
 
     });

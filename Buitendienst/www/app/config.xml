@@ -6,7 +6,7 @@
         xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Buitendienst</name>
     <description>
-        Buitendienst Mobile App - PLINQ BV
+        Buitendienst Mobile App - PLINQ BV - TEST 2
     </description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">
         Danny Hoeve en Mike Mijnheer
@@ -14,7 +14,6 @@
     <content src="index.html"/>
     <access origin="*"/>
     <preference name="phonegap-version" value="3.7.0" />
-    <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true"/>
     <preference name="UIWebViewBounce" value="true"/>
     <preference name="DisallowOverscroll" value="true"/>
@@ -23,7 +22,4 @@
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true"/>
     </feature>
-    <feature name="http://api.phonegap.com/1.0/camera"/>
-    <gap:plugin name="org.apache.cordova.camera" version="0.3.2" />
-
 </widget>
