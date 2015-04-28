@@ -1,0 +1,60 @@
+﻿<div class="row nopadding">
+    <ion-item class="col noborder nopadding">
+        <ion-list type="list-inset">
+            <ion-item class="item-divider positive">
+                Werkordergegevens
+            </ion-item>
+            <div>
+                <ion-item class="row">
+                    <div class="col">
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth">Order No.: </div>
+                            <div class="col bold"> {{order.orderid}}</div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"> Plandatum: </div>
+                            <div class="col bold"> {{order.plandatum}}</div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"> Omschrijving: </div>
+                            <div class="col bold"> {{order.omschrijving}}</div>
+                        </ion-item>
+                    </div>
+                </ion-item>
+            </div>
+        </ion-list>
+    </ion-item>
+    <ion-item class="col noborder nopadding">
+        <ion-list type="list-inset">
+            <ion-item class="item-divider positive">
+                Klantgegevens
+            </ion-item>
+            <div>
+                <ion-item class="row">
+                    <div class="col">
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"> Naam: </div>
+                            <div class="col bold"> {{order.klant.naam}}</div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"> Telefoonnr: </div>
+                            <div class="col bold"> {{order.klant.telefoon}}</div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"> E-mailadres: </div>
+                            <div class="col bold"> {{order.klant.email}}</div>
+                        </ion-item>
+                        <ion-item class="row  noborder">
+                            <div class="col fixedwidth"> Aansluitadres: </div>
+                            <div class="col bold">{{order.klant.straat}}</div>
+                        </ion-item>
+                        <ion-item class="row item-text-wrap noborder">
+                            <div class="col fixedwidth"></div>
+                            <div class="col bold">{{order.klant.postcode}}, {{order.klant.plaats}}</div>
+                        </ion-item>
+                    </div>
+                </ion-item>
+            </div>
+        </ion-list>
+    </ion-item>
+</div>

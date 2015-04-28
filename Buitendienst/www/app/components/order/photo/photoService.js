@@ -1,6 +1,6 @@
-﻿angular.module('directory.cameraService', [])
+﻿angular.module('directory.photoService', [])
 
-    .factory('CameraService', ['$q', function ($q) {
+    .factory('PhotoService', ['$q', function ($q) {
 
         return {
             getPicture: function (options) {
