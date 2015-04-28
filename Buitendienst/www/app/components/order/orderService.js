@@ -25,6 +25,12 @@
                 return deferred.promise;
             },
 
+            saveOrder: function () {
+                //TODO save in localstorage
+            },
+            postOrder: function () {
+                //TODO JSON request
+            },
 
             // Getter for the Image from the Signature Pad
             getSignatureImage: function () {
@@ -40,45 +46,13 @@
         }
     })
 
-
-    .filter('getSlice', function () {
-        return function (input) {
-            if (input.length > 20) {
-                output = input.slice(0, 20) + '...';
-            } else {
-                output = input;
-            }
-            return output;
-        }
-    })
-
-    .service('SplitArrayService', function () {
-        return {
-            SplitArray: function (array, columns) {
-                if (array.length <= columns) {
-                    return [array];
-                };
-
-                var rowsNum = Math.ceil(array.length / columns); 
-
-                var rowsArray = new Array(columns);
-
-                for (var i = 0; i < columns; i++) {
-                    var columnsArray = new Array(rowsNum);
-                    for (j = 0; j < rowsNum; j++) {
-                        var index = i * rowsNum + j;
-
-                        if (index < array.length) {
-                            columnsArray[j] = array[index];
-                        } else {
-                            break;
-                        }
-                    }
-                    rowsArray[i] = columnsArray;
-                }
-                return rowsArray;
-
-
-            }
-        }
-    });
+    // .filter('getSlice', function () {
+    //     return function (input) {
+    //         if (input.length > 20) {
+    //             output = input.slice(0, 20) + '...';
+    //         } else {
+    //             output = input;
+    //         }
+    //         return output;
+    //     }
+    // });
