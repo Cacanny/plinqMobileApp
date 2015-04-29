@@ -28,8 +28,9 @@
                 </ion-item>
                 <ion-item class="row item-text-wrap" ng-repeat="t in order.ticket.ticketregels">
                     <div class="col fixedwidth-175">{{t.datum}}</div>
-                    <div class="col" ng-click="showme = !showme" ng-show="showme">{{t.notitie | getSlice}}</div>
-                    <div class="col" ng-click="showme = !showme" ng-show="!showme">{{t.notitie}}</div>
+                    <div class="col" ng-click="toggleSlice(t.notitie)">{{t.notitie}}</div>
+<!--                     <div class="col" ng-click="showme = !showme" ng-show="showme">{{t.notitie | getSlice}}</div>
+                    <div class="col" ng-click="showme = !showme" ng-show="!showme">{{t.notitie}}</div> -->
                     <div class="col fixedwidth-175">{{t.verantw}}</div>
                 </ion-item>
             </div>
