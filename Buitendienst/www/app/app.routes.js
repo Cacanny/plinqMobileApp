@@ -27,7 +27,7 @@ angular.module('directory.appRoutes', [])
 
             .state('signature', {
                 url: "/signature",
-                templateUrl: "app/components/order/signature/signatureView.html"
+                templateUrl: "app/components/order/signature/signaturepadView.html"
             });
 
         // if none of the above states are matched, use this as the fallback
