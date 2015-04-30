@@ -28,8 +28,19 @@ angular.module('directory.activitiesController', [])
         // This was needed to get value of the selected radio button
         $scope.materiaal = { naam: '' };
 
-        // To save all the materialen in
-        $scope.materialen = { materialen: [] };
+        // Create an array of materialen and fill it if there is already something saved in localStorage
+        function checkForMaterialen() {
+            ActivitiesService.getMaterialen($scope.order.orderid).then(function(materialenList){
+                if(JSON.stringify(materialenList) !== '[]') {
+                    // Show header of materialen
+                    $scope.showMateriaalHeader = true;
+                } else {
+                    $scope.showMateriaalHeader = false;
+                }
+                $scope.materialen = { materialen: materialenList };
+            }); 
+        }
+        checkForMaterialen();
 
         $scope.savemateriaal = function () {
             var savesucces = false;
@@ -60,7 +71,10 @@ angular.module('directory.activitiesController', [])
 
                 if (savesucces) {
                     // And show the header
-                    $scope.toShowArr[4] = true;
+                    $scope.showMateriaalHeader = true;
+
+                    // Save directly into localStorage at the correct order
+                    ActivitiesService.setMaterialen($scope.order.orderid, $scope.materialen.materialen);
 
                     // Reset all values
                     $scope.total = 1;
@@ -88,8 +102,19 @@ angular.module('directory.activitiesController', [])
         // This was needed to get value of the selected radio button
         $scope.werkzaamheid = { beschrijving: '' };
 
-        // To save all the materialen in
-        $scope.werkzaamheden = { werkzaamheden: [] };
+        // Create an array of werkzaamheden and fill it if there is already something saved in localStorage
+        function checkForWerkzaamheden() {
+            ActivitiesService.getWerkzaamheden($scope.order.orderid).then(function(werkzaamhedenList){
+                if(JSON.stringify(werkzaamhedenList) !== '[]') {
+                    // Show header of werkzaamheden
+                    $scope.showWerkzaamheidHeader = true;
+                } else {
+                    $scope.showWerkzaamheidHeader = false;
+                }
+                $scope.werkzaamheden = { werkzaamheden: werkzaamhedenList };
+            }); 
+        }
+        checkForWerkzaamheden();
 
         $scope.savewerkzaamheid = function () {
             var savesucces = false;
@@ -121,7 +146,10 @@ angular.module('directory.activitiesController', [])
 
                 if (savesucces) {
                     // And show the header
-                    $scope.toShowArr[7] = true;
+                    $scope.showWerkzaamheidHeader = true;
+
+                    // Save directly into localStorage at the correct order
+                    ActivitiesService.setWerkzaamheden($scope.order.orderid, $scope.werkzaamheden.werkzaamheden);
 
                     // Reset all values
                     $scope.werkzaamheid.beschrijving = '';

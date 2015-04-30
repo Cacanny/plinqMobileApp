@@ -155,17 +155,23 @@ hr {
 }
 
 .input_btn {
-    padding: 0px 10px;
     border-color: #b2b2b2;
     background-color: #f8f8f8;
     color: #444;
     border-width: 1px;
     border-style: solid;
     border-radius: 2px;
-    text-align: center;
     cursor: pointer;
-    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding: 0;
 }
+
+    .input_btn h1 {
+        margin: 0;
+        padding: 0;
+    }
 
 .left {
     float: left;
@@ -178,6 +184,7 @@ hr {
 textarea {
     font-size: 16px;
 }
+
 .signature-back-button {
     font-size: 17px !important;
     border: 0 !important;

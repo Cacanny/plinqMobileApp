@@ -1,16 +1,20 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal) {
+    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, CompleteService) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
-            $scope.showTickets = true;
-            if (JSON.stringify($scope.order.ticket) === '{}') {
-                $scope.showTickets = false;
-            }
         });
 
         // Get the date of today, used at 'Afronding'
         $scope.date = new Date();
+
+        $scope.sendOrder = function() {
+            // Delete order from LocalStorage?
+
+            // CHECK FOR SIGNATURE AND WERKBON -- REQUIRED
+
+            // SET STATUS VOLTOOID
+        }
 
         // Ionic Modal
         $ionicModal.fromTemplateUrl('modal', {
@@ -23,11 +27,7 @@
             $event.stopPropagation();
             $scope.include = include;
             $scope.modal.show();
-        };
-        $scope.closeModal = function () {
-            $scope.modal.hide();
-            $scope._signatureImage = OrderService.getSignatureImage();
-        };
+        }
 
         // Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function () {
@@ -37,11 +37,11 @@
         // Keep track of all the elements that are collapsed or not
         // True = expanded, False = collapsed
         $scope.toShowArr = [
-            true, true, true, false, false, false, false, false, false
+            true, true, true, false, false, false, false
         ];
 
         // Toggles the state of a window to true or false
         $scope.toggle = function (index) {
             $scope.toShowArr[index] = !$scope.toShowArr[index];
-        };
-    })
+        }
+    });

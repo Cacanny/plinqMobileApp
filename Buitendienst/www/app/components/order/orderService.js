@@ -1,6 +1,6 @@
 ﻿angular.module('directory.orderService', [])
 
-    .factory('OrderService', function (PlanningService, $q) {
+    .factory('OrderService', function (PlanningService, $q, $window, $http) {
 
         var orders;
         var _signature;
@@ -25,23 +25,8 @@
                 return deferred.promise;
             },
 
-            saveOrder: function () {
-                //TODO save in localstorage
-            },
             postOrder: function () {
                 //TODO JSON request
-            },
-
-            // Getter for the Image from the Signature Pad
-            getSignatureImage: function () {
-                return _signature;
-            },
-
-            // Setter for the Image from the Signature Pad
-            setSignatureImage: function (signature) {
-                _signature = signature;
             }
-
-
         }
     });

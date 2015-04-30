@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/order/comment/commentView.html',
-            controller: 'OrderCtrl'
+            controller: 'CommentCtrl'
         }
 
     });

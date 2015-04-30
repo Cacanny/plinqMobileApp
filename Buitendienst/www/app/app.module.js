@@ -13,9 +13,14 @@ angular.module('directory', [
         'directory.activitiesController',
         'directory.activitiesService',
         'directory.commentDirective',
+        'directory.commentController',
+        'directory.commentService',
         'directory.completeDirective',
+        'directory.completeController',
+        'directory.completeService',
         'directory.detailsDirective',
         'directory.subscriptionDirective',
+        'directory.subscriptionController',
         'directory.ticketDirective',
         'directory.ticketController',
         'directory.ticketFilter',
@@ -23,7 +28,6 @@ angular.module('directory', [
         'directory.photoDirective',
         'directory.photoService',
         'directory.photoController'
-
 ])
 
     .config(function ($compileProvider) {

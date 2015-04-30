@@ -11,12 +11,12 @@
                         <i class="icon ion-plus"></i>
                     </button>
                 </ion-item>
-                <ion-item class="row item-text-wrap" ng-show="toShowArr[4]">
+                <ion-item class="row item-text-wrap" ng-show="showMateriaalHeader">
                     <div class="col fixedwidth-60 bold">Aantal</div>
                     <div class="col bold">Naam</div>
                     <div class="col bold">Specificaties</div>
                 </ion-item>
-                <ion-item class="row item-text-wrap" ng-repeat="m in materialen.materialen">
+                <ion-item class="row item-text-wrap" ng-repeat="m in materialen.materialen track by $index">
                     <div class="col fixedwidth-60">{{m.aantal}}</div>
                     <div class="col">{{m.naam}}</div>
                     <div class="col">{{m.specificatie}}</div>
@@ -34,16 +34,16 @@
                         <ion-item class="row item-text-wrap noborder">
                             <div class="col col-center fixedwidth">Naam:</div>
                             <div class="col">
-                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(5)">
+                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(4)">
                                     {{materiaal.naam || "Selecteer een materiaal..."}} <i class="icon ion-arrow-down-b"></i>
                                 </button>
                                 <ion-item class="row noborder nopadding">
-                                    <div class="col nopadding cssFade" ng-repeat="row in activities.materialen" ng-show="toShowArr[5]">
+                                    <div class="col nopadding cssFade" ng-repeat="row in activities.materialen" ng-show="toShowArr[4]">
                                         <div class="list">
-                                            <label class="item item-radio" ng-click="toShowArr[5]=false" ng-repeat="m in row">
+                                            <label class="item item-radio" ng-click="toShowArr[4]=false" ng-repeat="m in row">
                                                 <input type="radio" ng-model="$parent.materiaal.naam" name="materialen" ng-value="m">
                                                 <div class="item-content">
-                                                    {{m}}
+                                                    {{::m}}
                                                 </div>
                                                 <i class="radio-icon ion-checkmark"></i>
                                             </label>
@@ -65,7 +65,7 @@
                         </ion-item>
                     </div>
                     <div class="col col-center fixedwidth-60">
-                        <button class="input_btn" ng-click="savemateriaal();toShowArr[5]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
+                        <button class="input_btn" ng-click="savemateriaal();toShowArr[4]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
                         <button class="input_btn" ng-click="resetmateriaal()"><h1 class="icon ion-ios-close assertive"></h1></button>
                     </div>
                 </ion-item>
@@ -74,33 +74,33 @@
             <ion-list type="list-inset">
                 <ion-item class="item-divider">
                     <i class="icon ion-wrench"></i> Uitgevoerde werkzaamheden
-                    <button class="custombtn" ng-click="toggle(6);$event.stopPropagation()">
+                    <button class="custombtn" ng-click="toggle(5);$event.stopPropagation()">
                         <i class="icon ion-plus"></i>
                     </button>
                 </ion-item>
-                <ion-item class="row item-text-wrap" ng-show="toShowArr[7]">
+                <ion-item class="row item-text-wrap" ng-show="showWerkzaamheidHeader">
                     <div class="col col-67 bold">Beschrijving</div>
                     <div class="col bold">Specificaties</div>
                 </ion-item>
-                <ion-item class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden">
+                <ion-item class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden track by $index">
                     <div class="col col-67">{{w.beschrijving}}</div>
                     <div class="col">{{w.specificatie}}</div>
                 </ion-item>
-                <ion-item ng-show="toShowArr[6]" class="row item-text-wrap">
+                <ion-item ng-show="toShowArr[5]" class="row item-text-wrap">
                     <div class="col">
                         <ion-item class="row item-text-wrap noborder">
                             <div class="col col-center fixedwidth">Beschrijving:</div>
                             <div class="col">
-                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(8)">
+                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(6)">
                                     {{werkzaamheid.beschrijving || "Selecteer een werkzaamheid..."}} <i class="icon ion-arrow-down-b"></i>
                                 </button>
                                 <ion-item class="row noborder nopadding">
-                                    <div class="col nopadding cssFade" ng-repeat="row in activities.werkzaamheden" ng-show="toShowArr[8]">
+                                    <div class="col nopadding cssFade" ng-repeat="row in activities.werkzaamheden" ng-show="toShowArr[6]">
                                         <div class="list">
-                                            <label class="item item-radio" ng-click="toShowArr[8]=false" ng-repeat="w in row">
+                                            <label class="item item-radio" ng-click="toShowArr[6]=false" ng-repeat="w in row">
                                                 <input type="radio" ng-model="$parent.werkzaamheid.beschrijving" name="werkzaamheden" ng-value="w">
                                                 <div class="item-content">
-                                                    {{w}}
+                                                    {{::w}}
                                                 </div>
                                                 <i class="radio-icon ion-checkmark"></i>
                                             </label>
@@ -122,7 +122,7 @@
                         </ion-item>
                     </div>
                     <div class="col col-center fixedwidth-60">
-                        <button class="input_btn" ng-click="savewerkzaamheid();toShowArr[8]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
+                        <button class="input_btn" ng-click="savewerkzaamheid();toShowArr[6]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
                         <button class="input_btn" ng-click="resetwerkzaamheid()"><h1 class="icon ion-ios-close assertive"></h1></button>
                     </div>
                 </ion-item>

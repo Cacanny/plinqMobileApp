@@ -1,4 +1,4 @@
-﻿<ion-list type="list-inset" ng-show="showTickets">
+﻿<ion-list type="list-inset" ng-if="showTickets">
     <ion-item class="item-divider positive" ng-click="toggle(0)">
         Ticketdetails
     </ion-item>
@@ -7,15 +7,15 @@
             <div class="col">
                 <ion-item class="row item-text-wrap noborder">
                     <div class="col fixedwidth">Ticket ID:</div>
-                    <div class="col bold">{{order.ticket.ticketid}}</div>
+                    <div class="col bold">{{::order.ticket.ticketid}}</div>
                 </ion-item>
                 <ion-item class="row item-text-wrap noborder">
                     <div class="col fixedwidth">Datum</div>
-                    <div class="col bold">{{order.ticket.datum}}</div>
+                    <div class="col bold">{{::order.ticket.datum}}</div>
                 </ion-item>
                 <ion-item class="row item-text-wrap noborder">
                     <div class="col fixedwidth">Omschrijving:</div>
-                    <div class="col bold">{{order.ticket.omschrijving}}</div>
+                    <div class="col bold">{{::order.ticket.omschrijving}}</div>
                 </ion-item>
             </div>
         </ion-item>
@@ -27,11 +27,9 @@
                     <div class="col bold fixedwidth-175">Verantw.</div>
                 </ion-item>
                 <ion-item class="row item-text-wrap" ng-repeat="t in order.ticket.ticketregels track by $index">
-                    <div class="col fixedwidth-175">{{t.datum}}</div>
+                    <div class="col fixedwidth-175">{{::t.datum}}</div>
                     <div class="col" ng-click="toggleFilter(t.notitie, $index)">{{t.notitie}}</div>
-<!--                     <div class="col" ng-click="showme = !showme" ng-show="showme">{{t.notitie | getSlice}}</div>
-                    <div class="col" ng-click="showme = !showme" ng-show="!showme">{{t.notitie}}</div> -->
-                    <div class="col fixedwidth-175">{{t.verantw}}</div>
+                    <div class="col fixedwidth-175">{{::t.verantw}}</div>
                 </ion-item>
             </div>
         </ion-item>

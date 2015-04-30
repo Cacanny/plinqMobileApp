@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/order/complete/completeView.html',
-            controller: 'OrderCtrl'
+            controller: 'CompleteCtrl'
         }
 
     });

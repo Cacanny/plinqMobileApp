@@ -6,27 +6,27 @@
     <ion-content has-bouncing="true" padding="true">
         <div ng-repeat="(key, value) in orders | groupBy:'plandatum':true">
             <div class="title">
-                <h3 ng-if="key == date">Vandaag, {{key}}</h3>
-                <h3 ng-if="key != date" style="margin-top: 40px;">{{key}}</h3>
+                <h3 ng-if="key == date">Vandaag, {{::key}}</h3>
+                <h3 ng-if="key != date" style="margin-top: 40px;">{{::key}}</h3>
             </div>
             <hr/>
             <div class="card" ng-repeat="o in value" ng-click="details(o.orderid)">
                 <div class="item item-text-wrap cardwrap">
                     <div class="row">
-                        <div class="col col-center"><h1> {{o.tijd}}</h1></div>
+                        <div class="col col-center"><h1> {{::o.tijd}}</h1></div>
                         <div class="col col-25 col-center">
-                            <h3>Order No.: {{o.orderid}}</h3>
-                            <h3>Status: {{orderstatus}}</h3>
+                            <h3>Order No.: <b>{{::o.orderid}}</b></h3>
+                            <h3>Status: <b>{{::orderstatus}}</b></h3>
                         </div>
                         <div class="col col-25 col-center">
-                            <h3>{{o.klant.naam}}</h3>
-                            <h3 class="icon ion-ios-telephone"> {{o.klant.telefoon}}</h3>
-                            <h3 class="icon ion-ios-email-outline"> {{o.klant.email}}</h3>
+                            <h3><b>{{::o.klant.naam}}</b></h3>
+                            <h3 class="icon ion-ios-telephone"> <b>{{::o.klant.telefoon}}</b></h3>
+                            <h3 class="icon ion-ios-email-outline"> <b>{{::o.klant.email}}</b></h3>
                         </div>
                         <div class="col col-25 col-center">
                             <h3>Aansluitadres:</h3>
-                            <h3>{{o.klant.straat}}</h3>
-                            <h3>{{o.klant.postcode}}, {{o.klant.plaats}}</h3>
+                            <h3><b>{{::o.klant.straat}}</b></h3>
+                            <h3><b>{{::o.klant.postcode}}, {{::o.klant.plaats}}</b></h3>
                         </div>
                         <div class="col col-10 col-center arrow"><h1 class="icon ion-chevron-right"></h1></div>
                     </div>

@@ -1,6 +1,6 @@
 angular.module('directory.activitiesService', [])
 
-    .factory('ActivitiesService', function (PlanningService, $q) {
+    .factory('ActivitiesService', function (PlanningService, $q, $window) {
 
         var activities;
 
@@ -9,6 +9,32 @@ angular.module('directory.activitiesService', [])
                 activities = PlanningService.getActivities();
                 var deferred = $q.defer();
                 deferred.resolve(activities);
+                return deferred.promise;
+            },
+
+            setMaterialen: function(orderid, materialen) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem.materialen = materialen;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
+            getMaterialen: function(orderid) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem.materialen);
+                return deferred.promise;
+            },
+
+            setWerkzaamheden: function(orderid, werkzaamheden) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem.werkzaamheden = werkzaamheden;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
+            getWerkzaamheden: function(orderid) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem.werkzaamheden);
                 return deferred.promise;
             },
 

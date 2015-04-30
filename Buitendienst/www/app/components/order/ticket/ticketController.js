@@ -9,19 +9,39 @@ angular.module('directory.ticketController', [])
             $scope.showTickets = false;
         }
 
-        // Toggle the filter for 'notitie' on click
-        var shouldRunFilter = false;
-        var originalNote;
+        var shouldRunFilter = [];
+        var originalNote = [];
 
+        // Apply the 'getSlice' filter to all ticket notities when the page is loaded
+        function setInitialFilter() {
+        	if($scope.showTickets) {
+		        for(var index = 0; index < $scope.order.ticket.ticketregels.length; index += 1) {
+		        	var notitie = $scope.order.ticket.ticketregels[index].notitie;
+		        	originalNote.push(notitie);
+		        	shouldRunFilter.push(false);
+		        	$scope.order.ticket.ticketregels[index].notitie = $filter('getSlice')(notitie);
+		        }
+	    	}
+    	}
+    	setInitialFilter();
+
+    	// Toggle the filter 'getSlice' on click
         $scope.toggleFilter = function (_notitie, index){
-        	shouldRunFilter = !shouldRunFilter;
-
-        	if(shouldRunFilter) {
-        		originalNote = $scope.order.ticket.ticketregels[index].notitie;
+        	if(shouldRunFilter[index]) {
+        		shouldRunFilter[index] = false;
         		$scope.order.ticket.ticketregels[index].notitie = $filter('getSlice')(_notitie);
         	} else {
-        		$scope.order.ticket.ticketregels[index].notitie = originalNote;
+        		shouldRunFilter[index] = true;
+        		$scope.order.ticket.ticketregels[index].notitie = originalNote[index];
         	}
-    	}
-    
+    	}    
+
+        // Check if user leaves page and set all ticket notities back to their original without filter applied
+        var myInterval = setInterval(1);
+        $scope.$on("$destroy", function(){
+            for(var index = 0; index < shouldRunFilter.length; index += 1) {
+                $scope.order.ticket.ticketregels[index].notitie = originalNote[index];
+            }
+            clearInterval(myInterval);
+        });
     });

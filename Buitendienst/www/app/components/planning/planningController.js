@@ -48,7 +48,15 @@
         function getAll() {
             OrderService.getOrders().then(function (orders) {
                 $scope.orders = orders;
+                setupLocalStorage(orders);
             });
+        }
+
+        // Create some empty keys in localStorage for all the orders
+        function setupLocalStorage(orders) {
+            for(var i = 0; i < orders.length; i += 1) {
+                PlanningService.createEmptyOrder(orders[i]);
+            }
         }
 
         // Manual refresh to get the new JSON files
@@ -73,4 +81,4 @@
             var d = new Date(inputFormat);
             return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
         }
-    })
+    });

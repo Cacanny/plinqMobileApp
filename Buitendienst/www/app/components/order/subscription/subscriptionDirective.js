@@ -3,7 +3,7 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/order/subscription/subscriptionView.html',
-            controller: 'OrderCtrl'
+            controller: 'SubscriptionCtrl'
         }
 
     });

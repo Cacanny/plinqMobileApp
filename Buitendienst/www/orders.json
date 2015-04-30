@@ -1,10 +1,11 @@
-[
+﻿[
     {
         "orderid": "123",
         "plandatum": "18-04-2015",
         "tijd": "09:00",
         "omschrijving": "Installatie",
         "klant": {
+	    "klantid": "75321",
             "naam": "Pieter Versteeg",
             "straat": "Gruppenlaan 17",
             "postcode": "1236AB",
@@ -88,12 +89,31 @@
         "tijd": "10:00",
         "omschrijving": "Installatie",
         "klant": {
+	    "klantid": "12321",
             "naam": "Klaas Pieterson",
             "straat": "Vinkenstraat 44B",
             "postcode": "1012KL",
             "plaats": "Utrecht",
             "telefoon": "0326-143238",
-            "email": "klaaspietserson@hotmail.com"
+            "email": "klaaspietserson@hotmail.com",
+            "abonnement": {
+                    "abonnementregels": [
+                      {
+                        "type": "Internet",
+                        "product": "VDSL 40000/30721:40",
+                        "status": "Actief"
+                      }
+                    ],
+                    "internet": {
+                            "netwerk": "KPN",
+                            "snelheid": "20MBps",
+                            "iptoewijzing": "DHCP",
+                            "login": "dsl1234",
+                            "wachtwoord": "12341234"
+                        },
+                    "televisie": {},
+                    "telefoon": {}
+                }
         },
         "ticket": {}
     },
@@ -103,12 +123,33 @@
         "omschrijving": "Reparatie",
         "tijd": "11:00",
         "klant": {
-          "naam": "Jan van Dijk",
-          "straat": "Oude straat 14",
-          "postcode": "4356GH",
-          "plaats": "Zwolle",
-          "telefoon": "0534-478374",
-          "email": "j.vandijk@hotmail.nl"
+	    "klantid": "33789",
+            "naam": "Jan van Dijk",
+            "straat": "Oude straat 14",
+            "postcode": "4356GH",
+            "plaats": "Zwolle",
+            "telefoon": "0534-478374",
+            "email": "j.vandijk@hotmail.nl",
+            "abonnement": {
+                    "abonnementregels": [
+                      {
+                        "type": "Telefonie",
+                        "product": "Bellen basis",
+                        "status": "Beëindigen"
+                      }
+                    ],
+                    "internet": {},
+                    "televisie": {
+                            "soort": "IPTV",
+                            "accountcode": "iptv1234",
+                            "pincode": "12341234"
+                        },
+                    "telefoon": {
+                            "telefoonnummer": "0421-123455",
+                            "login": "tel1234",
+                            "wachtwoord": "12341234"
+                        }
+                }
         },
         "ticket": {}
       }
