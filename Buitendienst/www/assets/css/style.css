@@ -146,6 +146,7 @@ hr {
 }
 
 .input_btn {
+    padding: 0px 10px;
     border-color: #b2b2b2;
     background-color: #f8f8f8;
     color: #444;
@@ -154,7 +155,7 @@ hr {
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
-    width: 50px;
+    max-width: 50px;
 }
 
 .left {
