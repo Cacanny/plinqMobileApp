@@ -1,11 +1,15 @@
 ﻿<ion-list type="list-inset">
     <ion-item class="item-divider positive">
         Foto's
-        <button class="custombtn" ng-click="getPhoto($event)">
-            <i class="icon ion-plus"></i>
-        </button>
     </ion-item>
     <ion-item>
-        <img ng-src="assets/img/ionic.png" />
+        <div class="button add-photo padding" ng-click="takePicture()">
+            <img src="../../../../assets/img/add_picture.png" alt="" />
+        </div>
+        <div class="photo-container">
+            <ion-scroll direction="x" class="photo-container">
+                <img alt="" ng-repeat="photo in allPhotos" ng-src="{{photo}}" class="photo" ng-click="showImages($index)" />
+            </ion-scroll>
+        </div>
     </ion-item>
 </ion-list>

@@ -29,7 +29,7 @@
                 <ion-item class="item-divider">
                     <i class="icon ion-ios-compose-outline"></i> Handtekening
                 </ion-item>
-                <ion-item ng-click="openModal('app/components/order/signature/signaturepadView.html', $event)">
+                <ion-item ng-click="openModal('app/components/order/signature/signatureView.html', $event)">
                     <div class="signature padding" ng-switch="_signatureImage || '_undefined_'">
                         <img ng-switch-when="_undefined_" ng-src="assets/img/signature_placeholder.png" alt="" />
                         <img ng-switch-default ng-src="{{_signatureImage}}" alt="" />
