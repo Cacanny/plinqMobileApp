@@ -28,13 +28,14 @@ angular.module('directory.appRoutes', [])
             .state('signature', {
                 url: "/signature",
                 templateUrl: "app/components/order/complete/signature/signaturepadView.html"
-            });
+            })
 
-        .state('test', {
-            url: "/test",
-            templateUrl: "app/shared/test/test.html",
-            controller: 'PhotoCtrl'
-        });   
+            .state('test', {
+                url: "/test",
+                templateUrl: "app/shared/test/test.html",
+                controller: 'PhotoCtrl'
+            });  
+             
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/app/planning');
     });
