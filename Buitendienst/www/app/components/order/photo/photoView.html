@@ -4,11 +4,11 @@
     </ion-item>
     <ion-item>
         <div class="button add-photo padding" ng-click="takePicture()">
-            <img src="../../../../assets/img/add_picture.png" alt="" />
+            <img src="../../../assets/img/add_picture.png" alt="" />
         </div>
         <div class="photo-container">
             <ion-scroll direction="x" class="photo-container">
-                <img alt="" ng-repeat="photo in allPhotos" ng-src="{{photo}}" class="photo" ng-click="showImages($index)" />
+                <img alt="" ng-repeat="photo in allPhotos" ng-src="{{photo}}" class="photo cover" ng-click="showImages($index)" />
             </ion-scroll>
         </div>
     </ion-item>
