@@ -164,6 +164,28 @@ hr {
         padding: 0;
     }
 
+.inline-button {
+    right: 16px;
+    padding: 5px 15px 0px;
+    margin: -5px -16px;
+    height: 100% !important;
+    position: absolute;
+    border-color: #b2b2b2;
+    color: #444;
+    font-size: 22px;
+    border-width: 0px 0px 0px 1px;
+    border-style: solid;
+    border-radius: 2px;
+    text-align: center;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.moreleft {
+    right: 65px;
+    padding: 5px 18px 0px;
+}
+
 .left {
     float: left;
 }

@@ -15,11 +15,13 @@
                     <div class="col fixedwidth-60 bold">Aantal</div>
                     <div class="col bold">Naam</div>
                     <div class="col bold">Specificaties</div>
+                    <div class="col fixedwidth"></div>
                 </ion-item>
                 <ion-item class="row item-text-wrap" ng-repeat="m in materialen.materialen track by $index">
                     <div class="col fixedwidth-60">{{m.aantal}}</div>
                     <div class="col">{{m.naam}}</div>
                     <div class="col">{{m.specificatie}}</div>
+                    <div class="col fixedwidth"><i class="inline-button moreleft ion-trash-a"></i> <i class="inline-button ion-edit"></i></div>
                 </ion-item>
                 <ion-item ng-show="toShowArr[3]" class="row item-text-wrap">
                     <div class="col">
@@ -79,12 +81,14 @@
                     </button>
                 </ion-item>
                 <ion-item class="row item-text-wrap" ng-show="showWerkzaamheidHeader">
-                    <div class="col col-67 bold">Beschrijving</div>
+                    <div class="col bold">Beschrijving</div>
                     <div class="col bold">Specificaties</div>
+                    <div class="col fixedwidth"></div>
                 </ion-item>
                 <ion-item class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden track by $index">
-                    <div class="col col-67">{{w.beschrijving}}</div>
+                    <div class="col">{{w.beschrijving}}</div>
                     <div class="col">{{w.specificatie}}</div>
+                    <div class="col fixedwidth"><i class="inline-button moreleft ion-trash-a"></i> <i class="inline-button ion-edit"></i></div>
                 </ion-item>
                 <ion-item ng-show="toShowArr[5]" class="row item-text-wrap">
                     <div class="col">
