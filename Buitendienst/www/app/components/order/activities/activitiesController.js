@@ -99,6 +99,12 @@ angular.module('directory.activitiesController', [])
             }
         }
 
+        $scope.deleteMateriaal = function(index) {
+            alert(index);
+            
+        }
+
+
         // This was needed to get value of the selected radio button
         $scope.werkzaamheid = { beschrijving: '' };
 

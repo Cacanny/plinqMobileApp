@@ -21,7 +21,7 @@
                     <div class="col fixedwidth-60">{{m.aantal}}</div>
                     <div class="col">{{m.naam}}</div>
                     <div class="col">{{m.specificatie}}</div>
-                    <div class="col fixedwidth"><i class="inline-button moreleft ion-trash-a"></i> <i class="inline-button ion-edit"></i></div>
+                    <div class="col fixedwidth"><i class="inline-button moreleft ion-trash-a" ng-click="deleteMateriaal($index)"></i> <i class="inline-button ion-edit"></i></div>
                 </ion-item>
                 <ion-item ng-show="toShowArr[3]" class="row item-text-wrap">
                     <div class="col">
