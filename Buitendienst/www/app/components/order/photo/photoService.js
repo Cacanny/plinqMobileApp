@@ -30,7 +30,6 @@
                         $rootScope.$apply(function () {
                             // strip beginning from string
                             var encodedData = reader.result.replace(/data:image\/jpeg;base64,/, '');
-                            alert("Is there something in the image? " + encodedData);
                             deferred.resolve(encodedData);
                         });
                     };
@@ -45,8 +44,8 @@
                     quality: 75,
                     destinationType: Camera.DestinationType.DATA_URL,
                     allowEdit: true,
-                    targetWidth: 75,
-                    targetHeight: 75
+                    targetWidth: 1024,
+                    targetHeight: 768
                 };
 
                 // allow overriding the default options

@@ -1,20 +1,20 @@
 
 angular.module('directory.photoController', [])
 
-    .controller('PhotoCtrl', function ($scope, PhotoService) {
+    .controller('PhotoCtrl', function ($scope, PhotoService, $ionicModal) {
         // Array to save the photo's 
         $scope.allPhotos = [];
 
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
             $scope.activeSlide = index;
-            $scope.showModal('photoPopoverView/photoPopoverView.html');
+            $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
         }
 
         $scope.showModal = function (templateUrl) {
             $ionicModal.fromTemplateUrl(templateUrl, {
                 scope: $scope,
-                animation: 'slide-in-up'
+                animation: 'fade-in'
             }).then(function (modal) {
                 $scope.modal = modal;
                 $scope.modal.show();
@@ -29,7 +29,6 @@ angular.module('directory.photoController', [])
 
         // Camera function 
         $scope.takePicture = function () {
-            alert("Taking a picture now with the takePicture() function");
             PhotoService.getPicture()
               .then(function (imageData) {
                   // imageData is your base64-encoded image
