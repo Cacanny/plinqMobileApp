@@ -25,6 +25,12 @@ angular.module('directory.activitiesService', [])
                 return deferred.promise;
             },
 
+            deleteMateriaal: function(orderid, materialen) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem.materialen = materialen;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
             setWerkzaamheden: function(orderid, werkzaamheden) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.werkzaamheden = werkzaamheden;
@@ -36,6 +42,12 @@ angular.module('directory.activitiesService', [])
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.werkzaamheden);
                 return deferred.promise;
+            },
+
+            deleteWerkzaamheid: function(orderid, werkzaamheden) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem.werkzaamheden = werkzaamheden;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 
             splitArray: function (array, columns) {

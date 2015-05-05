@@ -7,6 +7,7 @@ angular.module('directory.completeController', [])
 
     	$scope.closeSignature = function () {
             $scope.modal.hide();
+            $scope.modal.remove();
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
             	$scope._signatureImage = signature;
             });              

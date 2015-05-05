@@ -166,11 +166,12 @@ hr {
 
 .inline-button {
     right: 16px;
-    padding: 5px 15px 0px;
+    padding: 0px 15px;
     margin: -5px -16px;
     height: 100% !important;
     position: absolute;
     border-color: #b2b2b2;
+    background-color: white;
     color: #444;
     font-size: 22px;
     border-width: 0px 0px 0px 1px;
@@ -183,7 +184,7 @@ hr {
 
 .moreleft {
     right: 65px;
-    padding: 5px 18px 0px;
+    padding: 0px 18px;
 }
 
 .left {

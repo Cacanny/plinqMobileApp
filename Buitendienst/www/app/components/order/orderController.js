@@ -14,6 +14,7 @@
             // CHECK FOR SIGNATURE AND WERKBON -- REQUIRED
 
             // SET STATUS VOLTOOID
+            OrderService.postOrder($scope.order.orderid);
         }
 
         // Ionic Modal

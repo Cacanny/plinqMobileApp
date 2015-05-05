@@ -13,10 +13,10 @@
                 return deferred.promise;
             },
 
-            findByOrderId: function (orderId) {
+            findByOrderId: function (_orderId) {
                 var deferred = $q.defer();
                 for (var x = 0; x < orders.length; x++) {
-                    if (orders[x].orderid == orderId) {
+                    if (orders[x].orderid == _orderId) {
                         var order = orders[x];
                         break;
                     }
@@ -25,8 +25,19 @@
                 return deferred.promise;
             },
 
-            postOrder: function () {
-                //TODO JSON request
+            postOrder: function (_orderId) {
+                var completeOrder = $window.localStorage.getItem('order' + _orderId);
+                console.log(completeOrder);
+                var data = $.param({
+                    json: completeOrder
+                });
+                return $http.post("test.json", data)
+                    .success(function (response) {
+                        console.log(response);
+                    })
+                    .error(function () {
+                        alert('ERROR: Order kon niet worden opgeslagen, probeer opnieuw.');
+                    });
             }
         }
     });

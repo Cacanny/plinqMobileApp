@@ -21,7 +21,7 @@
                     <div class="col fixedwidth-60">{{m.aantal}}</div>
                     <div class="col">{{m.naam}}</div>
                     <div class="col">{{m.specificatie}}</div>
-                    <div class="col fixedwidth"><i class="inline-button moreleft ion-trash-a" ng-click="deleteMateriaal($index)"></i> <i class="inline-button ion-edit"></i></div>
+                    <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteMateriaal($index)"><i class="icon  ion-trash-a"></i></button> <button class="inline-button"><i class="icon ion-edit"></i></button></i></div>
                 </ion-item>
                 <ion-item ng-show="toShowArr[3]" class="row item-text-wrap">
                     <div class="col">
@@ -88,7 +88,7 @@
                 <ion-item class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden track by $index">
                     <div class="col">{{w.beschrijving}}</div>
                     <div class="col">{{w.specificatie}}</div>
-                    <div class="col fixedwidth"><i class="inline-button moreleft ion-trash-a"></i> <i class="inline-button ion-edit"></i></div>
+                    <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteWerkzaamheid($index)"><i class="icon  ion-trash-a"></i></button> <button class="inline-button"><i class="icon ion-edit"></i></button></i></div>
                 </ion-item>
                 <ion-item ng-show="toShowArr[5]" class="row item-text-wrap">
                     <div class="col">
