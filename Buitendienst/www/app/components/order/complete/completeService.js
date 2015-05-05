@@ -26,7 +26,7 @@ angular.module('directory.completeService', [])
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.handtekening);
                 return deferred.promise;
-            },
+            }
 
 
         }

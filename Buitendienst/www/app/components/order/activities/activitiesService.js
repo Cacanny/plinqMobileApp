@@ -12,13 +12,13 @@ angular.module('directory.activitiesService', [])
                 return deferred.promise;
             },
 
-            setMaterialen: function(orderid, materialen) {
+            setMaterialen: function (orderid, materialen) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.materialen = materialen;
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 
-            getMaterialen: function(orderid) {
+            getMaterialen: function (orderid) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.materialen);
@@ -37,7 +37,7 @@ angular.module('directory.activitiesService', [])
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 
-            getWerkzaamheden: function(orderid) {
+            getWerkzaamheden: function (orderid) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.werkzaamheden);

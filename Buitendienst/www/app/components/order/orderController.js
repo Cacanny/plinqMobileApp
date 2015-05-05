@@ -8,7 +8,7 @@
         // Get the date of today, used at 'Afronding'
         $scope.date = new Date();
 
-        $scope.sendOrder = function() {
+        $scope.sendOrder = function () {
             // Delete order from LocalStorage?
 
             // CHECK FOR SIGNATURE AND WERKBON -- REQUIRED
