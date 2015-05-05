@@ -1,5 +1,5 @@
 ﻿angular.module('directory.photoService', [])
-.factory('PhotoService', ['$rootScope', '$q', function ($rootScope, $q) {
+.factory('PhotoService', function ($rootScope, $q, $window) {
 
     return {
         getPicture: function (options) {
@@ -73,7 +73,20 @@
             // return a promise
             return deferred.promise;
 
+        },
+
+        setPhotoImage: function (orderid, image) {
+            var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+            parsedItem.fotos = image;
+            $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+        },
+
+        getPhotoImage: function (orderid) {
+            var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+            var deferred = $q.defer();
+            deferred.resolve(parsedItem.fotos);
+            return deferred.promise;
         }
     };
 
-}]);
+});

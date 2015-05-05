@@ -3,7 +3,10 @@ angular.module('directory.photoController', [])
 
     .controller('PhotoCtrl', function ($scope, PhotoService, $ionicModal) {
         // Array to save the photo's 
-        $scope.allPhotos = [];
+
+        PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
+            $scope.allPhotos = photos;
+        });
 
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
@@ -26,6 +29,7 @@ angular.module('directory.photoController', [])
             $scope.modal.hide();
             $scope.modal.remove();
         }
+        // End of Modal 
 
         // Camera function 
         $scope.takePicture = function () {
@@ -35,6 +39,7 @@ angular.module('directory.photoController', [])
                   // update some ng-src directive
                   $scope.picSrc = "data:image/jpeg;base64," + imageData;
                   $scope.allPhotos.push($scope.picSrc);
+                  PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
               })
               .catch(function (err) {
                   console.log(err);

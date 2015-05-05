@@ -12,7 +12,7 @@ angular.module('directory.activitiesController', [])
         }
 
         // Get the activities stored in localStorage
-        ActivitiesService.getActivities().then(function(activities){
+        ActivitiesService.getActivities().then(function (activities) {
             $scope.activities = activities;
 
             // Push an extra option for the dropdown list
@@ -30,15 +30,15 @@ angular.module('directory.activitiesController', [])
 
         // Create an array of materialen and fill it if there is already something saved in localStorage
         function checkForMaterialen() {
-            ActivitiesService.getMaterialen($scope.order.orderid).then(function(materialenList){
-                if(JSON.stringify(materialenList) !== '[]') {
+            ActivitiesService.getMaterialen($scope.order.orderid).then(function (materialenList) {
+                if (JSON.stringify(materialenList) !== '[]') {
                     // Show header of materialen
                     $scope.showMateriaalHeader = true;
                 } else {
                     $scope.showMateriaalHeader = false;
                 }
                 $scope.materialen = { materialen: materialenList };
-            }); 
+            });
         }
         checkForMaterialen();
 
@@ -104,15 +104,15 @@ angular.module('directory.activitiesController', [])
 
         // Create an array of werkzaamheden and fill it if there is already something saved in localStorage
         function checkForWerkzaamheden() {
-            ActivitiesService.getWerkzaamheden($scope.order.orderid).then(function(werkzaamhedenList){
-                if(JSON.stringify(werkzaamhedenList) !== '[]') {
+            ActivitiesService.getWerkzaamheden($scope.order.orderid).then(function (werkzaamhedenList) {
+                if (JSON.stringify(werkzaamhedenList) !== '[]') {
                     // Show header of werkzaamheden
                     $scope.showWerkzaamheidHeader = true;
                 } else {
                     $scope.showWerkzaamheidHeader = false;
                 }
                 $scope.werkzaamheden = { werkzaamheden: werkzaamhedenList };
-            }); 
+            });
         }
         checkForWerkzaamheden();
 
