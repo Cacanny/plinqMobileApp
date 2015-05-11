@@ -1,3 +1,7 @@
+body {
+    cursor: url('../img/finger.png'), auto;
+}
+
 .item-divider {
     background-color: #FAFAFA !important;
 }
@@ -272,7 +276,7 @@ textarea {
 }
  
 .transparent {
-    background: transparent !important;
+    background: black !important;
 }
  
 .fullscreen-image {
@@ -280,9 +284,9 @@ textarea {
     max-height: 100%;
     bottom: 0;
     left: 0;
+    position: fixed;
     margin: auto;
     overflow: auto;
-    position: fixed;
     right: 0;
     top: 0;
 }
