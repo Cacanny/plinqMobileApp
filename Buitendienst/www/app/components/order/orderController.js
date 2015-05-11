@@ -20,7 +20,7 @@
         // Ionic Modal
         $ionicModal.fromTemplateUrl('modal', {
             scope: $scope,
-            animation: 'fade-in'
+            animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.modal = modal;
         });
