@@ -2,7 +2,7 @@
     <ion-header-bar class='bar-stable'>
         <h1 class='title'> Foto's </h1>
         <button class="button signature-back-button" ng-click="closePicture()"><i class="icon ion-ios-arrow-back"></i> Back</button>
-        <button class="button button-clear icon ion-trash-a pull-right" ng-click=" deletePicture(activeSlide)"></button>
+        <button class="button button-clear icon ion-trash-a pull-right" ng-click="deletePicture(activeSlide)"></button>
     </ion-header-bar>
     <ion-slide-box on-slide-changed="indexChanged(index)" show-pager="true" active-slide="activeSlide" has-header="true">
         <ion-slide ng-repeat="photo in allPhotos">

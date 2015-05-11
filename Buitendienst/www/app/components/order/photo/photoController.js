@@ -11,7 +11,6 @@ angular.module('directory.photoController', [])
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
             $scope.activeSlide = index;
-            console.log("ActiveSlide has a number of " + $scope.activeSlide);
             $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
         }
 
@@ -56,13 +55,17 @@ angular.module('directory.photoController', [])
                 if (res) {
                     // Delete image from the array and give that array to the service to delete from LocalStorage
                     $scope.allPhotos.splice(index, 1);
+
                     $scope.activeSlide -= 1;
                     if ($scope.activeSlide === -1) {
                         $scope.activeSlide = 0;
                     }
                     $scope.closePicture();
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-                    $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
+
+                    if($scope.allPhotos.length !== 0) {
+                        $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
+                    }
                 }
             });
         }
