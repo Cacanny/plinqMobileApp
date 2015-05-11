@@ -3,7 +3,8 @@
     .factory('OrderService', function (PlanningService, $q, $window, $http) {
 
         var orders;
-        var _signature;
+        var signature = false;
+        var werkbon = false;
 
         return {
             getOrders: function () {
@@ -25,19 +26,39 @@
                 return deferred.promise;
             },
 
+            checkOrderStatus: function(_orderId) {
+
+            },
+
             postOrder: function (_orderId) {
-                var completeOrder = $window.localStorage.getItem('order' + _orderId);
-                console.log(completeOrder);
-                var data = $.param({
-                    json: completeOrder
-                });
-                return $http.post("test.json", data)
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+
+                return $http.post("test.json", parsedItem)
                     .success(function (response) {
-                        console.log(response);
+                        parsedItem.status = 'Verzonden';
+                        $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
                     })
                     .error(function () {
-                        alert('ERROR: Order kon niet worden opgeslagen, probeer opnieuw.');
+                        alert('ERROR: Order ' + _orderId + ' kon niet worden verzonden, probeer opnieuw.');
                     });
+            }, 
+
+            checkForSignature: function(_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                if(parsedItem.handtekening !== '') {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            checkForWerkbon: function(_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                if(parsedItem.werkbon !== '') {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
     });

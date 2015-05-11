@@ -295,3 +295,16 @@ textarea {
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {
   background-color: transparent;
 }
+
+/* Some CSS for displaying header for a modal screen correctly in iOS */
+.platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .bar-header > * {
+    margin-top: 0;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .bar-header {
+    height: 44px;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .has-header {
+    top: 44px;
+}

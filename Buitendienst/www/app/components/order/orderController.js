@@ -1,6 +1,6 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, CompleteService) {
+    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
         });
@@ -9,12 +9,41 @@
         $scope.date = new Date();
 
         $scope.sendOrder = function () {
+            var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
+            //var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
+            var werkbonAvailable = true;
+            var alertMessage = '';
+            var alertTitle = 'Fout!';
             // Delete order from LocalStorage?
 
             // CHECK FOR SIGNATURE AND WERKBON -- REQUIRED
 
             // SET STATUS VOLTOOID
-            OrderService.postOrder($scope.order.orderid);
+
+            if(!signatureAvailable && !werkbonAvailable) {
+                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
+                showAlert(alertMessage, alertTitle);
+            } else if(!signatureAvailable && werkbonAvailable) {
+                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
+                showAlert(alertMessage, alertTitle);
+            } else if(signatureAvailable && !werkbonAvailable) {
+                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
+                showAlert(alertMessage, alertTitle);
+            } else {
+                OrderService.postOrder($scope.order.orderid).then(function(response){
+                    alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.';
+                    alertTitle = 'Succes!';
+                    showAlert(alertMessage, alertTitle);
+                    console.log(response);
+                });
+            }
+        }
+
+        function showAlert(alertMessage, alertTitle) {
+            var alertPopup = $ionicPopup.alert({
+                    title: '<b>' + alertTitle + '</b>',
+                    template: alertMessage
+                });
         }
 
         // Ionic Modal
