@@ -3,8 +3,9 @@
         Opmerkingen
     </ion-item>
     <ion-item>
-        <label class="item item-input">
+        <div class="item item-input padding-right">
             <textarea id="comment" msd-elastic="\n" ng-model="comment" ng-change="change()" placeholder="Hier is ruimte voor eventuele opmerkingen"></textarea>
-        </label>
+            <button class="inline-button" ng-click="deleteComment()"><i class="icon ion-trash-a"></i></button>
+        </div>
     </ion-item>
 </ion-list>

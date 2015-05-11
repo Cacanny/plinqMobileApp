@@ -4,6 +4,7 @@ angular.module('directory', [
         'angular.filter',
         'monospaced.elastic',
         'ngCordova',
+        'ionicLazyLoad',
         'directory.appRoutes',
         'directory.planningService',
         'directory.planningController',

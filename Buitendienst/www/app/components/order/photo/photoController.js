@@ -11,23 +11,22 @@ angular.module('directory.photoController', [])
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
             $scope.activeSlide = index;
-            $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
+            $scope.openModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
         }
 
-        $scope.showModal = function (templateUrl) {
-            $ionicModal.fromTemplateUrl(templateUrl, {
-                scope: $scope,
-                animation: 'fade-in'
-            }).then(function (modal) {
-                $scope.modal = modal;
-                $scope.modal.show();
-            });
-        }
+        // $scope.showModal = function (templateUrl) {
+        //     $ionicModal.fromTemplateUrl(templateUrl, {
+        //         scope: $scope,
+        //         animation: 'fade-in'
+        //     }).then(function (modal) {
+        //         $scope.modal = modal;
+        //         $scope.modal.show();
+        //     });
+        // }
 
         // Close the modal
-        $scope.closeModal = function () {
+        $scope.closePicture = function () {
             $scope.modal.hide();
-            $scope.modal.remove();
         }
         // End of Modal 
 

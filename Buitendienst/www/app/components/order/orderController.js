@@ -20,12 +20,12 @@
         // Ionic Modal
         $ionicModal.fromTemplateUrl('modal', {
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'fade-in'
         }).then(function (modal) {
             $scope.modal = modal;
         });
-        $scope.openModal = function (include, $event) {
-            $event.stopPropagation();
+
+        $scope.openModal = function (include) {
             $scope.include = include;
             $scope.modal.show();
         }
@@ -38,7 +38,7 @@
         // Keep track of all the elements that are collapsed or not
         // True = expanded, False = collapsed
         $scope.toShowArr = [
-            true, true, true, false, false, false, false
+            true, true, true, false, false, false, false, false
         ];
 
         // Toggles the state of a window to true or false

@@ -1,15 +1,15 @@
 ﻿<ion-list type="list-inset">
-    <ion-item class="item-divider positive">
+    <ion-item class="item-divider positive" ng-click="toggle(7)">
         Foto's
     </ion-item>
-    <ion-item >
+    <ion-item ng-if="toShowArr[7]" class="cssFade" ng-cloak>
         <div class="button add-photo padding" ng-click="takePicture()">
-            <img src="../../../../assets/img/add_picture.png" alt="" />
+            <img ng-src="../../../../assets/img/add_picture.png" alt="addimage" />
         </div>
         <div class="photo-container">
             <ion-scroll direction="x" class="photo-container">
-                <img alt="" collection-repeat="photo in allPhotos" ng-src="{{photo}}" class="photo cover" ng-click="showImages($index)" />
+                <img alt="" ng-repeat="photo in allPhotos" image-lazy-src="{{::photo}}" class="photo cover" ng-click="showImages($index)" />
             </ion-scroll>
         </div>
     </ion-item>
-</ion-list>
+</ion-list

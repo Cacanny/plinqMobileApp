@@ -32,7 +32,7 @@
                 <ion-item ng-click="openModal('app/components/order/complete/signature/signaturepadView.html', $event)">
                     <div class="signature padding" ng-switch="_signatureImage || '_undefined_'">
                         <img ng-switch-when="_undefined_" ng-src="assets/img/signature_placeholder.png" alt="handtekening_placeholder" />
-                        <img ng-switch-default ng-src="{{_signatureImage}}" alt="handtekening" />
+                        <img ng-switch-default image-lazy-src="{{_signatureImage}}" alt="handtekening" />
                     </div>
                 </ion-item>
             </div>
