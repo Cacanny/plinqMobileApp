@@ -239,23 +239,6 @@ textarea {
     line-height: 76px;
 }
 
-    /*.add-photo h1 {
-        font-size: 30px !important;
-        display: block;
-        width: auto !important;
-        height: auto !important;
-        height: 100%;
-        max-height: 100%;
-        width: 100%;
-        max-width: 40%;
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-    }*/
-
 .scroll {
     min-width: 100%;
 }
