@@ -233,14 +233,20 @@ textarea {
     border-color: #b2b2b2;
     position: relative;
     float: left;
+    font-size: 45px;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: 76px;
 }
 
-    .add-photo img {
-        width: auto !important; /*override the width below*/
-        height: auto !important; /*override the height below*/
+    /*.add-photo h1 {
+        font-size: 30px !important;
+        display: block;
+        width: auto !important;
+        height: auto !important;
         height: 100%;
         max-height: 100%;
-        width: 50%;
+        width: 100%;
         max-width: 40%;
         margin: 0;
         position: absolute;
@@ -248,7 +254,7 @@ textarea {
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-    }
+    }*/
 
 .scroll {
     min-width: 100%;
@@ -274,11 +280,11 @@ textarea {
     top: 0 !important;
     left: 0 !important;
 }
- 
+
 .transparent {
     background: black !important;
 }
- 
+
 .fullscreen-image {
     max-width: 100%;
     max-height: 100%;
@@ -290,7 +296,7 @@ textarea {
     right: 0;
     top: 0;
 }
- 
+
 .slider {
     width: 100%;
     height: 100%;
@@ -302,7 +308,7 @@ textarea {
 }
 
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 /* Some CSS for displaying header for a modal screen correctly in iOS */
