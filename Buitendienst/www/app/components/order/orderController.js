@@ -8,15 +8,13 @@
         // Get the date of today, used at 'Afronding'
         $scope.date = new Date();
 
-        $scope.sendOrder = function () {
+        $scope.checkOrder = function () {
             var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
             //var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
             var werkbonAvailable = true;
             var alertMessage = '';
             var alertTitle = 'Fout!';
             // Delete order from LocalStorage?
-
-            // CHECK FOR SIGNATURE AND WERKBON -- REQUIRED
 
             // SET STATUS VOLTOOID
 
@@ -30,12 +28,8 @@
                 alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
                 showAlert(alertMessage, alertTitle);
             } else {
-                OrderService.postOrder($scope.order.orderid).then(function(response){
-                    alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.';
-                    alertTitle = 'Succes!';
-                    showAlert(alertMessage, alertTitle);
-                    console.log(response);
-                });
+                // All requirements are true
+                showPopup();
             }
         }
 
@@ -44,6 +38,36 @@
                     title: '<b>' + alertTitle + '</b>',
                     template: alertMessage
                 });
+        }
+
+        function showPopup() {
+          // A custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<p>U staat op het punt de order te verzenden. Wat is de huidige status van de order?</p><br/>'
+                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'Afgerond\')">Volledig afgerond</button>'
+                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'In behandeling\')">In behandeling</button>',
+                title: '<b>Order verzenden</b>',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: 'Cancel'
+                    }]
+            });
+
+            $scope.sendOrder = function(status) {
+
+                var alertTitle = 'Succes!';
+                var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
+
+                if(status === 'Afgerond') {
+                    alertMessage += 'Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd worden.';
+                } else {
+                    alertMessage += 'Deze order is <b>in behandeling</b> en kan nog gewijzigd worden.';
+                }
+
+                showAlert(alertMessage, alertTitle);
+                myPopup.close();
+            }
         }
 
         // Ionic Modal

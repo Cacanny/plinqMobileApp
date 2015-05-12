@@ -1,6 +1,7 @@
 ﻿[
     {
         "orderid": "123",
+        "status": "Nieuw",
         "plandatum": "18-04-2015",
         "tijd": "09:00",
         "omschrijving": "Installatie",
@@ -85,6 +86,7 @@
     },
     {
         "orderid": "124",
+        "status": "Nieuw",
         "plandatum": "18-04-2015",
         "tijd": "10:00",
         "omschrijving": "Installatie",
@@ -119,6 +121,7 @@
     },
     {
         "orderid": "125",
+        "status": "Nieuw",
         "plandatum": "18-04-2015",
         "omschrijving": "Reparatie",
         "tijd": "11:00",

@@ -32,7 +32,7 @@
                 if($window.localStorage.getItem('order' + order.orderid) === null) {
                     var fullOrder = {
                         orderid: order.orderid,
-                        status: 'In behandeling',
+                        status: '',
                         klant: '',
                         werkzaamheden: [],
                         materialen: [],

@@ -96,7 +96,7 @@ angular.module('directory.activitiesController', [])
         $scope.deleteMateriaal = function(index) {
             // A confirm dialog
             var confirmPopup = $ionicPopup.confirm({
-                title: 'Verwijder Materiaal',
+                title: '<b>Verwijder Materiaal</b>',
                 template: 'Wilt u dit materiaal verwijderen?<br/>' + 
                             '<br/>Aantal: <b>' + $scope.materialen.materialen[index].aantal + 
                             '</b><br/>Naam: <b>' + $scope.materialen.materialen[index].naam +
@@ -185,7 +185,7 @@ angular.module('directory.activitiesController', [])
         $scope.deleteWerkzaamheid = function(index) {
             // A confirm dialog
             var confirmPopup = $ionicPopup.confirm({
-                title: 'Verwijder Werkzaamheid',
+                title: '<b>Verwijder Werkzaamheid</b>',
                 template: 'Wilt u deze werkzaamheid verwijderen?<br/>' + 
                             '<br/>Beschrijving: <b>' + $scope.werkzaamheden.werkzaamheden[index].beschrijving + 
                             '</b><br/>Specificatie: <b>' + $scope.werkzaamheden.werkzaamheden[index].specificatie + '</b>'
