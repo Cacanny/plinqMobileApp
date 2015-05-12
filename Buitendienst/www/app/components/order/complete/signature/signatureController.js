@@ -12,7 +12,7 @@
 
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
                 signaturePad.fromDataURL(signature);
-            }); 
+            });
 
             $scope.clearCanvas = function () {
                 signaturePad.clear();
@@ -34,5 +34,5 @@
                 canvas.height = window.innerHeight - 96; 
             }
         });
-        
+    
     });

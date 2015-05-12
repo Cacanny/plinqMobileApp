@@ -232,6 +232,7 @@ textarea {
     border-radius: 5px;
     border-color: #b2b2b2;
     position: relative;
+    display: inline-block;
     float: left;
     font-size: 45px;
     text-align: center !important;
@@ -285,9 +286,8 @@ textarea {
     height: 100%;
 }
 
-.customPopupBtn {
-    background-color: black;
-    width: 100%;
+.popup-container .popup .backdrop .active{
+    z-index: 50;
 }
 
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {

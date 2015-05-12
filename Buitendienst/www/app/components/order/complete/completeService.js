@@ -2,18 +2,16 @@ angular.module('directory.completeService', [])
 
     .factory('CompleteService', function ($window, $q) {
 
-        var _signature;
+        var signaturePad;
 
         return {
-            // Getter for the Image from the Signature Pad
-            // getSignatureImage: function () {
-            //     return _signature;
-            // },
+            setSignaturePad: function(bool) {
+                signaturePad = bool;
+            },
 
-            // // Setter for the Image from the Signature Pad
-            // setSignatureImage: function (signature) {
-            //     _signature = signature;
-            // }
+            getSignaturePad: function() {
+                return signaturePad;
+            },
 
             setSignatureImage: function(orderid, signature) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
