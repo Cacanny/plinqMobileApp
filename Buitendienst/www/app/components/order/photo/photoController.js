@@ -17,6 +17,7 @@ angular.module('directory.photoController', [])
         $scope.showModal = function (templateUrl) {
             $ionicModal.fromTemplateUrl(templateUrl, {
                 scope: $scope,
+                backdropClickToClose: false,
                 animation: 'slide-in-up'
             }).then(function (modal) {
                 $scope.photoModal = modal;
