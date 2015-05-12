@@ -232,23 +232,13 @@ textarea {
     border-radius: 5px;
     border-color: #b2b2b2;
     position: relative;
+    display: inline-block;
     float: left;
+    font-size: 45px;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: 80px;
 }
-
-    .add-photo img {
-        width: auto !important; /*override the width below*/
-        height: auto !important; /*override the height below*/
-        height: 100%;
-        max-height: 100%;
-        width: 50%;
-        max-width: 40%;
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-    }
 
 .scroll {
     min-width: 100%;
@@ -296,9 +286,8 @@ textarea {
     height: 100%;
 }
 
-.customPopupBtn {
-    background-color: black;
-    width: 100%;
+.popup-container .popup .backdrop .active{
+    z-index: 50;
 }
 
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {

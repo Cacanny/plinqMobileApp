@@ -15,7 +15,7 @@
             $scope.connection = 'Online';
 
             // Get the planning and werkzaamheden/materialen
-            refresh();
+            refresh(); // TODO EVERY X seconds!!!!!
         });
 
         // listen for Offline event
@@ -27,13 +27,15 @@
         function getAll() {
             OrderService.getOrders().then(function (orders) {
                 $scope.orders = orders;
+                setupLocalStorage(orders);   
 
-                for(var index = 0; index < $scope.orders.length; index += 1) {
-                    OrderService.checkOrderStatus($scope.orders[index].orderid);
-                    $scope.orders[index].orderstatus;
-                }
-
-                setupLocalStorage(orders);
+                OrderService.checkOrderStatus(orders).then(function(statusArr){
+                    for(var index = 0; index < $scope.orders.length; index += 1) {
+                        if(statusArr[index] !== ''){
+                            $scope.orders[index].status = statusArr[index];
+                        }
+                    }
+                });
             });
         }
 

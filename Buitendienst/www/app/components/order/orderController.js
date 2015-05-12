@@ -40,10 +40,12 @@
                 });
         }
 
+        var myPopup;
+
         function showPopup() {
           // A custom popup
-            var myPopup = $ionicPopup.show({
-                template: '<p>U staat op het punt de order te verzenden. Wat is de huidige status van de order?</p><br/>'
+            myPopup = $ionicPopup.show({
+                template: '<p>U staat op het punt de order te verzenden. Welke status wilt u de order meegeven?</p><br/>'
                             + '<button class="button button-full button-positive" ng-click="sendOrder(\'Afgerond\')">Volledig afgerond</button>'
                             + '<button class="button button-full button-positive" ng-click="sendOrder(\'In behandeling\')">In behandeling</button>',
                 title: '<b>Order verzenden</b>',
@@ -53,21 +55,26 @@
                         text: 'Cancel'
                     }]
             });
+        }
 
-            $scope.sendOrder = function(status) {
+        $scope.sendOrder = function(status) {
 
-                var alertTitle = 'Succes!';
-                var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
+            var alertTitle = 'Succes!';
+            var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
 
-                if(status === 'Afgerond') {
-                    alertMessage += 'Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd worden.';
-                } else {
-                    alertMessage += 'Deze order is <b>in behandeling</b> en kan nog gewijzigd worden.';
-                }
-
-                showAlert(alertMessage, alertTitle);
-                myPopup.close();
+            if(status === 'Afgerond') {
+                alertMessage += '<br/>Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd worden.';
+                $scope.order.status = 'Afgerond';
+            } else {
+                alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd worden.';
+                $scope.order.status = 'In behandeling';
             }
+            myPopup.close();
+
+            OrderService.postOrder($scope.order.orderid).then(function(res){
+                showAlert(alertMessage, alertTitle);
+                console.log(res);
+            });
         }
 
         // Ionic Modal

@@ -26,8 +26,15 @@
                 return deferred.promise;
             },
 
-            checkOrderStatus: function(_orderId) {
-
+            checkOrderStatus: function(orderArr) {
+                var statusArr = [];
+                for(var index = 0; index < orderArr.length; index += 1) {
+                    var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderArr[index].orderid));
+                    statusArr.push(parsedItem.status);
+                }
+                var deferred = $q.defer();
+                deferred.resolve(statusArr);
+                return deferred.promise;
             },
 
             postOrder: function (_orderId) {
@@ -35,7 +42,7 @@
 
                 return $http.post("test.json", parsedItem)
                     .success(function (response) {
-                        parsedItem.status = 'Verzonden';
+                        parsedItem.status = 'Afgerond';
                         $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
                     })
                     .error(function () {
