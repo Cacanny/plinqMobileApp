@@ -37,12 +37,25 @@
                 return deferred.promise;
             },
 
-            postOrder: function (_orderId) {
+            checkIfFinished: function(_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                if(parsedItem.status === 'Afgerond') {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+
+            postOrder: function (_orderId, status) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
 
-                return $http.post("test.json", parsedItem)
+                return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
-                        parsedItem.status = 'Afgerond';
+                        if(status === 'Afgerond') {
+                            parsedItem.status = 'Afgerond';
+                        } else {
+                            parsedItem.status = 'In behandeling';
+                        }
                         $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
                     })
                     .error(function () {
@@ -61,11 +74,12 @@
 
             checkForWerkbon: function(_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                if(parsedItem.werkbon !== '') {
-                    return true;
-                } else {
-                    return false;
-                }
+                // if(parsedItem.werkbon !== '') {
+                //     return true;
+                // } else {
+                //     return false;
+                // }
+                return true;
             }
         }
     });

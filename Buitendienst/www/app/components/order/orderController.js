@@ -9,27 +9,33 @@
         $scope.date = new Date();
 
         $scope.checkOrder = function () {
-            var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
-            //var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
-            var werkbonAvailable = true;
+            // First check if the order already had been sent with the 'Afgerond' status
+            var orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+
             var alertMessage = '';
             var alertTitle = 'Fout!';
-            // Delete order from LocalStorage?
 
-            // SET STATUS VOLTOOID
-
-            if(!signatureAvailable && !werkbonAvailable) {
-                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
-                showAlert(alertMessage, alertTitle);
-            } else if(!signatureAvailable && werkbonAvailable) {
-                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
-                showAlert(alertMessage, alertTitle);
-            } else if(signatureAvailable && !werkbonAvailable) {
-                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
+            if(orderFinished) {
+                alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
                 showAlert(alertMessage, alertTitle);
             } else {
-                // All requirements are true
-                showPopup();
+                // Check if the signature and werkbon are available
+                var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
+                var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
+
+                if(!signatureAvailable && !werkbonAvailable) {
+                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
+                    showAlert(alertMessage, alertTitle);
+                } else if(!signatureAvailable && werkbonAvailable) {
+                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
+                    showAlert(alertMessage, alertTitle);
+                } else if(signatureAvailable && !werkbonAvailable) {
+                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
+                    showAlert(alertMessage, alertTitle);
+                } else {
+                    // All requirements are true
+                    showPopup();
+                }
             }
         }
 
@@ -43,7 +49,7 @@
         var myPopup;
 
         function showPopup() {
-          // A custom popup
+            // A custom popup
             myPopup = $ionicPopup.show({
                 template: '<p>U staat op het punt de order te verzenden. Welke status wilt u de order meegeven?</p><br/>'
                             + '<button class="button button-full button-positive" ng-click="sendOrder(\'Afgerond\')">Volledig afgerond</button>'
@@ -58,20 +64,24 @@
         }
 
         $scope.sendOrder = function(status) {
-
+            //TODO: Delete order from LocalStorage?
             var alertTitle = 'Succes!';
             var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
 
             if(status === 'Afgerond') {
                 alertMessage += '<br/>Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd worden.';
-                $scope.order.status = 'Afgerond';
             } else {
                 alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd worden.';
-                $scope.order.status = 'In behandeling';
             }
             myPopup.close();
 
-            OrderService.postOrder($scope.order.orderid).then(function(res){
+            // The actual sending of the order via the service
+            OrderService.postOrder($scope.order.orderid, status).then(function(res){
+                if(status === 'Afgerond') {
+                    $scope.order.status = 'Afgerond';
+                } else {
+                    $scope.order.status = 'In behandeling';
+                }
                 showAlert(alertMessage, alertTitle);
                 console.log(res);
             });
