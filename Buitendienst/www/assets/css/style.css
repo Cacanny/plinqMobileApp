@@ -16,8 +16,7 @@ body {
 }
 
 .card .item {
-    /*border: 1px solid #387ef5 !important;*/
-    border-top: 5px solid #387ef5 !important;
+    border-top: 5px solid #337ab7 !important;
     color: #565656 !important;
     background-color: #FAFAFA !important;
 }
@@ -96,7 +95,7 @@ hr {
     padding: 5px 10px;
     margin-left: 20px;
     color: white;
-    background-color: #387ef5;
+    background-color: #337ab7;
 }
 
 .cssFade {
@@ -286,8 +285,15 @@ textarea {
     height: 100%;
 }
 
-.popup-container .popup .backdrop .active{
-    z-index: 50;
+/*.list {
+    border-color: #0c63ee !important;
+}*/
+
+.listheader {
+    color: white;
+    text-align: center;
+    background-color: #337ab7 !important;
+    border-color: #2f70a8 !important;
 }
 
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {

@@ -1,8 +1,8 @@
 ﻿<ion-list type="list-inset" ng-if="showTickets">
-    <ion-item class="item-divider positive" ng-click="toggle(0)">
+    <ion-item class="item-divider listheader" ng-click="toggle(0)">
         Ticketdetails
     </ion-item>
-    <div ng-show="toShowArr[0]" class="cssFade">
+    <ion-item ng-show="toShowArr[0]" class="cssFade">
         <ion-item class="row">
             <div class="col">
                 <ion-item class="row item-text-wrap noborder">
@@ -33,5 +33,5 @@
                 </ion-item>
             </div>
         </ion-item>
-    </div>
+    </ion-item>
 </ion-list>

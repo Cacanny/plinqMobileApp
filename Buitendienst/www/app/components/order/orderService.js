@@ -54,7 +54,7 @@
                         if(status === 'Afgerond') {
                             parsedItem.status = 'Afgerond';
                         } else {
-                            parsedItem.status = 'In behandeling';
+                            parsedItem.status = 'Vervolgactie';
                         }
                         $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
                     })

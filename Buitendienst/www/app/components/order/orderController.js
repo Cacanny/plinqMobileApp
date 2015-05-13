@@ -52,8 +52,8 @@
             // A custom popup
             myPopup = $ionicPopup.show({
                 template: '<p>U staat op het punt de order te verzenden. Welke status wilt u de order meegeven?</p><br/>'
-                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'Afgerond\')">Volledig afgerond</button>'
-                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'In behandeling\')">In behandeling</button>',
+                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'Afgerond\')">Afgerond</button>'
+                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'Vervolgactie\')">Vervolgactie</button>',
                 title: '<b>Order verzenden</b>',
                 scope: $scope,
                 buttons: [

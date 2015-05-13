@@ -1,8 +1,8 @@
 ﻿<ion-list type="list-inset">
-    <ion-item class="item-divider positive" ng-click="toggle(2)">
+    <ion-item class="item-divider listheader" ng-click="toggle(2)">
         Werkzaamheden
     </ion-item>
-    <div ng-show="toShowArr[2]" class="cssFade">
+    <ion-item ng-show="toShowArr[2]" class="cssFade">
         <ion-item>
             <div class="list list-inset nomargin-top">
                 <ion-item class="item-divider">
@@ -36,7 +36,7 @@
                         <ion-item class="row item-text-wrap noborder">
                             <div class="col col-center fixedwidth">Naam:</div>
                             <div class="col">
-                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(4)">
+                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-dark" ng-click="toggle(4)">
                                     {{materiaal.naam || "Selecteer een materiaal..."}} <i class="icon ion-arrow-down-b"></i>
                                 </button>
                                 <ion-item class="row noborder nopadding">
@@ -67,8 +67,8 @@
                         </ion-item>
                     </div>
                     <div class="col col-center fixedwidth-60">
-                        <button class="input_btn" ng-click="savemateriaal();toShowArr[4]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
-                        <button class="input_btn" ng-click="resetmateriaal()"><h1 class="icon ion-ios-close assertive"></h1></button>
+                        <button class="input_btn button-clear" ng-click="savemateriaal();toShowArr[4]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
+                        <button class="input_btn button-clear" ng-click="resetmateriaal()"><h1 class="icon ion-ios-close assertive"></h1></button>
                     </div>
                 </ion-item>
             </div>
@@ -95,7 +95,7 @@
                         <ion-item class="row item-text-wrap noborder">
                             <div class="col col-center fixedwidth">Beschrijving:</div>
                             <div class="col">
-                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-positive" ng-click="toggle(6)">
+                                <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-dark" ng-click="toggle(6)">
                                     {{werkzaamheid.beschrijving || "Selecteer een werkzaamheid..."}} <i class="icon ion-arrow-down-b"></i>
                                 </button>
                                 <ion-item class="row noborder nopadding">
@@ -126,11 +126,11 @@
                         </ion-item>
                     </div>
                     <div class="col col-center fixedwidth-60">
-                        <button class="input_btn" ng-click="savewerkzaamheid();toShowArr[6]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
-                        <button class="input_btn" ng-click="resetwerkzaamheid()"><h1 class="icon ion-ios-close assertive"></h1></button>
+                        <button class="input_btn button-clear" ng-click="savewerkzaamheid();toShowArr[6]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
+                        <button class="input_btn button-clear" ng-click="resetwerkzaamheid()"><h1 class="icon ion-ios-close assertive"></h1></button>
                     </div>
                 </ion-item>
             </ion-list>
         </ion-item>
-    </div>
+    </ion-item>
 </ion-list>
