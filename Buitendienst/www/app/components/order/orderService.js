@@ -46,6 +46,19 @@
                 }
             },
 
+            setFollowup: function(orderid, text) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem.vervolgactie = text;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
+            getFollowup: function(orderid) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem.vervolgactie);
+                return deferred.promise;
+            },
+
             postOrder: function (_orderId, status) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
 

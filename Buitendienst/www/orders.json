@@ -1,7 +1,7 @@
 ﻿[
     {
         "orderid": "123",
-        "status": "Nieuw",
+        "status": "In behandeling",
         "plandatum": "18-04-2015",
         "tijd": "09:00",
         "omschrijving": "Installatie",
@@ -59,7 +59,6 @@
                             "wachtwoord": "12341234"
                         }
                 }
-           
         },
         "ticket": {
             "ticketid": "1201",
@@ -82,7 +81,18 @@
                 "verantw": "Jan Klaassen"
               }
             ]
-        }
+        },
+        "orderhistorie": [{
+                "verzenddatum": "16-04-2014 11:15:01",
+                "vervolgactie": "Het modem moet nog vervangen worden",
+                "monteur": "Arno"
+            },
+            {
+                "verzenddatum": "17-04-2014 09:54:33",
+                "vervolgactie": "Internetkabel moet nog gelegd worden",
+                "monteur": "Piet"
+            }
+        ]
     },
     {
         "orderid": "124",
@@ -117,7 +127,8 @@
                     "telefoon": {}
                 }
         },
-        "ticket": {}
+        "ticket": {},
+        "orderhistorie": []
     },
     {
         "orderid": "125",
@@ -154,6 +165,7 @@
                         }
                 }
         },
-        "ticket": {}
+        "ticket": {},
+        "orderhistorie": []
       }
 ]

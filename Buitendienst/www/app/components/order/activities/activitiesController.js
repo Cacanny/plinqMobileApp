@@ -42,6 +42,9 @@ angular.module('directory.activitiesController', [])
         }
         checkForMaterialen();
 
+        $scope.materiaalEdited = false;
+        var materiaalIndex;
+
         $scope.savemateriaal = function () {
             var savesucces = false;
 
@@ -50,13 +53,21 @@ angular.module('directory.activitiesController', [])
 
             if ($scope.materiaal.naam !== '') {
 
-                if ($scope.materiaal.naam == 'Anders, namelijk:') {
+                if ($scope.materiaal.naam === 'Anders, namelijk:') {
                     var naam = document.getElementById('naam').value;
                     if (naam) {
-                        // Add to the materialen array
-                        $scope.materialen.materialen.push({
-                            aantal: $scope.total, naam: naam, specificatie: specificatie
-                        });
+
+                        if($scope.materiaalEdited) {
+                            // Override the materiaal in the array
+                            $scope.materialen.materialen[materiaalIndex] = {
+                                aantal: $scope.total, naam: naam, specificatie: specificatie
+                            }
+                        } else {
+                            // Add to the materialen array
+                            $scope.materialen.materialen.push({
+                                aantal: $scope.total, naam: naam, specificatie: specificatie
+                            });
+                        }
 
                         savesucces = true;
                     }
@@ -91,6 +102,27 @@ angular.module('directory.activitiesController', [])
             for (var i = 0; i < selection.length; i++) {
                 selection[i].checked = false;
             }
+        }
+
+        $scope.editMateriaal = function(index) {
+            $scope.toShowArr[3] = true;
+            $scope.total = $scope.materialen.materialen[index].aantal;
+            $scope.specificatie_materiaal = $scope.materialen.materialen[index].specificatie;
+
+            alert($scope.specificatie_materiaal);
+
+            var naam = $scope.materialen.materialen[index].naam;
+            ActivitiesService.checkForCustomMateriaal(naam).then(function(bool) {
+                if(bool){
+                    $scope.materiaal.naam = 'Anders, namelijk:';
+                    $scope.customMateriaalNaam = naam;
+                } else {
+                    $scope.materiaal.naam = naam;
+                }
+            });
+
+            $scope.materiaalEdited = true;
+            materiaalIndex = index;
         }
 
         $scope.deleteMateriaal = function(index) {

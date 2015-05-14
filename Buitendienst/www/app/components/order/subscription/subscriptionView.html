@@ -3,99 +3,97 @@
         Abonnementgegevens
     </ion-item>
     <ion-item ng-show="toShowArr[1]" class="cssFade">
-        <ion-item>
-            <div class="list list-inset nomargin-top">
-                <ion-item class="item-divider">
-                    <i class="icon ion-ios-list-outline"></i> Abonnementregels
-                </ion-item>
-                <ion-item class="row item-text-wrap">
-                    <div class="col fixedwidth bold">Type</div>
-                    <div class="col bold">Product</div>
-                    <div class="col fixedwidth bold">Status</div>
-                </ion-item>
-                <ion-item class="row item-text-wrap" ng-repeat="ar in order.klant.abonnement.abonnementregels">
-                    <div class="col fixedwidth">{{::ar.type}}</div>
-                    <div class="col">{{::ar.product}}</div>
-                    <div class="col fixedwidth">{{::ar.status}}</div>
-                </ion-item>
-            </div>
-            <ion-list type="list-inset" ng-if="showInternet">
-                <ion-item class="item-divider">
-                    <i class="icon ion-wifi"></i> Internet
-                </ion-item>
-                <ion-item class="row">
-                    <div class="col">
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Netwerk: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.internet.netwerk}}</div>
-                        </ion-item>
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Snelheid: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.internet.snelheid}}</div>
-                        </ion-item>
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> IP toewijzing: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.internet.iptoewijzing}}</div>
-                        </ion-item>
-                    </div>
-                    <div class="col">
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Login: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.internet.login}}</div>
-                        </ion-item>
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Wachtwoord: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.internet.wachtwoord}}</div>
-                        </ion-item>
-                    </div>
-                </ion-item>
-            </ion-list>
-            <ion-list type="list-inset" ng-if="showTelevisie">
-                <ion-item class="item-divider">
-                    <i class="icon ion-ios-monitor-outline"></i> Televisie
-                </ion-item>
-                <ion-item class="row">
-                    <div class="col">
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Soort: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.televisie.soort}}</div>
-                        </ion-item>
-                    </div>
-                    <div class="col">
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Accountcode: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.televisie.accountcode}}</div>
-                        </ion-item>
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Pincode: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.televisie.pincode}}</div>
-                        </ion-item>
-                    </div>
-                </ion-item>
-            </ion-list>
-            <ion-list type="list-inset" ng-if="showTelefoon">
-                <ion-item class="item-divider">
-                    <i class="icon ion-ios-telephone"></i> Telefoon
-                </ion-item>
-                <ion-item class="row">
-                    <div class="col">
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Telefoonnr: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.telefoon.telefoonnummer}}</div>
-                        </ion-item>
-                    </div>
-                    <div class="col">
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Login: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.telefoon.login}}</div>
-                        </ion-item>
-                        <ion-item class="row item-text-wrap noborder">
-                            <div class="col fixedwidth"> Wachtwoord: </div>
-                            <div class="col bold"> {{::order.klant.abonnement.telefoon.wachtwoord}}</div>
-                        </ion-item>
-                    </div>
-                </ion-item>
-            </ion-list>
-        </ion-item>
+        <div class="list list-inset nomargin-top">
+            <ion-item class="item-divider">
+                <i class="icon ion-ios-list-outline"></i> Abonnementregels
+            </ion-item>
+            <ion-item class="row item-text-wrap">
+                <div class="col fixedwidth bold">Type</div>
+                <div class="col bold">Product</div>
+                <div class="col fixedwidth bold">Status</div>
+            </ion-item>
+            <ion-item class="row item-text-wrap" ng-repeat="ar in order.klant.abonnement.abonnementregels">
+                <div class="col fixedwidth">{{::ar.type}}</div>
+                <div class="col">{{::ar.product}}</div>
+                <div class="col fixedwidth">{{::ar.status}}</div>
+            </ion-item>
+        </div>
+        <ion-list type="list-inset" ng-if="showInternet">
+            <ion-item class="item-divider">
+                <i class="icon ion-wifi"></i> Internet
+            </ion-item>
+            <ion-item class="row">
+                <div class="col">
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Netwerk: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.internet.netwerk}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Snelheid: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.internet.snelheid}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> IP toewijzing: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.internet.iptoewijzing}}</div>
+                    </ion-item>
+                </div>
+                <div class="col">
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Login: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.internet.login}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Wachtwoord: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.internet.wachtwoord}}</div>
+                    </ion-item>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-list type="list-inset" ng-if="showTelevisie">
+            <ion-item class="item-divider">
+                <i class="icon ion-ios-monitor-outline"></i> Televisie
+            </ion-item>
+            <ion-item class="row">
+                <div class="col">
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Soort: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.televisie.soort}}</div>
+                    </ion-item>
+                </div>
+                <div class="col">
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Accountcode: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.televisie.accountcode}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Pincode: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.televisie.pincode}}</div>
+                    </ion-item>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-list type="list-inset" ng-if="showTelefoon">
+            <ion-item class="item-divider">
+                <i class="icon ion-ios-telephone"></i> Telefoon
+            </ion-item>
+            <ion-item class="row">
+                <div class="col">
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Telefoonnr: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.telefoon.telefoonnummer}}</div>
+                    </ion-item>
+                </div>
+                <div class="col">
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Login: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.telefoon.login}}</div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder">
+                        <div class="col fixedwidth"> Wachtwoord: </div>
+                        <div class="col bold"> {{::order.klant.abonnement.telefoon.wachtwoord}}</div>
+                    </ion-item>
+                </div>
+            </ion-item>
+        </ion-list>
     </ion-item>
 </ion-list>

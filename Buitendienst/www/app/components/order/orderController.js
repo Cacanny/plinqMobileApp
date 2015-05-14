@@ -52,8 +52,8 @@
             // A custom popup
             myPopup = $ionicPopup.show({
                 template: '<p>U staat op het punt de order te verzenden. Welke status wilt u de order meegeven?</p><br/>'
-                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'Afgerond\')">Afgerond</button>'
-                            + '<button class="button button-full button-positive" ng-click="sendOrder(\'Vervolgactie\')">Vervolgactie</button>',
+                            + '<button class="button button-full button-positive" ng-click="askConfirmation()">Afgerond</button>'
+                            + '<button class="button button-full button-positive" ng-click="addFollowup()">Vervolgactie</button>',
                 title: '<b>Order verzenden</b>',
                 scope: $scope,
                 buttons: [
@@ -64,16 +64,20 @@
         }
 
         $scope.sendOrder = function(status) {
+            myPopup.close();
             //TODO: Delete order from LocalStorage?
+
             var alertTitle = 'Succes!';
             var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
 
             if(status === 'Afgerond') {
-                alertMessage += '<br/>Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd worden.';
+                alertMessage += '<br/>Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd of verstuurd worden.';
             } else {
-                alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd worden.';
+                OrderService.getFollowup($scope.order.orderid).then(function(text){
+                    alertMessage += '<br/>Vervolgactie: ' + text + '<br/>';
+                    alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd en opnieuw verstuurd worden.';
+                })
             }
-            myPopup.close();
 
             // The actual sending of the order via the service
             OrderService.postOrder($scope.order.orderid, status).then(function(res){
@@ -85,6 +89,41 @@
                 showAlert(alertMessage, alertTitle);
                 console.log(res);
             });
+            
+        }
+
+        $scope.askConfirmation = function() {
+            // A confirm dialog
+            var confirmPopup = $ionicPopup.confirm({
+                title: '<b>Afronding</b>',
+                template: 'Weet u zeker dat u de order wilt afronden? Het is daarna <b>niet</b> meer mogelijk de order te wijzigen of opnieuw te verzenden!'
+            });
+            
+            confirmPopup.then(function(res) {
+                if(res) {
+                    $scope.sendOrder('Afgerond');
+                }
+            }); 
+        }
+
+        $scope.addFollowup = function() {
+            OrderService.getFollowup($scope.order.orderid).then(function(text){
+                // A confirm dialog
+                var confirmPopup = $ionicPopup.confirm({
+                    title: '<b>Vervolgactie</b>',
+                    template: 'Voer een vervolgactie in:<br/>'
+                                + '<div class="item item-input">'
+                                + '<textarea id="followup" rows="8">' + text + '</textarea>'
+                                + '</div>'
+                });
+                
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        OrderService.setFollowup($scope.order.orderid, document.getElementById('followup').value);
+                        $scope.sendOrder('Vervolgactie');
+                    }
+                }); 
+            });    
         }
 
         // Ionic Modal

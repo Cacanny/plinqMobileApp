@@ -25,6 +25,30 @@ angular.module('directory.activitiesService', [])
                 return deferred.promise;
             },
 
+            checkForCustomMateriaal: function(materiaal) {
+                var bools = [];
+                var bool = true;
+                var parsedItem = JSON.parse($window.localStorage.getItem('activities'));
+                for(var index = 0; index < parsedItem.materialen.length; index += 1) {
+                    if(materiaal !== parsedItem.materialen[index]) {
+                        bools.push(true);
+                    } else {
+                        bools.push(false);
+                    }
+                }
+                // If ALL bools are true, then it is a custom Materiaal else not!
+                for(var index = 0; index < bools.length; index += 1) {
+                    if(!bools[index]) {
+                        // If there is 1 false, then it's not a custom Materiaal
+                        bool = false;
+                        break;
+                    }
+                }
+                var deferred = $q.defer();
+                deferred.resolve(bool);
+                return deferred.promise;
+            },
+
             deleteMateriaal: function(orderid, materialen) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.materialen = materialen;

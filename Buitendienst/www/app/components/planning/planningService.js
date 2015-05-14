@@ -39,7 +39,10 @@
                         opmerking: '',
                         fotos: [],
                         werkbon: '',
-                        handtekening: ''
+                        handtekening: '',
+                        verzenddatum: '',
+                        vervolgactie: '',
+                        monteur: 'Arno'
                     }
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));
                 }
