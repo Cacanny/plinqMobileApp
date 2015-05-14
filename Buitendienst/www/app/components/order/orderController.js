@@ -147,7 +147,7 @@
         // Keep track of all the elements that are collapsed or not
         // True = expanded, False = collapsed
         $scope.toShowArr = [
-            true, true, true, false, false, false, false, false
+            true, true, true, false, false, false, false, false, true
         ];
 
         // Toggles the state of a window to true or false
