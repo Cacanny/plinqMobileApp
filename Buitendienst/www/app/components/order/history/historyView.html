@@ -1,8 +1,8 @@
 ﻿<ion-list type="list-inset" ng-if="showTickets">
-    <ion-item class="item-divider listheader" ng-click="toggle(0)">
-        Ticketdetails
+    <ion-item class="item-divider listheader" ng-click="toggle(8)">
+        Order Historie
     </ion-item>
-    <ion-item ng-show="toShowArr[0]" class="cssFade">   
+    <ion-item ng-show="toShowArr[8]" class="cssFade">   
             <div class="col">
                 <ion-item class="row item-text-wrap">
                     <div class="col bold fixedwidth-175">Datum</div>
@@ -10,8 +10,8 @@
                     <div class="col bold fixedwidth-175">Verantw. Monteur:</div>
                 </ion-item>
                 <ion-item class="row item-text-wrap" ng-repeat="h in order.orderhistorie track by $index">
-                    <div class="col fixedwidth-175">{{::h.datum}}</div>
-                    <div class="col" ng-click="toggleFilter(h.notitie, $index)">{{h.vervolgactie}}</div>
+                    <div class="col fixedwidth-175">{{::h.verzenddatum}}</div>
+                    <div class="col" ng-click="toggleHistoryFilter(h.vervolgactie, $index)">{{h.vervolgactie}}</div>
                     <div class="col fixedwidth-175">{{::h.monteur}}</div>
                 </ion-item>
             </div>

@@ -26,7 +26,8 @@ angular.module('directory.ticketController', [])
     	setInitialFilter();
 
     	// Toggle the filter 'getSlice' on click
-        $scope.toggleFilter = function (_notitie, index){
+    	$scope.toggleFilter = function (_notitie, index) {
+	        console.log("Er is gedrukt op de ticket toggle filter ");
         	if(shouldRunFilter[index]) {
         		shouldRunFilter[index] = false;
         		$scope.order.ticket.ticketregels[index].notitie = $filter('getSlice')(_notitie);
