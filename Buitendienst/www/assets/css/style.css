@@ -189,6 +189,16 @@ hr {
     cursor: pointer;
 }
 
+.addTitle {
+    padding: 40px 10px 0px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.addBackground {
+    background-color: #FAFAFA !important;
+}
+
 .moreleft {
     right: 65px;
     padding: 0px 18px;
@@ -285,15 +295,15 @@ textarea {
     height: 100%;
 }
 
-/*.list {
-    border-color: #0c63ee !important;
-}*/
-
 .listheader {
     color: white;
     text-align: center;
     background-color: #337ab7 !important;
     border-color: #2f70a8 !important;
+}
+
+.highlight {
+    background-color: #EFF2FB !important;
 }
 
 [nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {

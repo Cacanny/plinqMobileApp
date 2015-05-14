@@ -2,8 +2,8 @@
     <ion-item class="item-divider listheader" ng-click="toggle(0)">
         Ticketdetails
     </ion-item>
-    <ion-item ng-show="toShowArr[0]" class="cssFade row">
-        <div class="col">
+    <ion-item ng-show="toShowArr[0]" class="cssFade">
+        <div class="list list-inset nomargin-top">
             <ion-item class="row item-text-wrap noborder">
                 <div class="col fixedwidth">Ticket ID:</div>
                 <div class="col bold">{{::order.ticket.ticketid}}</div>
@@ -17,9 +17,7 @@
                 <div class="col bold">{{::order.ticket.omschrijving}}</div>
             </ion-item>
         </div>
-    </ion-item>
-    <ion-item class="row noborder-top">
-        <div class="col">
+        <div class="list list-inset nomargin-top">
             <ion-item class="row item-text-wrap">
                 <div class="col bold fixedwidth-175">Datum</div>
                 <div class="col bold">Notitie</div>

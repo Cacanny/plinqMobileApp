@@ -16,18 +16,19 @@
                 <div class="col bold">Specificaties</div>
                 <div class="col fixedwidth"></div>
             </ion-item>
-            <ion-item class="row item-text-wrap" ng-repeat="m in materialen.materialen track by $index">
+            <ion-item id="materiaal{{$index}}" class="row item-text-wrap" ng-repeat="m in materialen.materialen track by $index">
                 <div class="col fixedwidth-60">{{m.aantal}}</div>
                 <div class="col">{{m.naam}}</div>
                 <div class="col">{{m.specificatie}}</div>
                 <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteMateriaal($index)"><i class="icon ion-trash-a"></i></button> <button class="inline-button" ng-click="editMateriaal($index)"><i class="icon ion-edit"></i></button></i></div>
             </ion-item>
-            <ion-item ng-show="toShowArr[3]" class="row item-text-wrap">
+            <ion-item ng-show="toShowArr[3]" class="row item-text-wrap addBackground">
                 <div class="col">
-                    <ion-item class="row item-text-wrap noborder">
-                        <div class="col col-center">{{materiaalTitle}}</div>
+                    <ion-item class="row item-text-wrap noborder addTitle addBackground" ng-switch="materiaalEdited">
+                        <div class="col col-center" ng-switch-when="false">Nieuw materiaal<hr/></div>
+                        <div class="col col-center" ng-switch-when="true">Materiaal wijzigen<hr/></div>
                     </ion-item>
-                    <ion-item class="row item-text-wrap noborder">
+                    <ion-item class="row item-text-wrap noborder addBackground">
                         <div class="col col-center fixedwidth">Aantal:</div>
                         <div class="col">
                             <button class="aantal_btn left" ng-click="count(-1)"><i class="icon ion-minus"></i></button>
@@ -35,7 +36,7 @@
                             <button class="aantal_btn left" ng-click="count(1)"><i class="icon ion-plus"></i></button>
                         </div>
                     </ion-item>
-                    <ion-item class="row item-text-wrap noborder">
+                    <ion-item class="row item-text-wrap noborder addBackground">
                         <div class="col col-center fixedwidth">Naam:</div>
                         <div class="col">
                             <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-dark" ng-click="toggle(4)">
@@ -59,7 +60,7 @@
                             </label>
                         </div>
                     </ion-item>
-                    <ion-item class="row item-text-wrap noborder">
+                    <ion-item class="row item-text-wrap noborder addBackground">
                         <div class="col fixedwidth">Specificatie:</div>
                         <div class="col">
                             <label class="item item-input">
@@ -87,14 +88,18 @@
                 <div class="col bold">Specificaties</div>
                 <div class="col fixedwidth"></div>
             </ion-item>
-            <ion-item class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden track by $index">
+            <ion-item id="werkzaamheid{{$index}}" class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden track by $index">
                 <div class="col">{{w.beschrijving}}</div>
                 <div class="col">{{w.specificatie}}</div>
-                <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteWerkzaamheid($index)"><i class="icon ion-trash-a"></i></button> <button class="inline-button"><i class="icon ion-edit"></i></button></i></div>
+                <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteWerkzaamheid($index)"><i class="icon ion-trash-a"></i></button> <button class="inline-button" ng-click="editWerkzaamheid($index)"><i class="icon ion-edit"></i></button></i></div>
             </ion-item>
-            <ion-item ng-show="toShowArr[5]" class="row item-text-wrap">
+            <ion-item ng-show="toShowArr[5]" class="row item-text-wrap addBackground">
                 <div class="col">
-                    <ion-item class="row item-text-wrap noborder">
+                    <ion-item class="row item-text-wrap noborder addTitle addBackground" ng-switch="werkzaamheidEdited">
+                        <div class="col col-center" ng-switch-when="false">Nieuwe werkzaamheid<hr/></div>
+                        <div class="col col-center" ng-switch-when="true">Werkzaamheid wijzigen<hr/></div>
+                    </ion-item>
+                    <ion-item class="row item-text-wrap noborder addBackground">
                         <div class="col col-center fixedwidth">Beschrijving:</div>
                         <div class="col">
                             <button id="selectmateriaal" style="font-size: 16px" class="button button-small button-full button-dark" ng-click="toggle(6)">
@@ -114,11 +119,11 @@
                                 </div>
                             </ion-item>
                             <label class="item item-input" ng-if="werkzaamheid.beschrijving == 'Anders, namelijk:'">
-                                <textarea id="beschrijving" msd-elastic="\n" ng-model="foo" placeholder="Beschrijving van de uitgevoerde werkzaamheid"></textarea>
+                                <textarea id="beschrijving" msd-elastic="\n" ng-model="customWerkzaamheidBeschrijving" placeholder="Beschrijving van de uitgevoerde werkzaamheid"></textarea>
                             </label>
                         </div>
                     </ion-item>
-                    <ion-item class="row item-text-wrap noborder">
+                    <ion-item class="row item-text-wrap noborder addBackground">
                         <div class="col fixedwidth">Specificatie:</div>
                         <div class="col">
                             <label class="item item-input">

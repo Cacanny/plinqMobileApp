@@ -56,7 +56,6 @@ angular.module('directory.activitiesController', [])
                 if ($scope.materiaal.naam === 'Anders, namelijk:') {
                     var naam = document.getElementById('naam').value;
                     if (naam) {
-
                         if($scope.materiaalEdited) {
                             // Override the materiaal in the array
                             $scope.materialen.materialen[materiaalIndex] = {
@@ -72,10 +71,17 @@ angular.module('directory.activitiesController', [])
                         savesucces = true;
                     }
                 } else {
-                    // Add to the materialen array
-                    $scope.materialen.materialen.push({
-                        aantal: $scope.total, naam: $scope.materiaal.naam, specificatie: specificatie
-                    });
+                    if($scope.materiaalEdited) {
+                        // Override the materiaal in the array
+                        $scope.materialen.materialen[materiaalIndex] = {
+                            aantal: $scope.total, naam: $scope.materiaal.naam, specificatie: specificatie
+                        }
+                    } else {
+                        // Add to the materialen array
+                        $scope.materialen.materialen.push({
+                            aantal: $scope.total, naam: $scope.materiaal.naam, specificatie: specificatie
+                        });
+                    }
 
                     savesucces = true;
                 }
@@ -89,6 +95,13 @@ angular.module('directory.activitiesController', [])
 
                     // Reset all values
                     $scope.resetmateriaal();
+
+                    // Reset the highlight if you edited a materiaal
+                    if($scope.materiaalEdited) {
+                        document.getElementById('materiaal' + materiaalIndex).className = document.getElementById('materiaal' + materiaalIndex).className.replace(/\bhighlight\b/,'');
+                    }
+
+                    $scope.materiaalEdited = false;
                 }
             }
         }
@@ -104,13 +117,21 @@ angular.module('directory.activitiesController', [])
             }
         }
 
+        var lastMateriaalIndex = 0;
         $scope.editMateriaal = function(index) {
+            // Remove the highlight from the index selected before
+            document.getElementById('materiaal' + lastMateriaalIndex).className = document.getElementById('materiaal' + lastMateriaalIndex).className.replace(/\bhighlight\b/,'');
+            lastMateriaalIndex = index;
+            // Add the highlight to the new selected index
+            document.getElementById('materiaal' + index).className += " highlight";
+            
+            // Set all the stored values back to the input fields
             $scope.toShowArr[3] = true;
             $scope.total = $scope.materialen.materialen[index].aantal;
             $scope.specificatie_materiaal = $scope.materialen.materialen[index].specificatie;
+            document.getElementById('specificatie_materiaal').value = $scope.specificatie_materiaal; 
 
-            alert($scope.specificatie_materiaal);
-
+            // Check if there had been put a 'custom' materiaalNaam 
             var naam = $scope.materialen.materialen[index].naam;
             ActivitiesService.checkForCustomMateriaal(naam).then(function(bool) {
                 if(bool){
@@ -118,6 +139,7 @@ angular.module('directory.activitiesController', [])
                     $scope.customMateriaalNaam = naam;
                 } else {
                     $scope.materiaal.naam = naam;
+                    $scope.customMateriaalNaam = '';
                 }
             });
 
@@ -142,6 +164,10 @@ angular.module('directory.activitiesController', [])
                     if($scope.materialen.materialen.length < 1) {
                         $scope.showMateriaalHeader = false;
                     }
+
+                    // Reset materiaalEdited and reset values if you try to delete a Materiaal you wanted to edit
+                    $scope.materiaalEdited = false;
+                    $scope.resetmateriaal();
                 }
             });
         }
@@ -163,6 +189,9 @@ angular.module('directory.activitiesController', [])
         }
         checkForWerkzaamheden();
 
+        $scope.werkzaamheidEdited = false;
+        var werkzaamheidIndex;
+
         $scope.savewerkzaamheid = function () {
             var savesucces = false;
 
@@ -175,18 +204,32 @@ angular.module('directory.activitiesController', [])
                     var beschrijving = document.getElementById('beschrijving').value;
 
                     if (beschrijving) {
-                        // Add to the werkzaamheden array
-                        $scope.werkzaamheden.werkzaamheden.push({
-                            beschrijving: beschrijving, specificatie: specificatie
-                        });
+                        if($scope.werkzaamheidEdited) {
+                            // Override the werkzaamheid in the array
+                            $scope.werkzaamheden.werkzaamheden[werkzaamheidIndex] = {
+                                beschrijving: beschrijving, specificatie: specificatie
+                            }
+                        } else {
+                            // Add to the werkzaamheden array
+                            $scope.werkzaamheden.werkzaamheden.push({
+                                beschrijving: beschrijving, specificatie: specificatie
+                            });
+                        }
 
                         savesucces = true;
                     }
                 } else {
-                    // Add to the werkzaamheden array
-                    $scope.werkzaamheden.werkzaamheden.push({
-                        beschrijving: $scope.werkzaamheid.beschrijving, specificatie: specificatie
-                    });
+                    if($scope.werkzaamheidEdited) {
+                        // Override the werkzaamheid in the array
+                        $scope.werkzaamheden.werkzaamheden[werkzaamheidIndex] = {
+                            beschrijving: $scope.werkzaamheid.beschrijving, specificatie: specificatie
+                        }
+                    } else {
+                        // Add to the werkzaamheden array
+                        $scope.werkzaamheden.werkzaamheden.push({
+                            beschrijving: $scope.werkzaamheid.beschrijving, specificatie: specificatie
+                        });
+                    }
 
                     savesucces = true;
                 }
@@ -200,6 +243,13 @@ angular.module('directory.activitiesController', [])
 
                     // Reset all values
                     $scope.resetwerkzaamheid();
+
+                    // Reset the highlight if you edited a werkzaamheid
+                    if($scope.werkzaamheidEdited) {
+                        document.getElementById('werkzaamheid' + werkzaamheidIndex).className = document.getElementById('werkzaamheid' + werkzaamheidIndex).className.replace(/\bhighlight\b/,'');
+                    }
+
+                    $scope.werkzaamheidEdited = false;
                 }
             }
         }
@@ -212,6 +262,35 @@ angular.module('directory.activitiesController', [])
             for (var i = 0; i < selection.length; i++) {
                 selection[i].checked = false;
             }
+        }
+
+        var lastWerkzaamheidIndex = 0;
+        $scope.editWerkzaamheid = function(index) {
+            // Remove the highlight from the index selected before
+            document.getElementById('werkzaamheid' + lastWerkzaamheidIndex).className = document.getElementById('werkzaamheid' + lastWerkzaamheidIndex).className.replace(/\bhighlight\b/,'');
+            lastWerkzaamheidIndex = index;
+            // Add the highlight to the new selected index
+            document.getElementById('werkzaamheid' + index).className += " highlight";
+            
+            // Set all the stored values back to the input fields
+            $scope.toShowArr[5] = true;
+            $scope.specificatie_werkzaamheid = $scope.werkzaamheden.werkzaamheden[index].specificatie;
+            document.getElementById('specificatie_werkzaamheid').value = $scope.specificatie_werkzaamheid; 
+
+            // Check if there had been put a 'custom' werkzaamheidBeschrijving 
+            var beschrijving = $scope.werkzaamheden.werkzaamheden[index].beschrijving;
+            ActivitiesService.checkForCustomWerkzaamheid(beschrijving).then(function(bool) {
+                if(bool){
+                    $scope.werkzaamheid.beschrijving = 'Anders, namelijk:';
+                    $scope.customWerkzaamheidBeschrijving = beschrijving;
+                } else {
+                    $scope.werkzaamheid.beschrijving = beschrijving;
+                    $scope.customWerkzaamheidBeschrijving = '';
+                }
+            });
+
+            $scope.werkzaamheidEdited = true;
+            werkzaamheidIndex = index;
         }
 
         $scope.deleteWerkzaamheid = function(index) {
@@ -231,6 +310,10 @@ angular.module('directory.activitiesController', [])
                     if($scope.werkzaamheden.werkzaamheden.length < 1) {
                         $scope.showWerkzaamheidHeader = false;
                     }
+
+                    // Reset werkzaamheidEdited and reset values if you try to delete a Werkzaamheid you wanted to edit
+                    $scope.werkzaamheidEdited = false;
+                    $scope.resetwerkzaamheid();
                 }
             });
         }
