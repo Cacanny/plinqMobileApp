@@ -43,8 +43,8 @@
                                 {{materiaal.naam || "Selecteer een materiaal..."}} <i class="icon ion-arrow-down-b"></i>
                             </button>
                             <ion-item class="row noborder nopadding">
-                                <div class="col nopadding cssFade" ng-repeat="row in activities.materialen" ng-show="toShowArr[4]">
-                                    <div class="list">
+                                <div class="col nopadding cssFade addBackground" ng-repeat="row in activities.materialen" ng-show="toShowArr[4]">
+                                    <div class="list addBackground">
                                         <label class="item item-radio" ng-click="toShowArr[4]=false" ng-repeat="m in row">
                                             <input type="radio" ng-model="$parent.materiaal.naam" name="materialen" ng-value="m">
                                             <div class="item-content">

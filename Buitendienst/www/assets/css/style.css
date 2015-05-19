@@ -189,7 +189,8 @@ hr {
 .inline-button {
     right: 16px;
     padding: 0px 15px;
-    margin: -5px -16px;
+    margin: -5px -16px !important;
+    top: 5;
     height: 100% !important;
     position: absolute;
     border-color: #b2b2b2;

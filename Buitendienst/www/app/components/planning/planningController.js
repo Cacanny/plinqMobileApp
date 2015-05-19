@@ -16,6 +16,7 @@
 
             // Get the planning and werkzaamheden/materialen
             refresh(); // TODO EVERY X seconds!!!!!
+            //TODO: give a message like: 'Planning succesvol opgehaald op: <datumtijd>'
         });
 
         // listen for Offline event
