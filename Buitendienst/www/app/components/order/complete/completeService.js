@@ -2,17 +2,9 @@ angular.module('directory.completeService', [])
 
     .factory('CompleteService', function ($window, $q) {
 
-        var signaturePad;
+        var _canvas;
 
         return {
-            setSignaturePad: function(bool) {
-                signaturePad = bool;
-            },
-
-            getSignaturePad: function() {
-                return signaturePad;
-            },
-
             setSignatureImage: function(orderid, signature) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.handtekening = signature;
@@ -24,6 +16,14 @@ angular.module('directory.completeService', [])
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.handtekening);
                 return deferred.promise;
+            },
+
+            setCanvas: function(canvas) {
+                _canvas = canvas;
+            },
+
+            getCanvas: function() {
+                return _canvas;
             }
 
 

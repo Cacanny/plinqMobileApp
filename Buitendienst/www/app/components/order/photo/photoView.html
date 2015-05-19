@@ -2,12 +2,13 @@
     <ion-item class="item-divider listheader" ng-click="toggle(7)">
         Foto's
     </ion-item>
-    <ion-item ng-if="toShowArr[7]" ng-cloak>
-        <div class="button add-photo padding ion-ios-camera" ng-click="takePicture()">
+    <ion-item class="row" ng-if="toShowArr[7]" ng-cloak>
+        <div class="col fixedwidth-100">
+            <div class="button add-photo padding ion-ios-camera" ng-click="takePicture()"></div>
         </div>
-        <div class="photo-container">
-            <ion-scroll direction="x" class="photo-container">
-                <img alt="" ng-repeat="photo in allPhotos" image-lazy-src="{{::photo}}" class="photo cover" ng-click="showImages($index)" />
+        <div class="col photo-container">
+            <ion-scroll direction="x" height="100px">
+                <img alt="" ng-repeat="photo in allPhotos" ng-src="{{::photo}}" class="photo cover" ng-click="showImages($index)" />
             </ion-scroll>
         </div>
     </ion-item>

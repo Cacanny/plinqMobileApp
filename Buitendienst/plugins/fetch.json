@@ -40,5 +40,11 @@
             "type": "registry",
             "id": "org.apache.cordova.media"
         }
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar"
+        }
     }
 }

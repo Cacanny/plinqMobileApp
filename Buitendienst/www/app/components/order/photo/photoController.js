@@ -1,7 +1,7 @@
 
 angular.module('directory.photoController', [])
 
-    .controller('PhotoCtrl', function ($scope, PhotoService, $ionicModal, $ionicPopup) {
+    .controller('PhotoCtrl', function ($scope, PhotoService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
       
         // Function to get the images from the LocalStorage and story an array with these images
         PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
@@ -11,10 +11,10 @@ angular.module('directory.photoController', [])
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
             $scope.activeSlide = index;
-            $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
+            $scope.showPhoto('app/components/order/photo/photoPopoverView/photoPopoverView.html');
         }
 
-        $scope.showModal = function (templateUrl) {
+        $scope.showPhoto = function (templateUrl) {
             $ionicModal.fromTemplateUrl(templateUrl, {
                 scope: $scope,
                 backdropClickToClose: false,
@@ -29,7 +29,11 @@ angular.module('directory.photoController', [])
         $scope.closePicture = function () {
             $scope.photoModal.remove();
         }
-        // End of Modal 
+        
+        // Cleanup the modal when we're done with it!
+        $scope.$on('$destroy', function () {
+            $scope.photoModal.remove();
+        });
 
         // Camera function 
         $scope.takePicture = function () {
@@ -47,15 +51,15 @@ angular.module('directory.photoController', [])
         }
 
         // Deletes the currently selected photo 
-        $scope.deletePicture = function (index) {
+        $scope.deletePicture = function () {
             var confirmPopup = $ionicPopup.confirm({
-                title: 'Verwijder Foto',
+                title: '<b>Verwijder Foto</b>',
                 template: 'Wilt u deze foto verwijderen?'
             });
             confirmPopup.then(function (res) {
                 if (res) {
                     // Delete image from the array and give that array to the service to delete from LocalStorage
-                    $scope.allPhotos.splice(index, 1);
+                    $scope.allPhotos.splice($ionicSlideBoxDelegate.currentIndex(), 1);
 
                     $scope.activeSlide -= 1;
                     if ($scope.activeSlide === -1) {
@@ -65,14 +69,10 @@ angular.module('directory.photoController', [])
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
 
                     if($scope.allPhotos.length !== 0) {
-                        $scope.showModal('app/components/order/photo/photoPopoverView/photoPopoverView.html');
+                        $scope.showPhoto('app/components/order/photo/photoPopoverView/photoPopoverView.html');
                     }
                 }
             });
         }
 
-        // Function tracks the currently selected image, this is needed for deletion.
-        $scope.indexChanged = function(index) {
-            $scope.activeSlide = index;
-        }
     });

@@ -44,21 +44,36 @@ body {
 .fixedwidth {
     max-width: 120px !important;
     width: 120px !important;
+    min-width: 120px !important;
+    display: inline-block;
 }
 
 .fixedwidth-50 {
     max-width: 50px !important;
     width: 50px !important;
+    min-width: 50px !important;
+    display: inline-block;
 }
 
 .fixedwidth-60 {
     max-width: 60px !important;
     width: 60px !important;
+    min-width: 60px !important;
+    display: inline-block;
+}
+
+.fixedwidth-100 {
+    max-width: 100px !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    display: inline-block;
 }
 
 .fixedwidth-175 {
     max-width: 175px !important;
     width: 175px !important;
+    min-width: 175px !important;
+    display: inline-block;
 }
 
 .card .item .row .col h1, .card .item .row .col h3 {
@@ -240,8 +255,6 @@ textarea {
     border-radius: 5px;
     border-color: #b2b2b2;
     position: relative;
-    display: inline-block;
-    float: left;
     font-size: 45px;
     text-align: center !important;
     vertical-align: middle !important;

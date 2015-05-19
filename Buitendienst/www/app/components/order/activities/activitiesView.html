@@ -6,7 +6,7 @@
         <div class="list list-inset nomargin-top">
             <ion-item class="item-divider">
                 <i class="icon ion-ios-list-outline"></i> Materialen
-                <button class="custombtn" ng-click="toggle(3);$event.stopPropagation()">
+                <button class="custombtn removeAfterFinish" ng-click="toggle(3);$event.stopPropagation()">
                     <i class="icon ion-plus"></i>
                 </button>
             </ion-item>
@@ -20,7 +20,7 @@
                 <div class="col fixedwidth-60">{{m.aantal}}</div>
                 <div class="col">{{m.naam}}</div>
                 <div class="col">{{m.specificatie}}</div>
-                <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteMateriaal($index)"><i class="icon ion-trash-a"></i></button> <button class="inline-button" ng-click="editMateriaal($index)"><i class="icon ion-edit"></i></button></i></div>
+                <div class="col fixedwidth"><button class="inline-button moreleft removeAfterFinish" ng-click="deleteMateriaal($index)"><i class="icon ion-trash-a"></i></button> <button class="inline-button removeAfterFinish" ng-click="editMateriaal($index)"><i class="icon ion-edit"></i></button></i></div>
             </ion-item>
             <ion-item ng-show="toShowArr[3]" class="row item-text-wrap addBackground">
                 <div class="col">
@@ -75,11 +75,10 @@
                 </div>
             </ion-item>
         </div>
-
         <ion-list type="list-inset">
             <ion-item class="item-divider">
                 <i class="icon ion-wrench"></i> Uitgevoerde werkzaamheden
-                <button class="custombtn" ng-click="toggle(5);$event.stopPropagation()">
+                <button class="custombtn removeAfterFinish" ng-click="toggle(5);$event.stopPropagation()">
                     <i class="icon ion-plus"></i>
                 </button>
             </ion-item>
@@ -91,7 +90,7 @@
             <ion-item id="werkzaamheid{{$index}}" class="row item-text-wrap" ng-repeat="w in werkzaamheden.werkzaamheden track by $index">
                 <div class="col">{{w.beschrijving}}</div>
                 <div class="col">{{w.specificatie}}</div>
-                <div class="col fixedwidth"><button class="inline-button moreleft" ng-click="deleteWerkzaamheid($index)"><i class="icon ion-trash-a"></i></button> <button class="inline-button" ng-click="editWerkzaamheid($index)"><i class="icon ion-edit"></i></button></i></div>
+                <div class="col fixedwidth"><button class="removeAfterFinish inline-button moreleft" ng-click="deleteWerkzaamheid($index)"><i class="icon ion-trash-a"></i></button> <button class="removeAfterFinish inline-button" ng-click="editWerkzaamheid($index)"><i class="icon ion-edit"></i></button></i></div>
             </ion-item>
             <ion-item ng-show="toShowArr[5]" class="row item-text-wrap addBackground">
                 <div class="col">

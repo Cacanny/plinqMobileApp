@@ -34,15 +34,16 @@ angular.module('directory', [
         'directory.photoController'
 ])
 
-    .config(function ($compileProvider) {
+    .config(function ($compileProvider, $ionicConfigProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content):|data:image\//);
+        $ionicConfigProvider.backButton.text('Terug').icon('ion-chevron-left');
+        $ionicConfigProvider.navBar.alignTitle('center');
     })
+
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
-            if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
-                StatusBar.styleDefault();
-            }
-
+            // org.apache.cordova.statusbar required
+            // var showFullScreen = ionic.Platform.showFullScreen(true);
+            StatusBar.hide();
         });
     });

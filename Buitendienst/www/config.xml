@@ -9,7 +9,7 @@
         Buitendienst Mobile App - PLINQ BV (www)
     </description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">
-        Danny Hoeve en Mike Mijnheer
+        Danny Hoeve and Mike Mijnheer
     </author>
     <content src="index.html"/>
     <access origin="*"/>
@@ -19,6 +19,7 @@
     <preference name="DisallowOverscroll" value="true"/>
     <preference name="BackupWebStorage" value="none"/>
     <preference name="Orientation" value="landscape" />
+    <preference name="Fullscreen" value="true" />
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true"/>
     </feature>

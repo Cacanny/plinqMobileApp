@@ -7,12 +7,23 @@ angular.module('directory.completeController', [])
 
         $scope.openSignature = function() {
             $scope.openModal('app/components/order/complete/signature/signaturepadView.html');
-            CompleteService.setSignaturePad(true);
+            var canvas = CompleteService.getCanvas();
+
+            if(canvas) {
+                var signaturePad = new SignaturePad(canvas);
+                signaturePad.backgroundColor = "white";
+
+                signaturePad.minWidth = 2;
+                signaturePad.maxWidth = 4.5;
+
+                CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
+                    signaturePad.fromDataURL(signature);
+                });
+            }
         }
 
         $scope.closeSignature = function () {
             $scope.modal.hide();
-            CompleteService.setSignaturePad(false);
             
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
             	$scope._signatureImage = signature;

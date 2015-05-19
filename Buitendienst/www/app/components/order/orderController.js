@@ -3,19 +3,35 @@
     .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
+
+            // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
+            $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+
+            if($scope.orderFinished) {
+                angular.element(document).ready(function () {
+                    var elements = document.getElementsByClassName('removeAfterFinish');
+
+                    for(var index = 0; index < elements.length; index += 1) {
+                        elements[index].style.display = 'none';
+                    }
+
+                    var comment = document.getElementById('comment');
+                    if(comment) {
+                        comment.disabled = true;
+                    }
+                });
+            }
         });
 
         // Get the date of today, used at 'Afronding'
         $scope.date = new Date();
 
-        $scope.checkOrder = function () {
-            // First check if the order already had been sent with the 'Afgerond' status
-            var orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+        $scope.checkOrder = function () {       
 
             var alertMessage = '';
             var alertTitle = 'Fout!';
 
-            if(orderFinished) {
+            if($scope.orderFinished) {
                 alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
                 showAlert(alertMessage, alertTitle);
             } else {
