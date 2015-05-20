@@ -98,18 +98,20 @@
             var now = new Date().getTime();
             var _10SecondsFromNow = new Date(now + 10 * 1000);
             alert('daar gaan we ' + _10SecondsFromNow);
-            $cordovaLocalNotification.add({
-                id: "1234",
+            $cordovaLocalNotification.schedule({
+                id: 1,
                 at: _10SecondsFromNow,
-                message: "This is a message",
+                text: "This is a message",
                 title: "This is a title"
             }).then(function () {
                 alert("The notification has been set");
             });
         };
+
+        alert(JSON.stringify($cordovaLocalNotification));
  
         $scope.isScheduled = function() {
-            $cordovaLocalNotification.isScheduled("1234").then(function(isScheduled) {
+            $cordovaLocalNotification.isScheduled(1).then(function(isScheduled) {
                 alert("Notification 1234 Scheduled: " + isScheduled);
             });
         }

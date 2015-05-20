@@ -6,7 +6,6 @@ angular.module('directory', [
         'ngCordova',
         'ionicLazyLoad',
         'directory.appRoutes',
-        'directory.notificationController',
         'directory.planningService',
         'directory.planningController',
         'directory.orderService',
@@ -41,7 +40,7 @@ angular.module('directory', [
         $ionicConfigProvider.navBar.alignTitle('center');
     })
 
-    .run(function ($ionicPlatform, $window, $rootScope, $timeout, $cordovaLocalNotification) {
+    .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
             // org.apache.cordova.statusbar required
             if(window.StatusBar){
