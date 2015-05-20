@@ -1,11 +1,11 @@
 ﻿angular.module('directory.planningController', [])
 
-    .controller('PlanningCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $ionicLoading, PlanningService, OrderService, $state) {
+    .controller('PlanningCtrl', function ($scope, $rootScope, $window, $cordovaNetwork, $cordovaLocalNotification, $ionicLoading, PlanningService, OrderService, $state) {
         // Some initial variables
         $scope.orders = [];
-        $scope.orderstatus = 'In behandeling';
 
         //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
+        // $window.localStorage.clear();
         refresh();
         $scope.connection = 'Online';
 
@@ -33,7 +33,11 @@
                 OrderService.checkOrderStatus(orders).then(function(statusArr){
                     for(var index = 0; index < $scope.orders.length; index += 1) {
                         if(statusArr[index] !== ''){
-                            $scope.orders[index].status = statusArr[index];
+                            if(statusArr[index] === 'Vervolgactie') {
+                                $scope.orders[index].status = 'In behandeling';
+                            } else {
+                                $scope.orders[index].status = statusArr[index];
+                            }
                         }
                     }
                 });
@@ -76,10 +80,42 @@
         // Get the current date and convert it to dd-mm-yyyy format
         var date = new Date();
         $scope.date = convertDate(date);
+        $scope.time = convertTime(date);
+
+        function convertTime(inputFormat) {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(inputFormat);
+            return [pad(d.getHours()), pad(d.getMinutes())].join(':');
+        }
 
         function convertDate(inputFormat) {
             function pad(s) { return (s < 10) ? '0' + s : s; }
             var d = new Date(inputFormat);
             return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
         }
+
+        $scope.add = function() {
+            var now = new Date().getTime();
+            var _10SecondsFromNow = new Date(now + 10 * 1000);
+            alert('daar gaan we ' + _10SecondsFromNow);
+            $cordovaLocalNotification.add({
+                id: "1234",
+                at: _10SecondsFromNow,
+                message: "This is a message",
+                title: "This is a title"
+            }).then(function () {
+                alert("The notification has been set");
+            });
+        };
+ 
+        $scope.isScheduled = function() {
+            $cordovaLocalNotification.isScheduled("1234").then(function(isScheduled) {
+                alert("Notification 1234 Scheduled: " + isScheduled);
+            });
+        }
+
+        $scope.$on("$cordovaLocalNotification:schedule", function(id, state, json) {
+            alert("Added a notification");
+        });
+
     });

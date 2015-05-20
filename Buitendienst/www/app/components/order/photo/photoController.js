@@ -8,6 +8,21 @@ angular.module('directory.photoController', [])
             $scope.allPhotos = photos;
         });
 
+        // If the photo tab needs to be opened
+        $scope.showPhotoBool = false;
+        $scope.showPhotos = function() {
+            // Check if the order has been sent with the 'Afgerond' status, if so, disable the add button
+            if($scope.orderFinished) {
+                angular.element(document).ready(function () {
+                    var elements = document.getElementsByClassName('removeAfterFinish');
+                    for(var index = 0; index < elements.length; index += 1) {
+                        elements[index].style.display = 'none';
+                    }
+                });
+            }
+            $scope.showPhotoBool = !$scope.showPhotoBool;
+        }
+
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
             $scope.activeSlide = index;
@@ -20,6 +35,15 @@ angular.module('directory.photoController', [])
                 backdropClickToClose: false,
                 animation: 'slide-in-up'
             }).then(function (modal) {
+                // Check if the order has been sent with the 'Afgerond' status, if so, disable the remove button
+                if($scope.orderFinished) {
+                    angular.element(document).ready(function () {
+                        var elements = document.getElementsByClassName('removeAfterFinish');
+                        for(var index = 0; index < elements.length; index += 1) {
+                            elements[index].style.display = 'none';
+                        }
+                    });
+                }
                 $scope.photoModal = modal;
                 $scope.photoModal.show();
             });
@@ -32,7 +56,9 @@ angular.module('directory.photoController', [])
         
         // Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function () {
-            $scope.photoModal.remove();
+            if($scope.photoModal) {
+                $scope.photoModal.remove();
+            }
         });
 
         // Camera function 
@@ -73,6 +99,10 @@ angular.module('directory.photoController', [])
                     }
                 }
             });
+        }
+
+        $scope.slideChanged = function(index) {
+            $ionicSlideBoxDelegate.update();
         }
 
     });

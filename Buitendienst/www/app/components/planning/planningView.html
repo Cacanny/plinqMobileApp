@@ -4,9 +4,12 @@
         <button class="button" ng-click="refresh()"><i class="icon ion-refresh positive"></i></button>
     </ion-nav-buttons>
     <ion-content has-bouncing="true" padding="true">
+        {{time}}
+        <button class="button" ng-click="add()">Add notification</button>
+        <button class="button" ng-click="isScheduled()">Is Scheduled</button>
         <div ng-repeat="(key, value) in orders | groupBy:'plandatum':true">
             <div class="title">
-                <h3 ng-if="key == date">Vandaag, {{::key}}</h3>
+                <h3 ng-if="key == date" style="margin-top: 40px;">Vandaag, {{::key}}</h3>
                 <h3 ng-if="key != date" style="margin-top: 40px;">{{::key}}</h3>
             </div>
             <hr/>

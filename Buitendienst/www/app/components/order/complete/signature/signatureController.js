@@ -45,7 +45,7 @@
             function resizeCanvas() {
                 var ratio = window.devicePixelRatio || 1;
                 canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight - 96; 
+                canvas.height = window.innerHeight - 116; 
             }
         });
     

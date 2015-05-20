@@ -6,6 +6,7 @@ angular.module('directory', [
         'ngCordova',
         'ionicLazyLoad',
         'directory.appRoutes',
+        'directory.notificationController',
         'directory.planningService',
         'directory.planningController',
         'directory.orderService',
@@ -40,10 +41,15 @@ angular.module('directory', [
         $ionicConfigProvider.navBar.alignTitle('center');
     })
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $window, $rootScope, $timeout, $cordovaLocalNotification) {
         $ionicPlatform.ready(function () {
             // org.apache.cordova.statusbar required
-            // var showFullScreen = ionic.Platform.showFullScreen(true);
-            StatusBar.hide();
+            if(window.StatusBar){
+                StatusBar.hide();
+            }
+
+            if(ionic.Platform.isIOS()) {
+                window.plugin.notification.local.promptForPermission();
+            }
         });
     });

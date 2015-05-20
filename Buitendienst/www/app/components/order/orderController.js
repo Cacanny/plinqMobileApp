@@ -124,21 +124,30 @@
 
         $scope.addFollowup = function() {
             OrderService.getFollowup($scope.order.orderid).then(function(text){
-                // A confirm dialog
-                var confirmPopup = $ionicPopup.confirm({
+                // A custom popup
+                var myPopup = $ionicPopup.confirm({
                     title: '<b>Vervolgactie</b>',
                     template: 'Voer een vervolgactie in:<br/>'
                                 + '<div class="item item-input">'
                                 + '<textarea id="followup" rows="8">' + text + '</textarea>'
-                                + '</div>'
+                                + '</div>',
+                    buttons: [
+                          { text: 'Cancel' },
+                          {
+                            text: '<b>OK</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                              if (!document.getElementById('followup').value) {
+                                //don't allow the user to close unless he enters a 'vervolgactie'
+                                e.preventDefault();
+                              } else {
+                                OrderService.setFollowup($scope.order.orderid, document.getElementById('followup').value);
+                                $scope.sendOrder('Vervolgactie');
+                              }
+                            }
+                          }
+                        ]
                 });
-                
-                confirmPopup.then(function(res) {
-                    if(res) {
-                        OrderService.setFollowup($scope.order.orderid, document.getElementById('followup').value);
-                        $scope.sendOrder('Vervolgactie');
-                    }
-                }); 
             });    
         }
 

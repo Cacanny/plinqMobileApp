@@ -1,14 +1,18 @@
-﻿<div class="modal transparent image-modal has-header">
+﻿<ion-modal-view class="modal transparent image-modal">
     <ion-header-bar class='bar-stable'>
         <h1 class='title'> Foto's </h1>
         <button class="button signature-back-button" ng-click="closePicture()"><i class="icon ion-ios-arrow-back"></i> Terug</button>
-        <button class="button button-clear icon ion-trash-a pull-right" ng-click="deletePicture()"></button>
+        <button class="button button-clear icon ion-trash-a pull-right removeAfterFinish" ng-click="deletePicture()"></button>
     </ion-header-bar>
-    <ion-slide-box show-pager="true" active-slide="activeSlide">
-        <ion-slide ng-repeat="photo in allPhotos">
-            <ion-content direction="x">
-                <img ng-src="{{::photo}}" class="fullscreen-image" />
-            </ion-content>
-        </ion-slide>
-    </ion-slide-box>
-</div>
+        <ion-slide-box on-slide-changed="slideChanged($index)" show-pager="true" active-slide="activeSlide" ng-cloak>
+            <ion-slide ng-repeat="photo in allPhotos">
+                <ion-content direction="x" has-header="true">
+                <!-- <ion-content direction="x" class="fullscreen-wrapper"> -->
+                <!-- <div class="fullscreen-wrapper"> -->
+                    <img ng-src="{{::photo}}" class="fullscreen-image" />
+                <!-- </div> -->
+                </ion-content>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-modal-view>

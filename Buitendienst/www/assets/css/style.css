@@ -189,8 +189,8 @@ hr {
 .inline-button {
     right: 16px;
     padding: 0px 15px;
-    margin: -5px -16px !important;
-    top: 5;
+    margin: 0px -16px !important;
+    top: 0px !important;
     height: 100% !important;
     position: absolute;
     border-color: #b2b2b2;
@@ -263,6 +263,7 @@ textarea {
 }
 
 .scroll {
+    min-height: 100%;
     min-width: 100%;
 }
 
@@ -288,7 +289,7 @@ textarea {
 }
 
 .transparent {
-    background: black !important;
+    background: white !important;
 }
 
 .fullscreen-image {
@@ -301,6 +302,12 @@ textarea {
     overflow: auto;
     right: 0;
     top: 0;
+}
+
+.fullscreen-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+    text-align: center;
 }
 
 .slider {
@@ -324,14 +331,14 @@ textarea {
 }
 
 /* Some CSS for displaying header for a modal screen correctly in iOS */
-.platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .bar-header > * {
-    margin-top: 0;
+.platform-ios.platform-cordova:not(.fullscreen) .modal .bar.bar-header > * {
+    margin-top: 20px !important;
 }
 
-.platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .bar-header {
-    height: 44px;
+.platform-ios.platform-cordova:not(.fullscreen) .modal .bar.bar-header {
+    height: 64px !important;
 }
 
-.platform-ios.platform-cordova:not(.fullscreen) .modal-wrapper .has-header {
-    top: 44px;
+.platform-ios.platform-cordova:not(.fullscreen) .modal .has-header {
+    top: 64px !important;
 }

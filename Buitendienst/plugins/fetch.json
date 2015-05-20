@@ -46,5 +46,11 @@
             "type": "registry",
             "id": "org.apache.cordova.statusbar"
         }
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+        "source": {
+            "type": "registry",
+            "id": "de.appplant.cordova.plugin.local-notification"
+        }
     }
 }
