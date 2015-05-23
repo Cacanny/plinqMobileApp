@@ -76,6 +76,17 @@ body {
     display: inline-block;
 }
 
+.fixedwidth-210 {
+    max-width: 210px !important;
+    width: 210px !important;
+    min-width: 210px !important;
+    display: inline-block;
+}
+
+.alignright {
+    text-align: right;
+}
+
 .card .item .row .col h1, .card .item .row .col h3 {
     color: #565656 !important;
 }

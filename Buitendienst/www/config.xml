@@ -23,4 +23,9 @@
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true"/>
     </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
+
+    <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.8.1" />
 </widget>

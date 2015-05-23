@@ -1,17 +1,18 @@
 ﻿angular.module('directory.signatureController', [])
 
-    .controller('SignatureCtrl', function ($scope, CompleteService) {
+    .controller('SignatureCtrl', function ($scope, CompleteService, OrderService) {
         angular.element(document).ready(function () {
+            
+            $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
             // Check if the order has been sent with the 'Afgerond' status, if so, disable the two buttons
-            if($scope.orderFinished) {
-                angular.element(document).ready(function () {
+            OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                if($scope.orderFinished && !bool) {
                     var elements = document.getElementsByClassName('removeAfterFinish');
-                    console.log(elements);
                     for(var index = 0; index < elements.length; index += 1) {
                         elements[index].style.display = 'none';
                     }
-                });
-            }
+                }
+            });
 
             // This has to be called everytime the Modal opens
             var canvas = document.getElementById('signatureCanvas');
@@ -45,7 +46,12 @@
             function resizeCanvas() {
                 var ratio = window.devicePixelRatio || 1;
                 canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight - 116; 
+
+                if(ionic.Platform.isIOS()) {
+                    canvas.height = window.innerHeight - 116; 
+                } else {
+                    canvas.height = window.innerHeight - 96;
+                }
             }
         });
     

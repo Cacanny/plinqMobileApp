@@ -1,6 +1,6 @@
 ﻿angular.module('directory.orderService', [])
 
-    .factory('OrderService', function (PlanningService, $q, $window, $http) {
+    .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup) {
 
         var orders;
         var signature = false;
@@ -62,19 +62,65 @@
             postOrder: function (_orderId, status) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
 
+                if(status !== 'Queue') {
+                    if(status === 'Afgerond') {
+                        parsedItem.status = 'Afgerond';
+                    } else {
+                        parsedItem.status = 'Vervolgactie';
+                    }
+                }
+
+                $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
+
                 return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
-                        if(status === 'Afgerond') {
-                            parsedItem.status = 'Afgerond';
-                        } else {
-                            parsedItem.status = 'Vervolgactie';
-                        }
-                        $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
+                        // Success!
+                        console.log(response);
                     })
                     .error(function () {
-                        alert('ERROR: Order ' + _orderId + ' kon niet worden verzonden, probeer opnieuw.');
+                        var alertPopup = $ionicPopup.alert({
+                            title: '<b>Fout!</b>',
+                            template: 'Er is iets fout gegaan bij het verzenden van de order! <br/><br/>Order ' + _orderId + ' wordt in de wachtrij gezet. Er wordt automatisch geprobeerd deze order opnieuw te verzenden (bij internetconnectie).'
+                        });
+
+                        // Add the order to the queue if it's not already in there
+                        var queue = JSON.parse($window.localStorage.getItem('queue'));
+                        var addToQueue = true;
+                        for(var index = 0; index < queue.length; index += 1) {
+                            if(queue[index] === _orderId) {
+                                addToQueue = false;
+                                break;
+                            }
+                        }
+
+                        if(addToQueue) {
+                            queue.push(_orderId);
+                            $window.localStorage.setItem('queue', JSON.stringify(queue));
+                        }
                     });
             }, 
+
+            inQueueBool: function(_orderId) {
+                var bool = false;
+                var queue = JSON.parse($window.localStorage.getItem('queue'));
+
+                for(var index = 0; index < queue.length; index += 1) {
+                    if(queue[index] === _orderId) {
+                        bool = true;
+                        break;
+                    }
+                }
+                var deferred = $q.defer();
+                deferred.resolve(bool);
+                return deferred.promise;
+            },
+
+            getOrderStatus: function(_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem.status);
+                return deferred.promise;
+            },
 
             checkForSignature: function(_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));

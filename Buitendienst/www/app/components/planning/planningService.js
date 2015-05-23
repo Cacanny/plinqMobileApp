@@ -1,6 +1,6 @@
 ﻿angular.module('directory.planningService', [])
 
-    .factory('PlanningService', function ($window, $http) {
+    .factory('PlanningService', function ($window, $http, $q) {
 
         return {
             setActivities: function () {
@@ -16,6 +16,23 @@
                 return JSON.parse($window.localStorage.getItem('activities') || '{}');
             },
             
+            setInitialQueue: function() {
+                if($window.localStorage.getItem('queue') === null) {
+                    $window.localStorage.setItem('queue', JSON.stringify([]));
+                }
+            },
+
+            setQueue: function(queueArr) {
+                $window.localStorage.setItem('queue', JSON.stringify(queueArr));
+            },
+
+            getQueue: function() {
+                var parsedItem = JSON.parse($window.localStorage.getItem('queue'));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem);
+                return deferred.promise;
+            },
+
             setPlanning: function () {
                 return $http.get("orders.json")
                     .success(function (response) {
@@ -33,17 +50,17 @@
                     var fullOrder = {
                         orderid: order.orderid,
                         status: order.status,
+                        vervolgactie: '',
+                        verzenddatum: '',
                         klant: '',
                         werkzaamheden: [],
                         materialen: [],
                         opmerking: '',
                         fotos: [],
-                        werkbon: '',
-                        handtekening: '',
-                        verzenddatum: '',
-                        vervolgactie: '',
-                        monteur: 'Arno'
+                        werkbon: '', 
+                        handtekening: ''
                     }
+                    // Add 'Monteur' in werkbon
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));
                 }
             }

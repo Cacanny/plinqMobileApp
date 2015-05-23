@@ -1,7 +1,7 @@
 
 angular.module('directory.photoController', [])
 
-    .controller('PhotoCtrl', function ($scope, PhotoService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
+    .controller('PhotoCtrl', function ($scope, PhotoService, OrderService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
       
         // Function to get the images from the LocalStorage and story an array with these images
         PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
@@ -11,16 +11,25 @@ angular.module('directory.photoController', [])
         // If the photo tab needs to be opened
         $scope.showPhotoBool = false;
         $scope.showPhotos = function() {
-            // Check if the order has been sent with the 'Afgerond' status, if so, disable the add button
-            if($scope.orderFinished) {
-                angular.element(document).ready(function () {
-                    var elements = document.getElementsByClassName('removeAfterFinish');
-                    for(var index = 0; index < elements.length; index += 1) {
-                        elements[index].style.display = 'none';
-                    }
-                });
-            }
+            checkIfOrderFinished();
+
             $scope.showPhotoBool = !$scope.showPhotoBool;
+        }
+
+        function checkIfOrderFinished(){
+            $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+           
+            // Check if the order has been sent with the 'Afgerond' status, if so, disable the add button
+            OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                if($scope.orderFinished && !bool) {
+                    angular.element(document).ready(function () {
+                        var elements = document.getElementsByClassName('removeAfterFinish');
+                        for(var index = 0; index < elements.length; index += 1) {
+                            elements[index].style.display = 'none';
+                        }
+                    });
+                }
+            });
         }
 
         // Opens a modal screen that shows the image fullscreen
@@ -35,15 +44,7 @@ angular.module('directory.photoController', [])
                 backdropClickToClose: false,
                 animation: 'slide-in-up'
             }).then(function (modal) {
-                // Check if the order has been sent with the 'Afgerond' status, if so, disable the remove button
-                if($scope.orderFinished) {
-                    angular.element(document).ready(function () {
-                        var elements = document.getElementsByClassName('removeAfterFinish');
-                        for(var index = 0; index < elements.length; index += 1) {
-                            elements[index].style.display = 'none';
-                        }
-                    });
-                }
+                checkIfOrderFinished();
                 $scope.photoModal = modal;
                 $scope.photoModal.show();
             });
