@@ -26,9 +26,9 @@
                 return deferred.promise;
             },
 
-            checkOrderStatus: function(orderArr) {
+            checkOrderStatus: function (orderArr) {
                 var statusArr = [];
-                for(var index = 0; index < orderArr.length; index += 1) {
+                for (var index = 0; index < orderArr.length; index += 1) {
                     var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderArr[index].orderid));
                     statusArr.push(parsedItem.status);
                 }
@@ -37,22 +37,22 @@
                 return deferred.promise;
             },
 
-            checkIfFinished: function(_orderId) {
+            checkIfFinished: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                if(parsedItem.status === 'Afgerond') {
+                if (parsedItem.status === 'Afgerond') {
                     return true;
                 } else {
                     return false;
                 }
             },
 
-            setFollowup: function(orderid, text) {
+            setFollowup: function (orderid, text) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.vervolgactie = text;
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 
-            getFollowup: function(orderid) {
+            getFollowup: function (orderid) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.vervolgactie);
@@ -64,7 +64,7 @@
 
                 return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
-                        if(status === 'Afgerond') {
+                        if (status === 'Afgerond') {
                             parsedItem.status = 'Afgerond';
                         } else {
                             parsedItem.status = 'Vervolgactie';
@@ -74,25 +74,32 @@
                     .error(function () {
                         alert('ERROR: Order ' + _orderId + ' kon niet worden verzonden, probeer opnieuw.');
                     });
-            }, 
+            },
 
-            checkForSignature: function(_orderId) {
+            checkForSignature: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                if(parsedItem.handtekening !== '') {
+                if (parsedItem.handtekening !== '') {
                     return true;
                 } else {
                     return false;
                 }
             },
 
-            checkForWerkbon: function(_orderId) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                // if(parsedItem.werkbon !== '') {
-                //     return true;
-                // } else {
-                //     return false;
-                // }
-                return true;
+            setGeolocation: function (latitude, longitude) {
+                var _position = {
+                    latitude: latitude,
+                    longitude: longitude
+                }
+                $window.localStorage.setItem('geoLocation', JSON.stringify(_position));
+            },
+
+            getGeolocation: function () {
+                return glocation = {
+                    lat: $window.localStorage.getItem('geoLocation').latitude,
+                    lng: $window.localStorage.getItem('geoLocation').longitude
+                }
             }
+
+
         }
     });

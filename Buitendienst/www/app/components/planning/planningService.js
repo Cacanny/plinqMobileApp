@@ -32,6 +32,16 @@
                 if($window.localStorage.getItem('order' + order.orderid) === null) {
                     var fullOrder = {
                         orderid: order.orderid,
+                        start: {
+                            datum: '',
+                            lat: '',
+                            long: ''
+                        },
+                        eind: {
+                            datum: '',
+                            lat: '',
+                            long: ''
+                        },
                         status: '',
                         klant: '',
                         werkzaamheden: [],
@@ -39,7 +49,12 @@
                         opmerking: '',
                         fotos: [],
                         werkbon: '',
-                        handtekening: '',
+                        handtekening: {
+                            image: '',
+                            datum: '',
+                            lat: '',
+                            long: ''
+                        },
                         verzenddatum: '',
                         vervolgactie: '',
                         monteur: 'Arno'

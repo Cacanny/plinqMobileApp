@@ -1,6 +1,6 @@
 ﻿angular.module('directory.signatureController', [])
 
-    .controller('SignatureCtrl', function ($scope, CompleteService) {
+    .controller('SignatureCtrl', function ($scope, CompleteService, OrderService) {
         angular.element(document).ready(function () {
             // Check if the order has been sent with the 'Afgerond' status, if so, disable the two buttons
             if($scope.orderFinished) {
@@ -36,6 +36,7 @@
                 if(!signaturePad.isEmpty()) {
                     var sigImg = signaturePad.toDataURL();
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
+                    $scope.getCurrentGeoLocation();
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);

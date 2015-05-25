@@ -9,7 +9,6 @@
             $scope.showHistory = false;
             
         }
-        console.log("history is empty or false? " +$scope.showHistory);
         var shouldRunFilter = [];
         var originalNote = [];
 
@@ -20,8 +19,6 @@
                     var notitie = $scope.order.orderhistorie[index].vervolgactie;
                     originalNote.push(notitie);
                     shouldRunFilter.push(false);
-                    console.log("Orinal note is nu " + originalNote);
-                    console.log("NOtitie note is nu " + notitie);
                     $scope.order.orderhistorie[index].vervolgactie = $filter('getSlice')(notitie);
                 }
             }
@@ -30,10 +27,8 @@
 
         // Toggle the filter 'getSlice' on click
         $scope.toggleHistoryFilter = function (_notitie, index) {
-            console.log("waardes van notitie en index zijn? " + _notitie + index);
             if (shouldRunFilter[index]) {
                 shouldRunFilter[index] = false;
-                console.log("wat is de shouldrun arrya inhouds? " + shouldRunFilter);
                 $scope.order.orderhistorie[index].vervolgactie = $filter('getSlice')(_notitie);
             } else {
                 shouldRunFilter[index] = true;

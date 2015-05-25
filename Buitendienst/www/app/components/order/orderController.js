@@ -1,22 +1,22 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup) {
+    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup, $cordovaGeolocation) {
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
 
             // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
             $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
 
-            if($scope.orderFinished) {
+            if ($scope.orderFinished) {
                 angular.element(document).ready(function () {
                     var elements = document.getElementsByClassName('removeAfterFinish');
 
-                    for(var index = 0; index < elements.length; index += 1) {
+                    for (var index = 0; index < elements.length; index += 1) {
                         elements[index].style.display = 'none';
                     }
 
                     var comment = document.getElementById('comment');
-                    if(comment) {
+                    if (comment) {
                         comment.disabled = true;
                     }
                 });
@@ -26,12 +26,12 @@
         // Get the date of today, used at 'Afronding'
         $scope.date = new Date();
 
-        $scope.checkOrder = function () {       
+        $scope.checkOrder = function () {
 
             var alertMessage = '';
             var alertTitle = 'Fout!';
 
-            if($scope.orderFinished) {
+            if ($scope.orderFinished) {
                 alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
                 showAlert(alertMessage, alertTitle);
             } else {
@@ -39,13 +39,13 @@
                 var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
                 var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
 
-                if(!signatureAvailable && !werkbonAvailable) {
+                if (!signatureAvailable && !werkbonAvailable) {
                     alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
                     showAlert(alertMessage, alertTitle);
-                } else if(!signatureAvailable && werkbonAvailable) {
+                } else if (!signatureAvailable && werkbonAvailable) {
                     alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
                     showAlert(alertMessage, alertTitle);
-                } else if(signatureAvailable && !werkbonAvailable) {
+                } else if (signatureAvailable && !werkbonAvailable) {
                     alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
                     showAlert(alertMessage, alertTitle);
                 } else {
@@ -57,9 +57,9 @@
 
         function showAlert(alertMessage, alertTitle) {
             var alertPopup = $ionicPopup.alert({
-                    title: '<b>' + alertTitle + '</b>',
-                    template: alertMessage
-                });
+                title: '<b>' + alertTitle + '</b>',
+                template: alertMessage
+            });
         }
 
         var myPopup;
@@ -79,25 +79,25 @@
             });
         }
 
-        $scope.sendOrder = function(status) {
+        $scope.sendOrder = function (status) {
             myPopup.close();
             //TODO: Delete order from LocalStorage?
 
             var alertTitle = 'Succes!';
             var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
 
-            if(status === 'Afgerond') {
+            if (status === 'Afgerond') {
                 alertMessage += '<br/>Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd of verstuurd worden.';
             } else {
-                OrderService.getFollowup($scope.order.orderid).then(function(text){
+                OrderService.getFollowup($scope.order.orderid).then(function (text) {
                     alertMessage += '<br/>Vervolgactie: ' + text + '<br/>';
                     alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd en opnieuw verstuurd worden.';
                 })
             }
 
             // The actual sending of the order via the service
-            OrderService.postOrder($scope.order.orderid, status).then(function(res){
-                if(status === 'Afgerond') {
+            OrderService.postOrder($scope.order.orderid, status).then(function (res) {
+                if (status === 'Afgerond') {
                     $scope.order.status = 'Afgerond';
                 } else {
                     $scope.order.status = 'In behandeling';
@@ -105,25 +105,25 @@
                 showAlert(alertMessage, alertTitle);
                 console.log(res);
             });
-            
+
         }
 
-        $scope.askConfirmation = function() {
+        $scope.askConfirmation = function () {
             // A confirm dialog
             var confirmPopup = $ionicPopup.confirm({
                 title: '<b>Afronding</b>',
                 template: 'Weet u zeker dat u de order wilt afronden? Het is daarna <b>niet</b> meer mogelijk de order te wijzigen of opnieuw te verzenden!'
             });
-            
-            confirmPopup.then(function(res) {
-                if(res) {
+
+            confirmPopup.then(function (res) {
+                if (res) {
                     $scope.sendOrder('Afgerond');
                 }
-            }); 
+            });
         }
 
-        $scope.addFollowup = function() {
-            OrderService.getFollowup($scope.order.orderid).then(function(text){
+        $scope.addFollowup = function () {
+            OrderService.getFollowup($scope.order.orderid).then(function (text) {
                 // A confirm dialog
                 var confirmPopup = $ionicPopup.confirm({
                     title: '<b>Vervolgactie</b>',
@@ -132,14 +132,22 @@
                                 + '<textarea id="followup" rows="8">' + text + '</textarea>'
                                 + '</div>'
                 });
-                
-                confirmPopup.then(function(res) {
-                    if(res) {
+
+                confirmPopup.then(function (res) {
+                    if (res) {
                         OrderService.setFollowup($scope.order.orderid, document.getElementById('followup').value);
                         $scope.sendOrder('Vervolgactie');
                     }
-                }); 
-            });    
+                });
+            });
+        }
+        // Function gets the current GeoLocation
+        $scope.getCurrentGeoLocation = function () {
+            $cordovaGeolocation
+                .getCurrentPosition()
+                .then(function (position) {
+                    OrderService.setGeolocation(position.coords.latitude, position.coords.longitude);
+                });
         }
 
         // Ionic Modal
