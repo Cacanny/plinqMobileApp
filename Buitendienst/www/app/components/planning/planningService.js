@@ -49,6 +49,16 @@
                 if($window.localStorage.getItem('order' + order.orderid) === null) {
                     var fullOrder = {
                         orderid: order.orderid,
+                        start: {
+                            datum: '',
+                            lat: '',
+                            long: ''
+                        },
+                        eind: {
+                            datum: '',
+                            lat: '',
+                            long: ''
+                        },
                         status: order.status,
                         vervolgactie: '',
                         verzenddatum: '',
@@ -57,8 +67,17 @@
                         materialen: [],
                         opmerking: '',
                         fotos: [],
-                        werkbon: '', 
-                        handtekening: ''
+                        werkbon: '',
+                        handtekening: {
+                            image: '',
+                            datum: '',
+                            lat: '',
+                            long: ''
+                        },
+                        verzenddatum: '',
+                        vervolgactie: '',
+                        monteur: 'Arno',
+                        werkbon: '' 
                     }
                     // Add 'Monteur' in werkbon
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));

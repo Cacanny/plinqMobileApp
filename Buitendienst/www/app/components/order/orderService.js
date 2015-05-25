@@ -26,9 +26,9 @@
                 return deferred.promise;
             },
 
-            checkOrderStatus: function(orderArr) {
+            checkOrderStatus: function (orderArr) {
                 var statusArr = [];
-                for(var index = 0; index < orderArr.length; index += 1) {
+                for (var index = 0; index < orderArr.length; index += 1) {
                     var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderArr[index].orderid));
                     statusArr.push(parsedItem.status);
                 }
@@ -37,22 +37,22 @@
                 return deferred.promise;
             },
 
-            checkIfFinished: function(_orderId) {
+            checkIfFinished: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                if(parsedItem.status === 'Afgerond') {
+                if (parsedItem.status === 'Afgerond') {
                     return true;
                 } else {
                     return false;
                 }
             },
 
-            setFollowup: function(orderid, text) {
+            setFollowup: function (orderid, text) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.vervolgactie = text;
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 
-            getFollowup: function(orderid) {
+            getFollowup: function (orderid) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.vervolgactie);
@@ -62,8 +62,8 @@
             postOrder: function (_orderId, status) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
 
-                if(status !== 'Queue') {
-                    if(status === 'Afgerond') {
+                if (status !== 'Queue') {
+                    if (status === 'Afgerond') {
                         parsedItem.status = 'Afgerond';
                     } else {
                         parsedItem.status = 'Vervolgactie';
@@ -74,6 +74,12 @@
 
                 return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
+                        if (status === 'Afgerond') {
+                            parsedItem.status = 'Afgerond';
+                        } else {
+                            parsedItem.status = 'Vervolgactie';
+                        }
+                        $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
                         // Success!
                         console.log(response);
                     })
@@ -86,26 +92,26 @@
                         // Add the order to the queue if it's not already in there
                         var queue = JSON.parse($window.localStorage.getItem('queue'));
                         var addToQueue = true;
-                        for(var index = 0; index < queue.length; index += 1) {
-                            if(queue[index] === _orderId) {
+                        for (var index = 0; index < queue.length; index += 1) {
+                            if (queue[index] === _orderId) {
                                 addToQueue = false;
                                 break;
                             }
                         }
 
-                        if(addToQueue) {
+                        if (addToQueue) {
                             queue.push(_orderId);
                             $window.localStorage.setItem('queue', JSON.stringify(queue));
                         }
                     });
-            }, 
+            },
 
-            inQueueBool: function(_orderId) {
+            inQueueBool: function (_orderId) {
                 var bool = false;
                 var queue = JSON.parse($window.localStorage.getItem('queue'));
 
-                for(var index = 0; index < queue.length; index += 1) {
-                    if(queue[index] === _orderId) {
+                for (var index = 0; index < queue.length; index += 1) {
+                    if (queue[index] === _orderId) {
                         bool = true;
                         break;
                     }
@@ -115,30 +121,37 @@
                 return deferred.promise;
             },
 
-            getOrderStatus: function(_orderId) {
+            getOrderStatus: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.status);
                 return deferred.promise;
             },
 
-            checkForSignature: function(_orderId) {
+            checkForSignature: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                if(parsedItem.handtekening !== '') {
+                if (parsedItem.handtekening.image !== '') {
                     return true;
                 } else {
                     return false;
                 }
             },
 
-            checkForWerkbon: function(_orderId) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                // if(parsedItem.werkbon !== '') {
-                //     return true;
-                // } else {
-                //     return false;
-                // }
-                return true;
+            setGeolocation: function (latitude, longitude) {
+                var _position = {
+                    latitude: latitude,
+                    longitude: longitude
+                }
+                $window.localStorage.setItem('geoLocation', JSON.stringify(_position));
+            },
+
+            getGeolocation: function () {
+                return glocation = {
+                    lat: $window.localStorage.getItem('geoLocation').latitude,
+                    lng: $window.localStorage.getItem('geoLocation').longitude
+                }
             }
+
+
         }
     });

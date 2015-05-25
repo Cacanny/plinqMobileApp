@@ -9,7 +9,6 @@
             $scope.showHistory = false;
             
         }
-
         var shouldRunFilter = [];
         var originalNote = [];
 
@@ -28,7 +27,6 @@
 
         // Toggle the filter 'getSlice' on click
         $scope.toggleHistoryFilter = function (_notitie, index) {
-            console.log("waardes van notitie en index zijn? " + _notitie + index);
             if (shouldRunFilter[index]) {
                 shouldRunFilter[index] = false;
                 $scope.order.orderhistorie[index].vervolgactie = $filter('getSlice')(_notitie);

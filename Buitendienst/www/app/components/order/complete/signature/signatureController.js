@@ -37,6 +37,7 @@
                 if(!signaturePad.isEmpty()) {
                     var sigImg = signaturePad.toDataURL();
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
+                    $scope.getCurrentGeoLocation();
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
