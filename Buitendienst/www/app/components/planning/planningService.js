@@ -1,6 +1,6 @@
 ﻿angular.module('directory.planningService', [])
 
-    .factory('PlanningService', function ($window, $http, $q) {
+    .factory('PlanningService', function ($window, $http, $q, $ionicPopup) {
 
         return {
             setActivities: function () {
@@ -63,6 +63,13 @@
                     // Add 'Monteur' in werkbon
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));
                 }
+            },
+
+            giveAlert: function(time) {
+                var alertPopup = $ionicPopup.alert({
+                    title: '<b>Nieuwe order!</b>',
+                    template: 'Herinnering: er staat een order gepland voor <b>' + time + '</b>.'
+                });
             }
         }
     });

@@ -47,29 +47,29 @@ angular.module('directory', [
                 StatusBar.hide();
             }
 
-            if(ionic.Platform.isIOS()) {
-                // cordova.plugins.notification.local.promptForPermission();
-            }
+            // if(ionic.Platform.isIOS()) {
+            //     // cordova.plugins.notification.local.promptForPermission();
+            // }
 
-             document.addEventListener("deviceready", function() {
+            //  document.addEventListener("deviceready", function() {
 
-                var now = new Date().getTime();
-                var _10SecondsFromNow = new Date(now + 10 * 1000);
-                // Schedule notification for tomorrow to remember about the meeting
-                cordova.plugins.notification.local.schedule({
-                    id: 10,
-                    title: "Meeting in 15 minutes!",
-                    text: "Jour fixe Produktionsbesprechung",
-                    at: _10SecondsFromNow,
-                    data: { meetingId:"#123FG8" }
-                });
+            //     var now = new Date().getTime();
+            //     var _10SecondsFromNow = new Date(now + 10 * 1000);
+            //     // Schedule notification for tomorrow to remember about the meeting
+            //     cordova.plugins.notification.local.schedule({
+            //         id: 10,
+            //         title: "Meeting in 15 minutes!",
+            //         text: "Jour fixe Produktionsbesprechung",
+            //         at: _10SecondsFromNow,
+            //         data: { meetingId:"#123FG8" }
+            //     });
 
-                // Join BBM Meeting when user has clicked on the notification 
-                cordova.plugins.notification.local.on("click", function (notification) {
-                    if (notification.id == 10) {
-                        alert('geklikt!')
-                    }
-                });
-             }, false);
+            //     // Join BBM Meeting when user has clicked on the notification 
+            //     cordova.plugins.notification.local.on("click", function (notification) {
+            //         if (notification.id == 10) {
+            //             alert('geklikt!')
+            //         }
+            //     });
+            //  }, false);
         });
     });
