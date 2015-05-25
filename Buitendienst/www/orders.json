@@ -1,7 +1,7 @@
 ﻿[
     {
         "orderid": "123",
-        "status": "In behandeling",
+        "status": "Afgerond",
         "plandatum": "18-04-2015",
         "tijd": "09:00",
         "omschrijving": "Installatie",
@@ -133,7 +133,7 @@
     {
         "orderid": "125",
         "status": "Nieuw",
-        "plandatum": "18-04-2015",
+        "plandatum": "19-04-2015",
         "omschrijving": "Reparatie",
         "tijd": "11:00",
         "klant": {

@@ -1,17 +1,15 @@
 ﻿<ion-modal-view class="modal" ng-controller="SignatureCtrl">
-    <ion-pane>
-        <ion-header-bar class='bar-stable'>
-            <h1 class='title'> Handtekening </h1>
-            <ion-header-buttons side="left">
-                <button class="button signature-back-button" ng-click="closeSignature()"><i class="icon ion-ios-arrow-back"></i> Terug</button>     
-            </ion-header-buttons>
-        </ion-header-bar>
-        <ion-content has-header="true" scroll='false'>
-            <canvas id='signatureCanvas'></canvas>
-            <div class='button-bar'>
-                <a class='button button-positive removeAfterFinish' ng-click='clearCanvas()'>Wis</a>
-                <a class='button button-balanced removeAfterFinish' ng-click='saveCanvas(); closeSignature()'>Opslaan</a>
-            </div>
-        </ion-content>
-    </ion-pane>
+    <ion-header-bar class='bar-stable'>
+        <h1 class='title'> Handtekening </h1>
+        <ion-header-buttons side="left">
+            <button class="button signature-back-button" ng-click="closeSignature()"><i class="icon ion-ios-arrow-back"></i> Terug</button>     
+        </ion-header-buttons>
+    </ion-header-bar>
+    <ion-content has-header="true" scroll='false'>
+        <canvas id='signatureCanvas'></canvas>
+        <div class='button-bar'>
+            <a class='button button-positive removeAfterFinish' ng-click='clearCanvas()'>Wis</a>
+            <a class='button button-balanced removeAfterFinish' ng-click='saveCanvas(); closeSignature()'>Opslaan</a>
+        </div>
+    </ion-content>
 </ion-modal-view>

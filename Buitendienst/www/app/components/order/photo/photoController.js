@@ -1,12 +1,36 @@
 
 angular.module('directory.photoController', [])
 
-    .controller('PhotoCtrl', function ($scope, PhotoService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
+    .controller('PhotoCtrl', function ($scope, PhotoService, OrderService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
       
         // Function to get the images from the LocalStorage and story an array with these images
         PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
             $scope.allPhotos = photos;
         });
+
+        // If the photo tab needs to be opened
+        $scope.showPhotoBool = false;
+        $scope.showPhotos = function() {
+            checkIfOrderFinished();
+
+            $scope.showPhotoBool = !$scope.showPhotoBool;
+        }
+
+        function checkIfOrderFinished(){
+            $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+           
+            // Check if the order has been sent with the 'Afgerond' status, if so, disable the add button
+            OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                if($scope.orderFinished && !bool) {
+                    angular.element(document).ready(function () {
+                        var elements = document.getElementsByClassName('removeAfterFinish');
+                        for(var index = 0; index < elements.length; index += 1) {
+                            elements[index].style.display = 'none';
+                        }
+                    });
+                }
+            });
+        }
 
         // Opens a modal screen that shows the image fullscreen
         $scope.showImages = function (index) {
@@ -20,6 +44,7 @@ angular.module('directory.photoController', [])
                 backdropClickToClose: false,
                 animation: 'slide-in-up'
             }).then(function (modal) {
+                checkIfOrderFinished();
                 $scope.photoModal = modal;
                 $scope.photoModal.show();
             });
@@ -32,7 +57,9 @@ angular.module('directory.photoController', [])
         
         // Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function () {
-            $scope.photoModal.remove();
+            if($scope.photoModal) {
+                $scope.photoModal.remove();
+            }
         });
 
         // Camera function 
@@ -73,6 +100,10 @@ angular.module('directory.photoController', [])
                     }
                 }
             });
+        }
+
+        $scope.slideChanged = function(index) {
+            $ionicSlideBoxDelegate.update();
         }
 
     });

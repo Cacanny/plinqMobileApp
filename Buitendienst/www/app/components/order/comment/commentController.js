@@ -15,7 +15,7 @@ angular.module('directory.commentController', [])
         $scope.deleteComment = function() {
             // A confirm dialog
             var confirmPopup = $ionicPopup.confirm({
-                title: 'Verwijder Opmerking',
+                title: '<b>Verwijder Opmerking</b>',
                 template: 'Wilt u de opmerking verwijderen?'
             });
             confirmPopup.then(function(res) {

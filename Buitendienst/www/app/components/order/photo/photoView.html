@@ -1,9 +1,9 @@
 ﻿<ion-list type="list-inset">
-    <ion-item class="item-divider listheader" ng-click="toggle(7)">
+    <ion-item class="item-divider listheader" ng-click="showPhotos()">
         Foto's
     </ion-item>
-    <ion-item class="row" ng-if="toShowArr[7]" ng-cloak>
-        <div class="col fixedwidth-100">
+    <ion-item class="row" ng-if="showPhotoBool" ng-cloak>
+        <div class="col fixedwidth-100 removeAfterFinish">
             <div class="button add-photo padding ion-ios-camera" ng-click="takePicture()"></div>
         </div>
         <div class="col photo-container">

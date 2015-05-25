@@ -4,10 +4,13 @@
     </ion-item>
     <ion-item ng-show="toShowArr[2]" class="cssFade">
         <div class="list list-inset nomargin-top">
-            <ion-item class="item-divider">
+            <ion-item class="item-divider" ng-switch="toShowArr[3]">
                 <i class="icon ion-ios-list-outline"></i> Materialen
-                <button class="custombtn removeAfterFinish" ng-click="toggle(3);$event.stopPropagation()">
+                <button class="custombtn removeAfterFinish" ng-click="toggle(3)" ng-switch-when="false">
                     <i class="icon ion-plus"></i>
+                </button>
+                <button class="custombtn removeAfterFinish" ng-click="toggle(3)" ng-switch-when="true">
+                    <i class="icon ion-minus"></i>
                 </button>
             </ion-item>
             <ion-item class="row item-text-wrap" ng-show="showMateriaalHeader">
@@ -69,17 +72,20 @@
                         </div>
                     </ion-item>
                 </div>
-                <div class="col col-center fixedwidth-60">
+                <div class="col col-center fixedwidth-60 table-cell">
                     <button class="input_btn button-clear" ng-click="savemateriaal();toShowArr[4]=false"><h1 class="icon ion-checkmark-circled balanced"></h1></button><br /><br />
                     <button class="input_btn button-clear" ng-click="resetmateriaal()"><h1 class="icon ion-ios-close assertive"></h1></button>
                 </div>
             </ion-item>
         </div>
         <ion-list type="list-inset">
-            <ion-item class="item-divider">
+            <ion-item class="item-divider" ng-switch="toShowArr[5]">
                 <i class="icon ion-wrench"></i> Uitgevoerde werkzaamheden
-                <button class="custombtn removeAfterFinish" ng-click="toggle(5);$event.stopPropagation()">
+                <button class="custombtn removeAfterFinish" ng-click="toggle(5)" ng-switch-when="false">
                     <i class="icon ion-plus"></i>
+                </button>
+                <button class="custombtn removeAfterFinish" ng-click="toggle(5)" ng-switch-when="true">
+                    <i class="icon ion-minus"></i>
                 </button>
             </ion-item>
             <ion-item class="row item-text-wrap" ng-show="showWerkzaamheidHeader">

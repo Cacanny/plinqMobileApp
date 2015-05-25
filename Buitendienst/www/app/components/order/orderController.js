@@ -4,6 +4,18 @@
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
 
+            // If order is in queue, display the orderstatus different
+            OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                if(bool) {
+                    $scope.order.status = 'In wachtrij';
+                } else {
+                    $scope.disableAll();
+                }
+            });
+
+        });
+
+        $scope.disableAll = function() {
             // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
             $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
 
@@ -21,7 +33,7 @@
                     }
                 });
             }
-        });
+        }
 
         // Get the date of today, used at 'Afronding'
         $scope.date = new Date();
@@ -47,12 +59,30 @@
                     showAlert(alertMessage, alertTitle);
                 } else if (signatureAvailable && !werkbonAvailable) {
                     alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
+            OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                if($scope.orderFinished && !bool) {
+                    alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
                     showAlert(alertMessage, alertTitle);
                 } else {
-                    // All requirements are true
-                    showPopup();
+                    // Check if the signature and werkbon are available
+                    var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
+                    var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
+
+                    if(!signatureAvailable && !werkbonAvailable) {
+                        alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
+                        showAlert(alertMessage, alertTitle);
+                    } else if(!signatureAvailable && werkbonAvailable) {
+                        alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
+                        showAlert(alertMessage, alertTitle);
+                    } else if(signatureAvailable && !werkbonAvailable) {
+                        alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
+                        showAlert(alertMessage, alertTitle);
+                    } else {
+                        // All requirements are true
+                        showPopup();
+                    }
                 }
-            }
+            });
         }
 
         function showAlert(alertMessage, alertTitle) {
@@ -95,10 +125,16 @@
                 })
             }
 
+            $scope.order.status = 'In wachtrij';
             // The actual sending of the order via the service
             OrderService.postOrder($scope.order.orderid, status).then(function (res) {
                 if (status === 'Afgerond') {
+            OrderService.postOrder($scope.order.orderid, status).then(function(res){
+                $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+
+                if(status === 'Afgerond') {
                     $scope.order.status = 'Afgerond';
+                    $scope.disableAll();
                 } else {
                     $scope.order.status = 'In behandeling';
                 }
@@ -126,11 +162,31 @@
             OrderService.getFollowup($scope.order.orderid).then(function (text) {
                 // A confirm dialog
                 var confirmPopup = $ionicPopup.confirm({
+        $scope.addFollowup = function() {
+            OrderService.getFollowup($scope.order.orderid).then(function(text){
+                // A custom popup
+                var myPopup = $ionicPopup.confirm({
                     title: '<b>Vervolgactie</b>',
                     template: 'Voer een vervolgactie in:<br/>'
                                 + '<div class="item item-input">'
                                 + '<textarea id="followup" rows="8">' + text + '</textarea>'
-                                + '</div>'
+                                + '</div>',
+                    buttons: [
+                          { text: 'Cancel' },
+                          {
+                            text: '<b>OK</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                              if (!document.getElementById('followup').value) {
+                                //don't allow the user to close unless he enters a 'vervolgactie'
+                                e.preventDefault();
+                              } else {
+                                OrderService.setFollowup($scope.order.orderid, document.getElementById('followup').value);
+                                $scope.sendOrder('Vervolgactie');
+                              }
+                            }
+                          }
+                        ]
                 });
 
                 confirmPopup.then(function (res) {
@@ -148,6 +204,7 @@
                 .then(function (position) {
                     OrderService.setGeolocation(position.coords.latitude, position.coords.longitude);
                 });
+            });    
         }
 
         // Ionic Modal
