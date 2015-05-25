@@ -62,8 +62,8 @@
             postOrder: function (_orderId, status) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
 
-                if(status !== 'Queue') {
-                    if(status === 'Afgerond') {
+                if (status !== 'Queue') {
+                    if (status === 'Afgerond') {
                         parsedItem.status = 'Afgerond';
                     } else {
                         parsedItem.status = 'Vervolgactie';
@@ -92,27 +92,26 @@
                         // Add the order to the queue if it's not already in there
                         var queue = JSON.parse($window.localStorage.getItem('queue'));
                         var addToQueue = true;
-                        for(var index = 0; index < queue.length; index += 1) {
-                            if(queue[index] === _orderId) {
+                        for (var index = 0; index < queue.length; index += 1) {
+                            if (queue[index] === _orderId) {
                                 addToQueue = false;
                                 break;
                             }
                         }
 
-                        if(addToQueue) {
+                        if (addToQueue) {
                             queue.push(_orderId);
                             $window.localStorage.setItem('queue', JSON.stringify(queue));
                         }
                     });
             },
 
-            checkForSignature: function (_orderId) {
-            inQueueBool: function(_orderId) {
+            inQueueBool: function (_orderId) {
                 var bool = false;
                 var queue = JSON.parse($window.localStorage.getItem('queue'));
 
-                for(var index = 0; index < queue.length; index += 1) {
-                    if(queue[index] === _orderId) {
+                for (var index = 0; index < queue.length; index += 1) {
+                    if (queue[index] === _orderId) {
                         bool = true;
                         break;
                     }
@@ -122,14 +121,14 @@
                 return deferred.promise;
             },
 
-            getOrderStatus: function(_orderId) {
+            getOrderStatus: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.status);
                 return deferred.promise;
             },
 
-            checkForSignature: function(_orderId) {
+            checkForSignature: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
                 if (parsedItem.handtekening !== '') {
                     return true;

@@ -59,7 +59,6 @@
                             lat: '',
                             long: ''
                         },
-                        status: '',
                         status: order.status,
                         vervolgactie: '',
                         verzenddatum: '',
@@ -77,9 +76,8 @@
                         },
                         verzenddatum: '',
                         vervolgactie: '',
-                        monteur: 'Arno'
-                        werkbon: '', 
-                        handtekening: ''
+                        monteur: 'Arno',
+                        werkbon: '' 
                     }
                     // Add 'Monteur' in werkbon
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));
