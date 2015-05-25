@@ -60,10 +60,6 @@
             }
         } 
 
-        $scope.testInterval = $interval(function(){
-                console.log('ik refresh');
-            }, 3000);
-
         function refreshAllIntervals() {
             // Update the planning and werkzaamheden/materialen every 30 seconds.
             $scope.intervalRefresh = $interval(function(){
