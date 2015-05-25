@@ -43,49 +43,25 @@
             var alertMessage = '';
             var alertTitle = 'Fout!';
 
-            if ($scope.orderFinished) {
-                alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
-                showAlert(alertMessage, alertTitle);
-            } else {
-                // Check if the signature and werkbon are available
-                var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
-                var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
-
-                if (!signatureAvailable && !werkbonAvailable) {
-                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
+            OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
+                if ($scope.orderFinished && !bool) {
+                    alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
                     showAlert(alertMessage, alertTitle);
-                } else if (!signatureAvailable && werkbonAvailable) {
-                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
-                    showAlert(alertMessage, alertTitle);
-                } else if (signatureAvailable && !werkbonAvailable) {
-                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
-                    OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
-                        if ($scope.orderFinished && !bool) {
-                            alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
-                            showAlert(alertMessage, alertTitle);
-                        } else {
-                            // Check if the signature and werkbon are available
-                            var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
-                            var werkbonAvailable = OrderService.checkForWerkbon($scope.order.orderid);
+                } else {
+                    // Check if the signature and werkbon are available
+                    var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
 
-                            if (!signatureAvailable && !werkbonAvailable) {
-                                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon of handtekening van de klant!';
-                                showAlert(alertMessage, alertTitle);
-                            } else if (!signatureAvailable && werkbonAvailable) {
-                                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
-                                showAlert(alertMessage, alertTitle);
-                            } else if (signatureAvailable && !werkbonAvailable) {
-                                alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een ingevulde werkbon!';
-                                showAlert(alertMessage, alertTitle);
-                            } else {
-                                // All requirements are true
-                                showPopup();
-                            }
-                        }
-                    });
+                    if (!signatureAvailable) {
+                        alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
+                        showAlert(alertMessage, alertTitle);
+                    } else {
+                        // All requirements are true
+                        showPopup();
+                    }
                 }
-            }
+            });
         }
+
 
         function showAlert(alertMessage, alertTitle) {
             var alertPopup = $ionicPopup.alert({

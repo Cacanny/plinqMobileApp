@@ -130,7 +130,7 @@
 
             checkForSignature: function (_orderId) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                if (parsedItem.handtekening !== '') {
+                if (parsedItem.handtekening.image !== '') {
                     return true;
                 } else {
                     return false;
