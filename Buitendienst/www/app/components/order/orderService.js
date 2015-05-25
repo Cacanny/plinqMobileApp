@@ -74,12 +74,6 @@
 
                 return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
-                        if (status === 'Afgerond') {
-                            parsedItem.status = 'Afgerond';
-                        } else {
-                            parsedItem.status = 'Vervolgactie';
-                        }
-                        $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
                         // Success!
                         console.log(response);
                     })
