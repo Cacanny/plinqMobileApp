@@ -62,7 +62,6 @@
                         status: order.status,
                         vervolgactie: '',
                         verzenddatum: '',
-                        klant: '',
                         werkzaamheden: [],
                         materialen: [],
                         opmerking: '',

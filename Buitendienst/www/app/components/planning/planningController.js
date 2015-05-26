@@ -30,7 +30,7 @@
                 for(var index = 0; index < $scope.queueArr.length; index += 1) {
                     queueRow += '<ion-item>' + $scope.queueArr[index] + '</ion-item>';
                 }
-                template = 'De volgende <b>' + $scope.queueLength + '</b> orders worden bij herstelde internetconnectie <b>automatisch</b> verzonden:<br/><br/>' +
+                template = 'De volgende <b>' + $scope.queueLength + '</b> orders worden bij internetconnectie <b>automatisch</b> verzonden:<br/><br/>' +
                             '<ion-list>' + queueRow + '</ion-list>';
             } else {
                 template = 'Er zijn geen orders in afwachting van verzending.';
@@ -90,6 +90,7 @@
             // Stop all possible intervals
             $interval.cancel($scope.intervalQueue);
             $interval.cancel($scope.intervalRefresh);
+            $interval.cancel($scope.highlightInterval);
         });
 
         // Function that needs to be performed with Online connection
@@ -161,7 +162,11 @@
 
                 checkOrderStatus();
 
-                checkOrderHighlight();
+                highlightOrder();
+
+                $scope.highlightInterval = $interval(function(){
+                    highlightOrder();
+                }, 60000);
             });
         }
 
@@ -187,9 +192,54 @@
             }, 60000);
         }
 
-        // When it's time for a order, highlight it!
-        function checkOrderHighlight() {
+        $scope.$on('$ionicView.afterEnter', function(){
+            if($scope.orders) {
+                highlightOrder();
 
+                $scope.highlightInterval = $interval(function(){
+                    highlightOrder();
+                }, 60000);
+            }
+        });
+
+        // When it's time for a order, highlight it!
+        function highlightOrder() {
+            angular.element(document).ready(function () {
+                var date = convertDate(new Date()); // dd-MM-jjjj
+                var now = convertTime(new Date()); // HH:mm
+                
+                for(var index = 0; index < $scope.orders.length; index += 1){
+                    var nextOrderTime;
+
+                    // As long as the current time is between the time of the previous and next order
+                    if(!$scope.orders[index+1]){
+                        nextOrderTime = '23:59'
+                    } else {
+                        nextOrderTime = $scope.orders[index+1].tijd;
+                    }
+
+                    var orderId = $scope.orders[index].orderid;   
+                    if($scope.orders[index].tijd <= now && nextOrderTime > now && $scope.orders[index].plandatum === date) {         
+                        // And add the highlight to the order
+                        document.getElementById(orderId).className = "card orderHighlight";
+                        document.getElementById('orderid' + orderId).className = "orderHighlightItem";
+                        document.getElementById('orderstatus' + orderId).className = "orderHighlightItem";
+                        document.getElementById('orderklantnaam' + orderId).className = "icon ion-person orderHighlightItem";
+                        document.getElementById('orderklanttelefoon' + orderId).className = "icon ion-ios-telephone orderHighlightItem";
+                        document.getElementById('orderklantemail' + orderId).className = "icon ion-ios-email-outline orderHighlightItem";
+                        document.getElementById('orderadres' + orderId).className = "orderHighlightItem";
+                    } else {
+                        // Reset the className
+                        document.getElementById(orderId).className = "card orderWithoutHighlight";
+                        document.getElementById('orderid' + orderId).className = "positive";
+                        document.getElementById('orderstatus' + orderId).className = "positive";
+                        document.getElementById('orderklantnaam' + orderId).className = "icon ion-person positive";
+                        document.getElementById('orderklanttelefoon' + orderId).className = "icon ion-ios-telephone positive";
+                        document.getElementById('orderklantemail' + orderId).className = "icon ion-ios-email-outline positive";
+                        document.getElementById('orderadres' + orderId).className = "positive";
+                    }
+                }
+            });
         }
 
         // Refresh to get the new JSON files
@@ -242,42 +292,5 @@
         function getAlertTime(date, minutes) {
             return new Date(date.getTime() - minutes*60000);
         }
-
-        // $scope.add = function() {
-        //     var now = new Date().getTime();
-        //     var _10SecondsFromNow = new Date(now + 10 * 1000);
-        //     alert('daar gaan we ' + _10SecondsFromNow);
-        //     $cordovaLocalNotification.schedule({
-        //         id: 1,
-        //         at: _10SecondsFromNow,
-        //         text: "This is a message",
-        //         title: "This is a title"
-        //     }).then(function () {
-        //         alert("The notification has been set");
-        //     });
-        // };
-
- 
-        // $scope.isScheduled = function() {
-        //     $cordovaLocalNotification.isScheduled(1).then(function(isScheduled) {
-        //         alert("Notification 1234 Scheduled: " + isScheduled);
-        //     });
-        // }
-
-        // $scope.addNotification = function(tit, msg) {
-        //       window.plugin.notification.local.add({
-        //           id: 1,
-        //           title:   'Testss',
-        //           message: 'msg'
-        //     });
-        // }
-
-        // $scope.$on("$cordovaLocalNotification:schedule", function(id, state, json) {
-        //     alert("Added a notification");
-        // });
-
-        // $scope.$on('onReminderAdded', function(event, id, state, json) {
-        //   alert('notification ADDED, id: ' + id  + ' state:' + state + ' json:' + json );
-        // });
 
     });

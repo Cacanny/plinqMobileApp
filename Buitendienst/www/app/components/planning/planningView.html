@@ -16,21 +16,21 @@
                 <h3 ng-if="key != date" style="margin-top: 40px;">{{::key}}</h3>
             </div>
             <hr/>
-            <div class="card" ng-repeat="o in value" ng-click="details(o.orderid)">
+            <div id="{{::o.orderid}}" class="card orderWithoutHighlight" ng-repeat="o in value" ng-click="details(o.orderid)">
                 <div class="item item-text-wrap cardwrap">
                     <div class="row">
                         <div class="col col-center"><h1> {{::o.tijd}}</h1></div>
                         <div class="col col-25 col-center">
-                            <h3><t class="positive">Order No.:</t> {{::o.orderid}}</h3>
-                            <h3><t class="positive">Status:</t> {{o.status}}</h3>
+                            <h3><t id="orderid{{::o.orderid}}" class="positive">Order No.:</t> {{::o.orderid}}</h3>
+                            <h3><t id="orderstatus{{::o.orderid}}" class="positive">Status:</t> {{o.status}}</h3>
                         </div>
                         <div class="col col-25 col-center">
-                            <h3><t class="icon ion-person positive"></t> {{::o.klant.naam}}</h3>
-                            <h3><t class="icon ion-ios-telephone positive"></t> {{::o.klant.telefoon}}</h3>
-                            <h3><t class="icon ion-ios-email-outline positive"></t> {{::o.klant.email}}</h3>
+                            <h3><t id="orderklantnaam{{::o.orderid}}" class="icon ion-person positive"></t> {{::o.klant.naam}}</h3>
+                            <h3><t id="orderklanttelefoon{{::o.orderid}}" class="icon ion-ios-telephone positive"></t> {{::o.klant.telefoon}}</h3>
+                            <h3><t id="orderklantemail{{::o.orderid}}" class="icon ion-ios-email-outline positive"></t> {{::o.klant.email}}</h3>
                         </div>
                         <div class="col col-25 col-center">
-                            <h3><t class="positive">Aansluitadres:</t></h3>
+                            <h3><t id="orderadres{{::o.orderid}}" class="positive">Aansluitadres:</t></h3>
                             <h3>{{::o.klant.straat}}</h3>
                             <h3>{{::o.klant.postcode}}, {{::o.klant.plaats}}</h3>
                         </div>

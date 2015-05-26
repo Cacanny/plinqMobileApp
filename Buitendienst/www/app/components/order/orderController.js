@@ -55,7 +55,7 @@
                         alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
                         showAlert(alertMessage, alertTitle);
                     } else {
-                        showPopup();
+                        chooseOrderStatus();
                     }
                 }
             });
@@ -71,7 +71,7 @@
 
         var myPopup;
 
-        function showPopup() {
+        function chooseOrderStatus() {
             // A custom popup
             myPopup = $ionicPopup.show({
                 template: '<p>U staat op het punt de order te verzenden. Welke status wilt u de order meegeven?</p><br/>'

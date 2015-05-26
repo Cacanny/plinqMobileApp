@@ -2,7 +2,7 @@
     {
         "orderid": "123",
         "status": "Afgerond",
-        "plandatum": "18-04-2015",
+        "plandatum": "26-05-2015",
         "tijd": "09:00",
         "omschrijving": "Installatie",
         "klant": {
@@ -97,8 +97,8 @@
     {
         "orderid": "124",
         "status": "Nieuw",
-        "plandatum": "18-04-2015",
-        "tijd": "10:00",
+        "plandatum": "26-05-2015",
+        "tijd": "09:20",
         "omschrijving": "Installatie",
         "klant": {
 	    "klantid": "12321",
@@ -133,9 +133,9 @@
     {
         "orderid": "125",
         "status": "Nieuw",
-        "plandatum": "25-05-2015",
+        "plandatum": "26-05-2015",
         "omschrijving": "Reparatie",
-        "tijd": "15:22",
+        "tijd": "09:21",
         "klant": {
 	    "klantid": "33789",
             "naam": "Jan van Dijk",

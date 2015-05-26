@@ -16,9 +16,20 @@ body {
 }
 
 .card .item {
-    border-top: 5px solid #337ab7 !important;
     color: #565656 !important;
     background-color: #FAFAFA !important;
+}
+
+.orderWithoutHighlight {
+    border-top: 5px solid #337ab7 !important;
+}
+
+.orderHighlight {
+    border-top: 5px solid #5cb85c !important;
+}
+
+.orderHighlightItem {
+    color: #5cb85c !important;
 }
 
 .noborder {

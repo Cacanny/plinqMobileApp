@@ -1,4 +1,4 @@
-﻿angular.module('directory.orderService', [])
+angular.module('directory.orderService', [])
 
     .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup) {
 
@@ -72,7 +72,7 @@
 
                 $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
 
-                return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
+                return $http.post("test2.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
                         // Success!
                         console.log(response);
