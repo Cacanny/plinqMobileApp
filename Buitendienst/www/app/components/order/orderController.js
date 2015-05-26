@@ -1,9 +1,18 @@
 ﻿angular.module('directory.orderController', [])
 
     .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup, $cordovaGeolocation) {
+
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
-
+            $scope.orderIsStarted = OrderService.checkIfStarted($scope.order.orderid);
+            $scope.orderState = $scope.orderFinished;
+            $scope.startTime = OrderService.getOrderTime($scope.order.orderid, "start");
+            $scope.endTime = OrderService.getOrderTime($scope.order.orderid, "eind");
+         
+            if (!$scope.orderIsStarted && !$scope.orderFinished) {
+                $scope.startTime = "Niet gestart";
+                $scope.disableAll();
+            } 
             // If order is in queue, display the orderstatus different
             OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
                 if (bool) {
@@ -15,11 +24,63 @@
 
         });
 
+        // Function makes sending the order available and stores timer and geolocation
+        $scope.startOrder = function () {
+            $scope.enableAll();
+            var date = new Date();
+            var startTime = $scope.convertTime(date);
+            var startDate = $scope.convertDate(date);
+            startDate = startDate +" " + startTime;
+            var destination = "start";
+            var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+            OrderService.setStartDate($scope.order.orderid, startDate, destination);
+            $scope.startTime = OrderService.getOrderTime($scope.order.orderid, destination);
+            $scope.orderIsStarted = true;
+            $scope.orderState = false;
+        }
+
+        $scope.endOrder = function() {
+            var date = new Date();
+            var startTime = $scope.convertTime(date);
+            var startDate = $scope.convertDate(date);
+            startDate = startDate + " " + startTime;
+            var destination = "eind";
+            var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+            OrderService.setStartDate($scope.order.orderid, startDate, destination);
+            $scope.endTime = OrderService.getOrderTime($scope.order.orderid, destination);
+            $scope.orderIsStarted = true;
+        }
+ 
+        $scope.convertTime = function (inputFormat) {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(inputFormat);
+            return [pad(d.getHours()), pad(d.getMinutes())].join(':');
+        }
+
+        $scope.convertDate = function (inputFormat) {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(inputFormat);
+            return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
+        }
+
+        $scope.getCurrentGeoLocation = function (destination, orderid) {
+            $cordovaGeolocation
+                .getCurrentPosition()
+                .then(function (position) {
+                    OrderService.setGeolocation(position.coords.latitude, position.coords.longitude, destination, orderid);
+                }, function (err) {
+                    console.log("The following error occured while trying to get the geoLocation: ");
+                    console.log(err);
+                });
+        }
+
         $scope.disableAll = function () {
             // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
             $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
-
-            if ($scope.orderFinished) {
+            console.log("KOm ik wel in deze code?");
+            console.log("")
+            if ($scope.orderFinished || !$scope.orderIsStarted) {
+                console.log("Ja check eer!");
                 angular.element(document).ready(function () {
                     var elements = document.getElementsByClassName('removeAfterFinish');
 
@@ -33,6 +94,21 @@
                     }
                 });
             }
+        }
+
+        $scope.enableAll = function() {
+            angular.element(document).ready(function () {
+                var elements = document.getElementsByClassName('removeAfterFinish');
+
+                for (var index = 0; index < elements.length; index += 1) {
+                    elements[index].style.display = '';
+                }
+
+                var comment = document.getElementById('comment');
+                if (comment) {
+                    comment.disabled = false;
+                }
+            });
         }
 
         // Get the date of today, used at 'Afronding'
@@ -103,6 +179,7 @@
             }
 
             $scope.order.status = 'In wachtrij';
+            $scope.endOrder();
             // The actual sending of the order via the service
             OrderService.postOrder($scope.order.orderid, status).then(function (res) {
                 $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
@@ -159,15 +236,6 @@
                     ]
                 });
             });
-        }
-
-        // Function gets the current GeoLocation
-        $scope.getCurrentGeoLocation = function () {
-            $cordovaGeolocation
-                .getCurrentPosition()
-                .then(function (position) {
-                    OrderService.setGeolocation(position.coords.latitude, position.coords.longitude);
-                });
         }
 
         // Ionic Modal

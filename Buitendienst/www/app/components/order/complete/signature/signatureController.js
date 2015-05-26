@@ -37,7 +37,13 @@
                 if(!signaturePad.isEmpty()) {
                     var sigImg = signaturePad.toDataURL();
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
-                    $scope.getCurrentGeoLocation();
+                    var date = new Date();
+                    var startTime = $scope.convertTime(date);
+                    var startDate = $scope.convertDate(date);
+                    startDate = startDate + " " + startTime;
+                    var destination = "handtekening";
+                    var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+                    OrderService.setStartDate($scope.order.orderid, startDate, destination);
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);

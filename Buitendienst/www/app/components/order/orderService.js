@@ -4,7 +4,6 @@ angular.module('directory.orderService', [])
 
         var orders;
         var signature = false;
-        var werkbon = false;
 
         return {
             getOrders: function () {
@@ -44,6 +43,20 @@ angular.module('directory.orderService', [])
                 } else {
                     return false;
                 }
+            },
+
+            checkIfStarted: function(_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                if (parsedItem.start.datum === '') {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
+            getOrderTime: function(_orderId, destination) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));           
+                return parsedItem[destination].datum;
             },
 
             setFollowup: function (orderid, text) {
@@ -131,12 +144,14 @@ angular.module('directory.orderService', [])
                 }
             },
 
-            setGeolocation: function (latitude, longitude) {
-                var _position = {
+            setGeolocation: function (latitude, longitude, destination, orderid) {
+                var position = {
                     latitude: latitude,
                     longitude: longitude
                 }
-                $window.localStorage.setItem('geoLocation', JSON.stringify(_position));
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem[destination].location = position;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 
             getGeolocation: function () {
@@ -144,8 +159,23 @@ angular.module('directory.orderService', [])
                     lat: $window.localStorage.getItem('geoLocation').latitude,
                     lng: $window.localStorage.getItem('geoLocation').longitude
                 }
+            },
+
+            setStartDate: function (orderid, dateTime, destination) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem[destination].datum = dateTime;
+                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
+            setStartLocation: function (orderid, geoLocation) {
+                console.log("setStartLocation :")
+                console.log(geoLocation);
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+                parsedItem.start.latitude = geoLocation.latitude;
+                console.log(parsedItem);
+                parsedItem.start.longitude = geoLocation.longitude;
+                console.log(parsedItem);
+
             }
-
-
         }
     });
