@@ -2,6 +2,8 @@
 
     .controller('PlanningCtrl', function ($scope, $rootScope, $interval, $window, $ionicPlatform, $cordovaNetwork, $cordovaLocalNotification, $ionicLoading, $ionicPopup, PlanningService, OrderService, $state) {
         PlanningService.setInitialQueue();
+        startNotificationInterval();
+
         // Some initial variables
         $scope.orders = [];
         $scope.queueLength = 0;
@@ -158,6 +160,8 @@
                 setupLocalStorage(orders);  
 
                 checkOrderStatus();
+
+                checkOrderHighlight();
             });
         }
 
@@ -166,6 +170,26 @@
             for(var i = 0; i < orders.length; i += 1) {
                 PlanningService.createEmptyOrder(orders[i]);
             }
+        }  
+
+        // Start the interval to check every 1 minute if it is 15 minutes before a scheduled order
+        function startNotificationInterval() {
+            var intervalNotification = $interval(function(){
+                var date = convertDate(new Date()); // dd-MM-jjjj
+                var now = convertTime(new Date()); // HH:mm
+                var orderTime = convertTime(getAlertTime(new Date(new Date().toDateString() + ' ' + $scope.orders[2].tijd), 15)); // HH:mm (15 minutes before order time)
+                
+                for(var index = 0; index < $scope.orders.length; index += 1){
+                    if(orderTime === now && $scope.orders[index].plandatum === date) {
+                        PlanningService.giveAlert($scope.orders[index].tijd);
+                    }
+                }
+            }, 60000);
+        }
+
+        // When it's time for a order, highlight it!
+        function checkOrderHighlight() {
+
         }
 
         // Refresh to get the new JSON files
@@ -215,41 +239,8 @@
             return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
         }
 
-        $scope.add = function() {
-            var now = new Date().getTime();
-            var _10SecondsFromNow = new Date(now + 10 * 1000);
-            alert('daar gaan we ' + _10SecondsFromNow);
-            $cordovaLocalNotification.schedule({
-                id: 1,
-                at: _10SecondsFromNow,
-                text: "This is a message",
-                title: "This is a title"
-            }).then(function () {
-                alert("The notification has been set");
-            });
-        };
-
- 
-        $scope.isScheduled = function() {
-            $cordovaLocalNotification.isScheduled(1).then(function(isScheduled) {
-                alert("Notification 1234 Scheduled: " + isScheduled);
-            });
+        function getAlertTime(date, minutes) {
+            return new Date(date.getTime() - minutes*60000);
         }
-
-        $scope.addNotification = function(tit, msg) {
-              window.plugin.notification.local.add({
-                  id: 1,
-                  title:   'Testss',
-                  message: 'msg'
-            });
-        }
-
-        // $scope.$on("$cordovaLocalNotification:schedule", function(id, state, json) {
-        //     alert("Added a notification");
-        // });
-
-        // $scope.$on('onReminderAdded', function(event, id, state, json) {
-        //   alert('notification ADDED, id: ' + id  + ' state:' + state + ' json:' + json );
-        // });
 
     });

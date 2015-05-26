@@ -90,14 +90,13 @@
                     alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
                     showAlert(alertMessage, alertTitle);
                 } else {
-                    // Check if the signature and werkbon are available
+                    // Check if the signature is available
                     var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
 
                     if (!signatureAvailable) {
                         alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
                         showAlert(alertMessage, alertTitle);
                     } else {
-                        // All requirements are true
                         showPopup();
                     }
                 }
@@ -159,7 +158,6 @@
                 showAlert(alertMessage, alertTitle);
                 console.log(res);
             });
-
         }
 
         $scope.askConfirmation = function () {
@@ -201,13 +199,6 @@
                               }
                           }
                     ]
-                });
-
-                confirmPopup.then(function (res) {
-                    if (res) {
-                        OrderService.setFollowup($scope.order.orderid, document.getElementById('followup').value);
-                        $scope.sendOrder('Vervolgactie');
-                    }
                 });
             });
         }

@@ -133,9 +133,9 @@
     {
         "orderid": "125",
         "status": "Nieuw",
-        "plandatum": "19-04-2015",
+        "plandatum": "25-05-2015",
         "omschrijving": "Reparatie",
-        "tijd": "11:00",
+        "tijd": "15:22",
         "klant": {
 	    "klantid": "33789",
             "naam": "Jan van Dijk",
