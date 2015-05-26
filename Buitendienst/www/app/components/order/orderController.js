@@ -1,9 +1,14 @@
 ﻿angular.module('directory.orderController', [])
 
     .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup, $cordovaGeolocation) {
+
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
-
+            $scope.orderIsStarted = OrderService.checkIfStarted($scope.order.orderid);
+            $scope.startTime = OrderService.getStartTime($scope.order.orderid);
+            if ($scope.startTime === "") {
+                $scope.startTime = "Niet gestart";
+            }
             // If order is in queue, display the orderstatus different
             OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
                 if (bool) {
@@ -14,6 +19,43 @@
             });
 
         });
+
+        // Function makes sending the order available and stores timer and geolocation
+        $scope.startOrder = function () {
+            var date = new Date();
+            var startTime = convertTime(date);
+            var startDate = convertDate(date);
+            startDate = startDate +" " + startTime;
+            var destination = "start";
+            var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+            OrderService.setStartDate($scope.order.orderid, startDate);
+            $scope.startTime = OrderService.getStartTime($scope.order.orderid);
+            console.log($scope.startTime);
+            $scope.orderIsStarted = true;
+        }
+ 
+        $scope.convertTime = function (inputFormat) {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(inputFormat);
+            return [pad(d.getHours()), pad(d.getMinutes())].join(':');
+        }
+
+        $scope.convertDate = function (inputFormat) {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(inputFormat);
+            return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
+        }
+
+        $scope.getCurrentGeoLocation = function (destination, orderid) {
+            $cordovaGeolocation
+                .getCurrentPosition()
+                .then(function (position) {
+                    OrderService.setGeolocation(position.coords.latitude, position.coords.longitude, destination, orderid);
+                }, function (err) {
+                    console.log("The following error occured while trying to get the geoLocation: ");
+                    console.log(err);
+                });
+        }
 
         $scope.disableAll = function () {
             // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
@@ -168,14 +210,6 @@
                     }
                 });
             });
-        }
-        // Function gets the current GeoLocation
-        $scope.getCurrentGeoLocation = function () {
-            $cordovaGeolocation
-                .getCurrentPosition()
-                .then(function (position) {
-                    OrderService.setGeolocation(position.coords.latitude, position.coords.longitude);
-                });
         }
 
         // Ionic Modal
