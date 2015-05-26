@@ -54,9 +54,9 @@
                 }
             },
 
-            getStartTime: function(_orderId) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
-                return parsedItem.start.datum;
+            getOrderTime: function(_orderId, destination) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));           
+                return parsedItem[destination].datum;
             },
 
             setFollowup: function (orderid, text) {

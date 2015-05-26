@@ -55,8 +55,7 @@
                         },
                         eind: {
                             datum: '',
-                            lat: '',
-                            long: ''
+                            location: {}
                         },
                         status: order.status,
                         vervolgactie: '',
