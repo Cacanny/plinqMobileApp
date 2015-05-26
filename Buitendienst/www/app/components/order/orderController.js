@@ -23,12 +23,12 @@
         // Function makes sending the order available and stores timer and geolocation
         $scope.startOrder = function () {
             var date = new Date();
-            var startTime = convertTime(date);
-            var startDate = convertDate(date);
+            var startTime = $scope.convertTime(date);
+            var startDate = $scope.convertDate(date);
             startDate = startDate +" " + startTime;
             var destination = "start";
             var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
-            OrderService.setStartDate($scope.order.orderid, startDate);
+            OrderService.setStartDate($scope.order.orderid, startDate, destination);
             $scope.startTime = OrderService.getStartTime($scope.order.orderid);
             console.log($scope.startTime);
             $scope.orderIsStarted = true;
