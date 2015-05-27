@@ -2,8 +2,8 @@
     .directive('detailsView', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/components/order/details/detailsView.html',
-            controller: 'OrderCtrl'
+            templateUrl: 'app/components/order/details/detailsView.html'
+            // controller: 'OrderCtrl'
         }
 
     });

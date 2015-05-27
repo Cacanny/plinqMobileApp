@@ -21,15 +21,11 @@ body {
 }
 
 .orderWithoutHighlight {
-    border-top: 5px solid #337ab7 !important;
+    border-top: 5px solid #D8D8D8 !important; /*#337ab7*/
 }
 
 .orderHighlight {
-    border-top: 5px solid #5cb85c !important;
-}
-
-.orderHighlightItem {
-    color: #5cb85c !important;
+    border-top: 5px solid #337ab7 !important; /*#5cb85c*/
 }
 
 .noborder {
@@ -87,10 +83,10 @@ body {
     display: inline-block;
 }
 
-.fixedwidth-210 {
-    max-width: 210px !important;
-    width: 210px !important;
-    min-width: 210px !important;
+.fixedwidth-225 {
+    max-width: 225px !important;
+    width: 225px !important;
+    min-width: 225px !important;
     display: inline-block;
 }
 

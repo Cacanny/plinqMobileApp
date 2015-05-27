@@ -22,7 +22,7 @@
                 sendQueue(); // Delete this after browser testing
             });
         });
-
+        
         $scope.viewQueue = function() {
             var template = '';
             if($scope.queueArr.length > 0) {
@@ -44,9 +44,14 @@
 
         function sendQueue() {
             if($scope.queueArr.length > 0) {
+                var date = new Date();
+                var startTime = convertTime(date);
+                var startDate = convertDate(date);
+                var datum = startDate + " " + startTime; 
+
                 // Foreach order in the queue send it, and remove it from the queue
                 for(var index = $scope.queueArr.length - 1; index >= 0; index -= 1) {
-                    OrderService.postOrder($scope.queueArr[index], 'Queue').then(function(res){
+                    OrderService.postOrder($scope.queueArr[index], 'Queue', datum).then(function(res){
                         $scope.queueArr.splice(index, 1);
                         $scope.queueLength = $scope.queueArr.length;
                         PlanningService.setQueue($scope.queueArr);
@@ -61,11 +66,6 @@
         } 
 
         function refreshAllIntervals() {
-            // Update the planning and werkzaamheden/materialen every 30 seconds.
-            $scope.intervalRefresh = $interval(function(){
-                refresh();
-            }, 30000);
-
             // Try to send orders in the queue if there is any
             $scope.intervalQueue = $interval(function(){
                 if($scope.queueArr.length > 0) {
@@ -80,6 +80,9 @@
             document.addEventListener("deviceready", function () {
                 if(navigator.connection.type !== Connection.NONE){
                     performOnlineFunction();
+
+                    // Get the planning and werkzaamheden/materialen
+                    refresh();
                 } else {
                     performOfflineFunction();
                 }
@@ -89,16 +92,12 @@
         $scope.$on('$ionicView.beforeLeave', function(){
             // Stop all possible intervals
             $interval.cancel($scope.intervalQueue);
-            $interval.cancel($scope.intervalRefresh);
             $interval.cancel($scope.highlightInterval);
         });
 
         // Function that needs to be performed with Online connection
         function performOnlineFunction() {
             $scope.connection = 'Online';
-
-            // Get the planning and werkzaamheden/materialen
-            refresh();
 
             // Initial intervals
             refreshAllIntervals();
@@ -110,7 +109,6 @@
 
             // Stop all possible intervals
             $interval.cancel($scope.intervalQueue);
-            $interval.cancel($scope.intervalRefresh);
         }
 
         // Watch if the Internet Connection changes 
@@ -222,21 +220,9 @@
                     if($scope.orders[index].tijd <= now && nextOrderTime > now && $scope.orders[index].plandatum === date) {         
                         // And add the highlight to the order
                         document.getElementById(orderId).className = "card orderHighlight";
-                        document.getElementById('orderid' + orderId).className = "orderHighlightItem";
-                        document.getElementById('orderstatus' + orderId).className = "orderHighlightItem";
-                        document.getElementById('orderklantnaam' + orderId).className = "icon ion-person orderHighlightItem";
-                        document.getElementById('orderklanttelefoon' + orderId).className = "icon ion-ios-telephone orderHighlightItem";
-                        document.getElementById('orderklantemail' + orderId).className = "icon ion-ios-email-outline orderHighlightItem";
-                        document.getElementById('orderadres' + orderId).className = "orderHighlightItem";
                     } else {
                         // Reset the className
                         document.getElementById(orderId).className = "card orderWithoutHighlight";
-                        document.getElementById('orderid' + orderId).className = "positive";
-                        document.getElementById('orderstatus' + orderId).className = "positive";
-                        document.getElementById('orderklantnaam' + orderId).className = "icon ion-person positive";
-                        document.getElementById('orderklanttelefoon' + orderId).className = "icon ion-ios-telephone positive";
-                        document.getElementById('orderklantemail' + orderId).className = "icon ion-ios-email-outline positive";
-                        document.getElementById('orderadres' + orderId).className = "positive";
                     }
                 }
             });
@@ -255,8 +241,8 @@
                 $ionicLoading.hide();
             });
 
-            // Get the 'werkzaamheden' and the 'materialen' 
-            PlanningService.setActivities();
+            // // Get the 'werkzaamheden' and the 'materialen' 
+            // PlanningService.setActivities();
 
             // Update time
             var date = new Date();
