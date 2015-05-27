@@ -78,6 +78,7 @@ angular.module('directory.photoController', [])
 
             // 3
             navigator.getPicture(options).then(function (imageData) {
+                alert("Kom ik hier?");
 
                 // 4
                 onImageSuccess(imageData);
@@ -116,6 +117,7 @@ angular.module('directory.photoController', [])
 
                 function fail(error) {
                     console.log("fail: " + error.code);
+                    alert(error);
                 }
 
                 function makeid() {
@@ -129,6 +131,7 @@ angular.module('directory.photoController', [])
                 }
 
             }, function (err) {
+                alert(err);
                 console.log(err);
             });
         }
