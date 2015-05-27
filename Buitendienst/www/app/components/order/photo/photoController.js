@@ -18,12 +18,12 @@ angular.module('directory.photoController', [])
             $scope.showPhotoBool = !$scope.showPhotoBool;
         }
 
-        function checkIfOrderFinished() {
-            $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
-
+        function checkIfOrderFinished(){
+            // $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+           
             // Check if the order has been sent with the 'Afgerond' status, if so, disable the add button
-            OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
-                if ($scope.orderFinished && !bool) {
+            OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                if($scope.orderFinished || !$scope.orderIsStarted && !bool) {
                     angular.element(document).ready(function () {
                         var elements = document.getElementsByClassName('removeAfterFinish');
                         for (var index = 0; index < elements.length; index += 1) {

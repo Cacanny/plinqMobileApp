@@ -1,7 +1,6 @@
 ﻿angular.module('directory.historyController', [])
 
     .controller('HistoryCtrl', function ($scope, $filter) {
-
         // Determine if the orderhistory tab should be showed or not
         $scope.showHistory = true;
 

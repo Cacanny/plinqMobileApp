@@ -3,15 +3,15 @@
     .factory('PlanningService', function ($window, $http, $q, $ionicPopup) {
 
         return {
-            setActivities: function () {
-                return $http.get("activities.json")
-                    .success(function (response) {
-                        $window.localStorage.setItem('activities', JSON.stringify(response));
-                    })
-                    .error(function () {
-                        alert('ERROR: Werkzaamheden konden niet worden opgehaald, herstart de applicatie.');
-                    });
-            },
+            // setActivities: function () {
+            //     return $http.get("activities.json")
+            //         .success(function (response) {
+            //             $window.localStorage.setItem('activities', JSON.stringify(response));
+            //         })
+            //         .error(function () {
+            //             alert('ERROR: Werkzaamheden konden niet worden opgehaald, herstart de applicatie.');
+            //         });
+            // },
             getActivities: function () {
                 return JSON.parse($window.localStorage.getItem('activities') || '{}');
             },
@@ -36,7 +36,8 @@
             setPlanning: function () {
                 return $http.get("orders.json")
                     .success(function (response) {
-                        $window.localStorage.setItem('getplanning', JSON.stringify(response));
+                        $window.localStorage.setItem('activities', JSON.stringify(response.basis));
+                        $window.localStorage.setItem('getplanning', JSON.stringify(response.orders));
                     })
                     .error(function () {
                         alert('ERROR: Planning kon niet worden opgehaald, herstart de applicatie.');
@@ -64,16 +65,12 @@
                         materialen: [],
                         opmerking: '',
                         fotos: [],
-                        werkbon: '',
                         handtekening: {
                             image: '',
                             datum: '',
                             location: {}
                         },
-                        verzenddatum: '',
-                        vervolgactie: '',
-                        monteur: 'Arno',
-                        werkbon: ''
+                        monteur: 'Arno'
                     }
                     // Add 'Monteur' in werkbon
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));

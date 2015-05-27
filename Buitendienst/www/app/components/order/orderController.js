@@ -1,18 +1,20 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $stateParams, OrderService, $ionicModal, $ionicPopup, $cordovaGeolocation) {
+    .controller('OrderCtrl', function ($scope, $timeout, $stateParams, OrderService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
 
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;
+
             $scope.orderIsStarted = OrderService.checkIfStarted($scope.order.orderid);
-            $scope.orderState = $scope.orderFinished;
-            $scope.startTime = OrderService.getOrderTime($scope.order.orderid, "start");
-            $scope.endTime = OrderService.getOrderTime($scope.order.orderid, "eind");
+            $scope.orderState = OrderService.checkIfStartedAndNotFinished($scope.order.orderid);
+            $scope.startTime = OrderService.getOrderTime($scope.order.orderid, 'start');
+            $scope.endTime = OrderService.getOrderTime($scope.order.orderid, 'eind');
          
-            if (!$scope.orderIsStarted && !$scope.orderFinished) {
+            if (!$scope.orderIsStarted) {
                 $scope.startTime = "Niet gestart";
                 $scope.disableAll();
             } 
+
             // If order is in queue, display the orderstatus different
             OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
                 if (bool) {
@@ -23,20 +25,20 @@
             });
 
         });
-
+        
         // Function makes sending the order available and stores timer and geolocation
         $scope.startOrder = function () {
             $scope.enableAll();
             var date = new Date();
             var startTime = $scope.convertTime(date);
             var startDate = $scope.convertDate(date);
-            startDate = startDate +" " + startTime;
+            startDate = startDate + " " + startTime;
             var destination = "start";
             var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+            
             OrderService.setStartDate($scope.order.orderid, startDate, destination);
             $scope.startTime = OrderService.getOrderTime($scope.order.orderid, destination);
             $scope.orderIsStarted = true;
-            $scope.orderState = false;
         }
 
         $scope.endOrder = function() {
@@ -48,7 +50,7 @@
             var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
             OrderService.setStartDate($scope.order.orderid, startDate, destination);
             $scope.endTime = OrderService.getOrderTime($scope.order.orderid, destination);
-            $scope.orderIsStarted = true;
+            $scope.orderState = false;
         }
  
         $scope.convertTime = function (inputFormat) {
@@ -77,21 +79,20 @@
         $scope.disableAll = function () {
             // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
             $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
-            console.log("KOm ik wel in deze code?");
-            console.log("")
+            
             if ($scope.orderFinished || !$scope.orderIsStarted) {
-                console.log("Ja check eer!");
                 angular.element(document).ready(function () {
-                    var elements = document.getElementsByClassName('removeAfterFinish');
+                    $timeout(function(){
+                        var elements = document.getElementsByClassName('removeAfterFinish');
+                        for (var index = 0; index < elements.length; index += 1) {
+                            elements[index].style.display = 'none';
+                        }
 
-                    for (var index = 0; index < elements.length; index += 1) {
-                        elements[index].style.display = 'none';
-                    }
-
-                    var comment = document.getElementById('comment');
-                    if (comment) {
-                        comment.disabled = true;
-                    }
+                        var comment = document.getElementById('comment');
+                        if (comment) {
+                            comment.disabled = true;
+                        }
+                    }, 1);
                 });
             }
         }
@@ -180,8 +181,14 @@
 
             $scope.order.status = 'In wachtrij';
             $scope.endOrder();
+
+            var date = new Date();
+            var startTime = $scope.convertTime(date);
+            var startDate = $scope.convertDate(date);
+            var datum = startDate + " " + startTime; 
+
             // The actual sending of the order via the service
-            OrderService.postOrder($scope.order.orderid, status).then(function (res) {
+            OrderService.postOrder($scope.order.orderid, status, datum).then(function (res) {
                 $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
 
                 if (status === 'Afgerond') {
@@ -246,8 +253,8 @@
             $scope.modal = modal;
         });
 
-        $scope.openModal = function (include) {
-            $scope.include = include;
+        $scope.openModal = function (_include) {
+            $scope.include = _include;
             $scope.modal.show();
         }
 

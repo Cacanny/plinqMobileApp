@@ -54,8 +54,17 @@ angular.module('directory.orderService', [])
                 }
             },
 
+            checkIfStartedAndNotFinished: function(_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                if (parsedItem.eind.datum !== '') {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+
             getOrderTime: function(_orderId, destination) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));           
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));  
                 return parsedItem[destination].datum;
             },
 
@@ -72,8 +81,9 @@ angular.module('directory.orderService', [])
                 return deferred.promise;
             },
 
-            postOrder: function (_orderId, status) {
+            postOrder: function (_orderId, status, datum) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
+                parsedItem.verzenddatum = datum;
 
                 if (status !== 'Queue') {
                     if (status === 'Afgerond') {

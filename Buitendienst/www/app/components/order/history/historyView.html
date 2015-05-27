@@ -3,17 +3,17 @@
         Orderhistorie
     </ion-item>
     <ion-item ng-show="toShowArr[8]" class="cssFade">   
-            <div class="col">
-                <ion-item class="row item-text-wrap">
-                    <div class="col bold fixedwidth-175">Datum</div>
-                    <div class="col bold">Vervolgactie</div>
-                    <div class="col bold fixedwidth-175">Verantw. monteur:</div>
-                </ion-item>
-                <ion-item class="row item-text-wrap" ng-repeat="h in order.orderhistorie track by $index">
-                    <div class="col fixedwidth-175">{{::h.verzenddatum}}</div>
-                    <div class="col" ng-click="toggleHistoryFilter(h.vervolgactie, $index)">{{h.vervolgactie}}</div>
-                    <div class="col fixedwidth-175">{{::h.monteur}}</div>
-                </ion-item>
-            </div>
+        <div class="col">
+            <ion-item class="row item-text-wrap">
+                <div class="col bold fixedwidth-175">Datum</div>
+                <div class="col bold">Vervolgactie</div>
+                <div class="col bold fixedwidth-175">Verantw. monteur:</div>
+            </ion-item>
+            <ion-item class="row item-text-wrap" ng-repeat="h in order.orderhistorie track by $index">
+                <div class="col fixedwidth-175">{{::h.verzenddatum}}</div>
+                <div class="col" ng-click="toggleHistoryFilter(h.vervolgactie, $index)">{{h.vervolgactie}}</div>
+                <div class="col fixedwidth-175">{{::h.monteur}}</div>
+            </ion-item>
+        </div>
     </ion-item>
 </ion-list>

@@ -3,10 +3,10 @@
     .controller('SignatureCtrl', function ($scope, CompleteService, OrderService) {
         angular.element(document).ready(function () {
             
-            $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+            // $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
             // Check if the order has been sent with the 'Afgerond' status, if so, disable the two buttons
             OrderService.inQueueBool($scope.order.orderid).then(function(bool){
-                if($scope.orderFinished && !bool) {
+                if($scope.orderFinished || !$scope.orderIsStarted && !bool) {
                     var elements = document.getElementsByClassName('removeAfterFinish');
                     for(var index = 0; index < elements.length; index += 1) {
                         elements[index].style.display = 'none';
@@ -37,6 +37,7 @@
                 if(!signaturePad.isEmpty()) {
                     var sigImg = signaturePad.toDataURL();
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
+                   
                     var date = new Date();
                     var startTime = $scope.convertTime(date);
                     var startDate = $scope.convertDate(date);

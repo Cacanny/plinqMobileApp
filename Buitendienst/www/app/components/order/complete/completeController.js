@@ -1,6 +1,6 @@
 angular.module('directory.completeController', [])
 
-    .controller('CompleteCtrl', function ($scope, CompleteService) {
+    .controller('CompleteCtrl', function ($scope, $rootScope, CompleteService) {
         CompleteService.getSignatureImage($scope.order.orderid).then(function (signature) {
             $scope._signatureImage = signature;
         });
@@ -22,7 +22,7 @@ angular.module('directory.completeController', [])
             }
         }
 
-        $scope.closeSignature = function () {
+        $rootScope.closeSignature = function () {
             $scope.modal.hide();
             
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
