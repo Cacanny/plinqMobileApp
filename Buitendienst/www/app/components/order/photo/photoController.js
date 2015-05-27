@@ -77,7 +77,7 @@ angular.module('directory.photoController', [])
             };
 
             // 3
-            $cordovaCamera.getPicture(options).then(function (imageData) {
+            navigator.getPicture(options).then(function (imageData) {
 
                 // 4
                 onImageSuccess(imageData);
