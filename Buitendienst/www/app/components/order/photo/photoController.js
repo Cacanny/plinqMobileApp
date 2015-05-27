@@ -8,7 +8,10 @@ angular.module('directory.photoController', [])
         //    $scope.allPhotos = photos;
         //});
 
-        $scope.allPhotos = [];
+        $ionicPlatform.ready(function () {
+            $scope.allPhotos = PhotoService.images();
+            $scope.$apply();
+        });
 
         // If the photo tab needs to be opened
         $scope.showPhotoBool = false;
@@ -136,28 +139,47 @@ angular.module('directory.photoController', [])
         //    });
         //}
 
-        // Camera function 
-        $scope.takePicture = function () {
-            PhotoService.getPicture()
-              .then(function (imageData) {
-                  // imageData is your base64-encoded image
-                  // update some ng-src directive
-                  $scope.allPhotos.push(imageData);
-                  //$scope.picSrc = "data:image/jpeg;base64," + imageData;
-                  //$scope.allPhotos.push($scope.picSrc);
-                  PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-              })
-              .catch(function (err) {
-                  console.log(err);
-              });
-        }
-
-        // Function makes sure the correct image is loaded
         $scope.urlForImage = function (imageName) {
-            var name = imageName.substr(imageName.lastIndexOf('/') + 1);
-            var trueOrigin = cordova.file.dataDirectory + name;
+            var trueOrigin = cordova.file.dataDirectory + imageName;
             return trueOrigin;
         }
+
+        $scope.addMedia = function () {
+            $scope.hideSheet = $ionicActionSheet.show({
+                buttons: [
+                  { text: 'Take photo' },
+                  { text: 'Photo from library' }
+                ],
+                titleText: 'Add images',
+                cancelText: 'Cancel',
+                buttonClicked: function (index) {
+                    $scope.addImage(index);
+                }
+            });
+        }
+
+        $scope.addImage = function (type) {
+            $scope.hideSheet();
+            ImageService.handleMediaDialog(type).then(function () {
+                $scope.$apply();
+            });
+        }
+
+        // Camera function 
+        //$scope.takePicture = function () {
+        //    PhotoService.getPicture()
+        //      .then(function (imageData) {
+        //          // imageData is your base64-encoded image
+        //          // update some ng-src directive
+        //          $scope.allPhotos.push(imageData);
+        //          //$scope.picSrc = "data:image/jpeg;base64," + imageData;
+        //          //$scope.allPhotos.push($scope.picSrc);
+        //          PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
+        //      })
+        //      .catch(function (err) {
+        //          console.log(err);
+        //      });
+        //}
 
         // Deletes the currently selected photo 
         $scope.deletePicture = function () {
