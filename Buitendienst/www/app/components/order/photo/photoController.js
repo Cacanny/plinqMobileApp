@@ -65,6 +65,7 @@ angular.module('directory.photoController', [])
         });
 
         $scope.takePicture = function () {
+            alert("Ik ga een foto maken");
 
             // 2
             var options = {
