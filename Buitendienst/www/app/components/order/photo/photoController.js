@@ -1,16 +1,18 @@
 
 angular.module('directory.photoController', [])
 
-    .controller('PhotoCtrl', function ($scope, PhotoService, OrderService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
-      
+    .controller('PhotoCtrl', function ($scope, PhotoService, OrderService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate, $cordovaCamera, $cordovaFile) {
+
         // Function to get the images from the LocalStorage and story an array with these images
-        PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
-            $scope.allPhotos = photos;
-        });
+        //PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
+        //    $scope.allPhotos = photos;
+        //});
+
+        $scope.allPhotos = [];
 
         // If the photo tab needs to be opened
         $scope.showPhotoBool = false;
-        $scope.showPhotos = function() {
+        $scope.showPhotos = function () {
             checkIfOrderFinished();
 
             $scope.showPhotoBool = !$scope.showPhotoBool;
@@ -24,7 +26,7 @@ angular.module('directory.photoController', [])
                 if($scope.orderFinished || !$scope.orderIsStarted && !bool) {
                     angular.element(document).ready(function () {
                         var elements = document.getElementsByClassName('removeAfterFinish');
-                        for(var index = 0; index < elements.length; index += 1) {
+                        for (var index = 0; index < elements.length; index += 1) {
                             elements[index].style.display = 'none';
                         }
                     });
@@ -54,27 +56,103 @@ angular.module('directory.photoController', [])
         $scope.closePicture = function () {
             $scope.photoModal.remove();
         }
-        
+
         // Cleanup the modal when we're done with it!
         $scope.$on('$destroy', function () {
-            if($scope.photoModal) {
+            if ($scope.photoModal) {
                 $scope.photoModal.remove();
             }
         });
 
-        // Camera function 
         $scope.takePicture = function () {
-            PhotoService.getPicture()
-              .then(function (imageData) {
-                  // imageData is your base64-encoded image
-                  // update some ng-src directive
-                  $scope.picSrc = "data:image/jpeg;base64," + imageData;
-                  $scope.allPhotos.push($scope.picSrc);
-                  PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-              })
-              .catch(function (err) {
-                  console.log(err);
-              });
+
+            // 2
+            var options = {
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+                allowEdit: false,
+                encodingType: Camera.EncodingType.JPEG,
+                popoverOptions: CameraPopoverOptions,
+            };
+
+            // 3
+            $cordovaCamera.getPicture(options).then(function (imageData) {
+
+                // 4
+                onImageSuccess(imageData);
+
+                function onImageSuccess(fileURI) {
+                    createFileEntry(fileURI);
+                }
+
+                function createFileEntry(fileURI) {
+                    window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+                }
+
+                // 5
+                function copyFile(fileEntry) {
+                    var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+                    var newName = makeid() + name;
+
+                    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+                        fileEntry.copyTo(
+                        fileSystem2,
+                        newName,
+                        onCopySuccess,
+                        fail
+                        );
+                    },
+                    fail);
+                }
+
+                // 6
+                function onCopySuccess(entry) {
+                    $scope.$apply(function () {
+                        $scope.allPhotos.push(entry.nativeURL);
+                        alert("Foto is gemaakt en succesvol opgeslagen");
+                    });
+                }
+
+                function fail(error) {
+                    console.log("fail: " + error.code);
+                }
+
+                function makeid() {
+                    var text = "";
+                    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                    for (var i = 0; i < 5; i++) {
+                        text += possible.charAt(Math.floor(Math.random() * possible.length));
+                    }
+                    return text;
+                }
+
+            }, function (err) {
+                console.log(err);
+            });
+        }
+
+        //// Camera function 
+        //$scope.takePicture = function () {
+        //    PhotoService.getPicture()
+        //      .then(function (imageData) {
+        //          // imageData is your base64-encoded image
+        //          // update some ng-src directive
+        //          $scope.allPhotos.push(imageData);
+        //          //$scope.picSrc = "data:image/jpeg;base64," + imageData;
+        //          //$scope.allPhotos.push($scope.picSrc);
+        //          PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
+        //      })
+        //      .catch(function (err) {
+        //          console.log(err);
+        //      });
+        //}
+
+        // Function makes sure the correct image is loaded
+        $scope.urlForImage = function (imageName) {
+            var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+            var trueOrigin = cordova.file.dataDirectory + name;
+            return trueOrigin;
         }
 
         // Deletes the currently selected photo 
@@ -95,14 +173,14 @@ angular.module('directory.photoController', [])
                     $scope.closePicture();
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
 
-                    if($scope.allPhotos.length !== 0) {
+                    if ($scope.allPhotos.length !== 0) {
                         $scope.showPhoto('app/components/order/photo/photoPopoverView/photoPopoverView.html');
                     }
                 }
             });
         }
 
-        $scope.slideChanged = function(index) {
+        $scope.slideChanged = function (index) {
             $ionicSlideBoxDelegate.update();
         }
 
