@@ -64,93 +64,93 @@ angular.module('directory.photoController', [])
             }
         });
 
-        $scope.takePicture = function () {
-            alert("Ik ga een foto maken");
-
-            // 2
-            var options = {
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
-                allowEdit: false,
-                encodingType: Camera.EncodingType.JPEG,
-                popoverOptions: CameraPopoverOptions,
-            };
-
-            // 3
-            navigator.getPicture(options).then(function (imageData) {
-                alert("Kom ik hier?");
-
-                // 4
-                onImageSuccess(imageData);
-
-                function onImageSuccess(fileURI) {
-                    createFileEntry(fileURI);
-                }
-
-                function createFileEntry(fileURI) {
-                    window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-                }
-
-                // 5
-                function copyFile(fileEntry) {
-                    var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-                    var newName = makeid() + name;
-
-                    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
-                        fileEntry.copyTo(
-                        fileSystem2,
-                        newName,
-                        onCopySuccess,
-                        fail
-                        );
-                    },
-                    fail);
-                }
-
-                // 6
-                function onCopySuccess(entry) {
-                    $scope.$apply(function () {
-                        $scope.allPhotos.push(entry.nativeURL);
-                        alert("Foto is gemaakt en succesvol opgeslagen");
-                    });
-                }
-
-                function fail(error) {
-                    console.log("fail: " + error.code);
-                    alert(error);
-                }
-
-                function makeid() {
-                    var text = "";
-                    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-                    for (var i = 0; i < 5; i++) {
-                        text += possible.charAt(Math.floor(Math.random() * possible.length));
-                    }
-                    return text;
-                }
-
-            }, function (err) {
-                alert(err);
-                console.log(err);
-            });
-        }
-
-        //// Camera function 
         //$scope.takePicture = function () {
-        //    PhotoService.getPicture()
-        //      .then(function (imageData) {
-        //          // imageData is your base64-encoded image
-        //          // update some ng-src directive
-        //          $scope.allPhotos.push(imageData);
-        //          //$scope.picSrc = "data:image/jpeg;base64," + imageData;
-        //          //$scope.allPhotos.push($scope.picSrc);
-        //          PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-        //      })
-        //      .catch(function (err) {
-        //          console.log(err);
-        //      });
+        //    alert("Ik ga een foto maken");
+
+        //    // 2
+        //    var options = {
+        //        destinationType: Camera.DestinationType.FILE_URI,
+        //        sourceType: Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+        //        allowEdit: false,
+        //        encodingType: Camera.EncodingType.JPEG,
+        //        popoverOptions: CameraPopoverOptions,
+        //    };
+
+        //    // 3
+        //    navigator.getPicture(options).then(function (imageData) {
+        //        alert("Kom ik hier?");
+
+        //        // 4
+        //        onImageSuccess(imageData);
+
+        //        function onImageSuccess(fileURI) {
+        //            createFileEntry(fileURI);
+        //        }
+
+        //        function createFileEntry(fileURI) {
+        //            window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+        //        }
+
+        //        // 5
+        //        function copyFile(fileEntry) {
+        //            var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+        //            var newName = makeid() + name;
+
+        //            window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+        //                fileEntry.copyTo(
+        //                fileSystem2,
+        //                newName,
+        //                onCopySuccess,
+        //                fail
+        //                );
+        //            },
+        //            fail);
+        //        }
+
+        //        // 6
+        //        function onCopySuccess(entry) {
+        //            $scope.$apply(function () {
+        //                $scope.allPhotos.push(entry.nativeURL);
+        //                alert("Foto is gemaakt en succesvol opgeslagen");
+        //            });
+        //        }
+
+        //        function fail(error) {
+        //            console.log("fail: " + error.code);
+        //            alert(error);
+        //        }
+
+        //        function makeid() {
+        //            var text = "";
+        //            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        //            for (var i = 0; i < 5; i++) {
+        //                text += possible.charAt(Math.floor(Math.random() * possible.length));
+        //            }
+        //            return text;
+        //        }
+
+        //    }, function (err) {
+        //        alert(err);
+        //        console.log(err);
+        //    });
         //}
+
+        // Camera function 
+        $scope.takePicture = function () {
+            PhotoService.getPicture()
+              .then(function (imageData) {
+                  // imageData is your base64-encoded image
+                  // update some ng-src directive
+                  $scope.allPhotos.push(imageData);
+                  //$scope.picSrc = "data:image/jpeg;base64," + imageData;
+                  //$scope.allPhotos.push($scope.picSrc);
+                  PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
+              })
+              .catch(function (err) {
+                  console.log(err);
+              });
+        }
 
         // Function makes sure the correct image is loaded
         $scope.urlForImage = function (imageName) {
