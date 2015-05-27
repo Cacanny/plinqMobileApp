@@ -48,6 +48,7 @@
                     targetWidth: 1024,
                     targetHeight: 768
                 };
+                alert(defaultOptions);
 
                 // allow overriding the default options
                 options = angular.extend(defaultOptions, options);
