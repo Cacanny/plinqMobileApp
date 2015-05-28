@@ -101,7 +101,13 @@ angular.module('directory.orderService', [])
                         console.log(response);
                     })
                     .error(function () {
-                        var alertPopup = $ionicPopup.alert({
+                        var alertPopup;
+
+                        //Check if there is already a popup in the screen, if so: close it first
+                        if(alertPopup) {
+                            alertPopup.close();
+                        }
+                        alertPopup = $ionicPopup.alert({
                             title: '<b>Fout!</b>',
                             template: 'Er is iets fout gegaan bij het verzenden van de order! <br/><br/>Order ' + _orderId + ' wordt in de wachtrij gezet. Er wordt automatisch geprobeerd deze order opnieuw te verzenden (bij internetconnectie).'
                         });

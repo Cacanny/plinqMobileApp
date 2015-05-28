@@ -39,11 +39,9 @@
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
                    
                     var date = new Date();
-                    var startTime = $scope.convertTime(date);
-                    var startDate = $scope.convertDate(date);
-                    startDate = startDate + " " + startTime;
+                    var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
                     var destination = "handtekening";
-                    var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+                    $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
                     OrderService.setStartDate($scope.order.orderid, startDate, destination);
                 } else {
                     var sigImg = '';

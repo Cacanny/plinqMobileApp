@@ -11,15 +11,15 @@
 
         //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
         // $window.localStorage.clear();
-        refresh();
-        $scope.connection = 'Online';
+        // refresh();
+        // $scope.connection = 'Online';
 
         $scope.$on('$ionicView.afterEnter', function(){
             // Get queue
             PlanningService.getQueue().then(function(_queueArr){
                 $scope.queueArr = _queueArr;
                 $scope.queueLength = _queueArr.length;
-                sendQueue(); // Delete this after browser testing
+                // sendQueue(); // Delete this after browser testing
             });
         });
         
@@ -45,9 +45,7 @@
         function sendQueue() {
             if($scope.queueArr.length > 0) {
                 var date = new Date();
-                var startTime = convertTime(date);
-                var startDate = convertDate(date);
-                var datum = startDate + " " + startTime; 
+                var datum = convertDate(date) + " " + convertTime(date);
 
                 // Foreach order in the queue send it, and remove it from the queue
                 for(var index = $scope.queueArr.length - 1; index >= 0; index -= 1) {
@@ -72,17 +70,16 @@
                     sendQueue();
                 }
             }, 15000);
-            sendQueue();
         }   
 
         // Get initial Internet Connection
         $scope.$on('$ionicView.afterEnter', function(){
             document.addEventListener("deviceready", function () {
                 if(navigator.connection.type !== Connection.NONE){
-                    performOnlineFunction();
-
                     // Get the planning and werkzaamheden/materialen
                     refresh();
+
+                    performOnlineFunction();
                 } else {
                     performOfflineFunction();
                 }

@@ -30,11 +30,9 @@
         $scope.startOrder = function () {
             $scope.enableAll();
             var date = new Date();
-            var startTime = $scope.convertTime(date);
-            var startDate = $scope.convertDate(date);
-            startDate = startDate + " " + startTime;
+            var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
             var destination = "start";
-            var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+            $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
             
             OrderService.setStartDate($scope.order.orderid, startDate, destination);
             $scope.startTime = OrderService.getOrderTime($scope.order.orderid, destination);
@@ -43,11 +41,9 @@
 
         $scope.endOrder = function() {
             var date = new Date();
-            var startTime = $scope.convertTime(date);
-            var startDate = $scope.convertDate(date);
-            startDate = startDate + " " + startTime;
+            var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
             var destination = "eind";
-            var geoLocation = $scope.getCurrentGeoLocation(destination, $scope.order.orderid);
+            $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
             OrderService.setStartDate($scope.order.orderid, startDate, destination);
             $scope.endTime = OrderService.getOrderTime($scope.order.orderid, destination);
             $scope.orderState = false;
@@ -65,7 +61,7 @@
             return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
         }
 
-        $scope.getCurrentGeoLocation = function (destination, orderid) {
+        $scope.setCurrentGeoLocation = function (destination, orderid) {
             $cordovaGeolocation
                 .getCurrentPosition()
                 .then(function (position) {
@@ -183,9 +179,7 @@
             $scope.endOrder();
 
             var date = new Date();
-            var startTime = $scope.convertTime(date);
-            var startDate = $scope.convertDate(date);
-            var datum = startDate + " " + startTime; 
+            var datum = $scope.convertDate(date) + " " + $scope.convertTime(date);
 
             // The actual sending of the order via the service
             OrderService.postOrder($scope.order.orderid, status, datum).then(function (res) {
