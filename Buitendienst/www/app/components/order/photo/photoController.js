@@ -1,7 +1,7 @@
 
 angular.module('directory.photoController', [])
 
-    .controller('PhotoCtrl', function ($scope, PhotoService, OrderService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate, $cordovaCamera, $cordovaFile) {
+    .controller('PhotoCtrl', function ($scope, PhotoService, OrderService, $ionicModal, $ionicPopup, $ionicSlideBoxDelegate) {
 
         // Function to get the images from the LocalStorage and story an array with these images
         PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
