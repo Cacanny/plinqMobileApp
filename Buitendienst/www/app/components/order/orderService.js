@@ -1,11 +1,21 @@
 angular.module('directory.orderService', [])
 
-    .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup) {
+    .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup, $ionicLoading) {
 
         var orders;
         var signature = false;
 
         return {
+            startLoadingScreen: function() {
+                $ionicLoading.show({
+                    template: "<ion-spinner icon='android'></ion-spinner><br/> Order wordt geladen..."
+                });
+            },
+
+            endLoadingScreen: function() {
+                $ionicLoading.hide();
+            },
+
             getOrders: function () {
                 orders = PlanningService.getPlanning();
                 var deferred = $q.defer();
@@ -95,22 +105,18 @@ angular.module('directory.orderService', [])
 
                 $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
 
-                return $http.post("test2.json", parsedItem) // CHANGE test.json TO THE API URL
+                return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
                         // Success!
                         console.log(response);
                     })
                     .error(function () {
-                        var alertPopup;
-
-                        //Check if there is already a popup in the screen, if so: close it first
-                        if(alertPopup) {
-                            alertPopup.close();
+                        if(status !== 'Queue') {
+                            var alertPopup = $ionicPopup.alert({
+                                title: '<b>Fout!</b>',
+                                template: 'Er is iets fout gegaan bij het verzenden van de order! <br/><br/>Order ' + _orderId + ' wordt in de wachtrij gezet. Er wordt automatisch geprobeerd deze order opnieuw te verzenden (bij internetconnectie).'
+                            });
                         }
-                        alertPopup = $ionicPopup.alert({
-                            title: '<b>Fout!</b>',
-                            template: 'Er is iets fout gegaan bij het verzenden van de order! <br/><br/>Order ' + _orderId + ' wordt in de wachtrij gezet. Er wordt automatisch geprobeerd deze order opnieuw te verzenden (bij internetconnectie).'
-                        });
 
                         // Add the order to the queue if it's not already in there
                         var queue = JSON.parse($window.localStorage.getItem('queue'));

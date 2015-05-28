@@ -1,6 +1,9 @@
 ﻿angular.module('directory.orderController', [])
 
     .controller('OrderCtrl', function ($scope, $timeout, $stateParams, OrderService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
+        $scope.$on('$ionicView.afterEnter', function(){
+            OrderService.endLoadingScreen();
+        });
 
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
             $scope.order = order;

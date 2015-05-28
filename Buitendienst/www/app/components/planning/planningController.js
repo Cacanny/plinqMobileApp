@@ -11,8 +11,8 @@
 
         //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
         // $window.localStorage.clear();
-        // refresh();
-        // $scope.connection = 'Online';
+        refresh();
+        $scope.connection = 'Online';
 
         $scope.$on('$ionicView.afterEnter', function(){
             // Get queue
@@ -88,6 +88,16 @@
 
         $scope.$on('$ionicView.beforeLeave', function(){
             // Stop all possible intervals
+            $interval.cancel($scope.intervalQueue);
+            $interval.cancel($scope.highlightInterval);
+
+            // Give a loading screen
+            OrderService.startLoadingScreen();
+
+        });
+
+        $scope.$on('$ionicView.afterLeave', function(){
+            // Extra check to stop all possible intervals
             $interval.cancel($scope.intervalQueue);
             $interval.cancel($scope.highlightInterval);
         });
