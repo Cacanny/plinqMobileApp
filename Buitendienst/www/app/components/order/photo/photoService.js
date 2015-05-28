@@ -5,6 +5,8 @@
     var IMAGE_STORAGE_KEY = 'images';
 
     return {
+
+        // Function
         getPicture: function (options) {
 
             // init $q
@@ -33,6 +35,7 @@
                         $rootScope.$apply(function () {
                             // strip beginning from string
                             var encodedData = reader.result.replace(/data:image\/jpeg;base64,/, '');
+                            console.log(encodedData);
                             deferred.resolve(encodedData);
                         });
                     };
@@ -49,7 +52,8 @@
                     sourceType: Camera.PictureSourceType.CAMERA,
                     allowEdit: false,
                     targetWidth: 1024,
-                    targetHeight: 768
+                    targetHeight: 768,
+                    saveToPhotoAlbum: true
                 };
                 alert(defaultOptions);
 
@@ -81,60 +85,20 @@
 
         },
 
-        saveImageToFile: function (imageUrl) {
-            var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
-            var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
-            var newName = makeid() + name;
-            $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName)
-              .then(function(info) {
-                  FileService.storeImage(newName);
-                  resolve();
-              }, function(e) {
-                  reject();
-              });
-            //createFileEntry(imageData);
 
-            //function createFileEntry(fileURI) {
-            //    $window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-            //}
-
-            //function copyFile(fileEntry) {
-            //    var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-            //    var newName = makeid() + name;
-
-            //    $window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
-            //        fileEntry.copyTo(
-            //           fileSystem2,
-            //           newName,
-            //           onCopySuccess,
-            //           fail
-            //           );
-            //    },
-            //                 fail);
-            //}
-
-            //// 6
-            //function onCopySuccess(entry) {
-            //    $scope.$apply(function () {
-            //        $scope.allPhotos.push(entry.nativeURL);
-            //        alert("Foto is gemaakt en succesvol opgeslagen");
-            //    });
-            //}
-
-            //function fail(error) {
-            //    console.log("fail: " + error.code);
-            //    alert(error);
-            //}
-
-            function makeid() {
-                var text = "";
-                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-                for (var i = 0; i < 5; i++) {
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-                }
-                return text;
+        //Converts data uri to Blob. Necessary for uploading images.
+        //@see
+        // http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
+        //@param  {String} dataURI
+        //@return {Blob}
+        dataURItoBlob: function (dataURI) {
+            var binary = atob(dataURI.split(',')[1]);
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var array = [];
+            for (var i = 0; i < binary.length; i++) {
+                array.push(binary.charCodeAt(i));
             }
+            return new Blob([new Uint8Array(array)], { type: mimeString });
         },
 
         setPhotoImage: function (orderid, image) {
