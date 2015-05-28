@@ -81,40 +81,50 @@
 
         },
 
-        saveImageToFile: function (imageData) {
-            createFileEntry(fileURI);
+        saveImageToFile: function (imageUrl) {
+            var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
+            var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
+            var newName = makeid() + name;
+            $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName)
+              .then(function(info) {
+                  FileService.storeImage(newName);
+                  resolve();
+              }, function(e) {
+                  reject();
+              });
+            //createFileEntry(imageData);
 
-            function createFileEntry(fileURI) {
-                window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-            }
+            //function createFileEntry(fileURI) {
+            //    $window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+            //}
 
-            function copyFile(fileEntry) {
-                var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-                var newName = makeid() + name;
+            //function copyFile(fileEntry) {
+            //    var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+            //    var newName = makeid() + name;
 
-                window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
-                    fileEntry.copyTo(
-                       fileSystem2,
-                       newName,
-                       onCopySuccess,
-                       fail
-                       );
-                },
-                             fail);
-            }
+            //    $window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (fileSystem2) {
+            //        fileEntry.copyTo(
+            //           fileSystem2,
+            //           newName,
+            //           onCopySuccess,
+            //           fail
+            //           );
+            //    },
+            //                 fail);
+            //}
 
-            // 6
-            function onCopySuccess(entry) {
-                $scope.$apply(function () {
-                    $scope.allPhotos.push(entry.nativeURL);
-                    alert("Foto is gemaakt en succesvol opgeslagen");
-                });
-            }
+            //// 6
+            //function onCopySuccess(entry) {
+            //    $scope.$apply(function () {
+            //        $scope.allPhotos.push(entry.nativeURL);
+            //        alert("Foto is gemaakt en succesvol opgeslagen");
+            //    });
+            //}
 
-            function fail(error) {
-                console.log("fail: " + error.code);
-                alert(error);
-            }
+            //function fail(error) {
+            //    console.log("fail: " + error.code);
+            //    alert(error);
+            //}
 
             function makeid() {
                 var text = "";
