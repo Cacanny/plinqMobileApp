@@ -4,11 +4,11 @@
     </ion-item>
     <ion-item class="row" ng-if="showPhotoBool" ng-cloak>
         <div class="col fixedwidth-100 removeAfterFinish">
-            <div class="button add-photo padding ion-ios-camera" ng-click="addMedia()"></div>
+            <div class="button add-photo padding ion-ios-camera" ng-click="takePicture()"></div>
         </div>
         <div class="col photo-container">
             <ion-scroll direction="x" height="100px">
-                <img alt="" ng-repeat="photo in allPhotos" ng-src="{{::urlForImage(photo)}}" class="photo cover" ng-click="showImages($index)" />
+                <img alt="" ng-repeat="photo in allPhotos" ng-src="{{::photo}}" class="photo cover" ng-click="showImages($index)" />
             </ion-scroll>
         </div>
     </ion-item>
