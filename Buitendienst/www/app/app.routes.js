@@ -7,32 +7,33 @@ angular.module('directory.appRoutes', [])
         // Each state's controller can be found in the designated folder in either shared or components of app.
         $stateProvider
 
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/components/login/loginView.html',
+                controller: 'LoginCtrl'
+            })
+
             .state('app', {
-                url: "/app",
+                url: '/app',
                 abstract: true,
-                templateUrl: "app/shared/menu/menu.html"
+                templateUrl: 'app/shared/menu/menu.html'
             })
 
             .state('app.planning', {
-                url: "/planning",
-                templateUrl: "app/components/planning/planningView.html",
+                url: '/planning',
+                templateUrl: 'app/components/planning/planningView.html',
                 controller: 'PlanningCtrl'
             })
 
             .state('app.order', {
-                url: "/order/:orderId",
-                templateUrl: "app/components/order/orderView.html",
+                url: '/order/:orderId',
+                templateUrl: 'app/components/order/orderView.html',
                 controller: 'OrderCtrl'
             })
 
-            .state('signature', {
-                url: "/signature",
-                templateUrl: "app/components/order/complete/signature/signaturepadView.html"
-            })
-
             .state('test', {
-                url: "/test",
-                templateUrl: "app/shared/test/test.html",
+                url: '/test',
+                templateUrl: 'app/shared/test/test.html',
                 controller: 'PhotoCtrl'
             });  
              

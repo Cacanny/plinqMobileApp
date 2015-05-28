@@ -8,7 +8,7 @@ angular.module('directory.orderService', [])
         return {
             startLoadingScreen: function() {
                 $ionicLoading.show({
-                    template: "<ion-spinner icon='android'></ion-spinner><br/> Order wordt geladen..."
+                    template: "Order wordt geladen..."
                 });
             },
 

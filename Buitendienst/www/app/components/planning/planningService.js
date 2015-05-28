@@ -43,9 +43,11 @@
                         alert('ERROR: Planning kon niet worden opgehaald, herstart de applicatie.');
                     });
             },
+            
             getPlanning: function () {
                 return JSON.parse($window.localStorage.getItem('getplanning') || '{}');
             },
+
             createEmptyOrder: function (order) {
                 if ($window.localStorage.getItem('order' + order.orderid) === null) {
                     var fullOrder = {
