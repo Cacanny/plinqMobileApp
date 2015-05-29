@@ -16,7 +16,8 @@ angular.module('directory.appRoutes', [])
             .state('app', {
                 url: '/app',
                 abstract: true,
-                templateUrl: 'app/shared/menu/menu.html'
+                templateUrl: 'app/shared/menu/menu.html',
+                controller: 'MenuCtrl'
             })
 
             .state('app.planning', {
@@ -38,5 +39,5 @@ angular.module('directory.appRoutes', [])
             });  
              
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/planning');
+        $urlRouterProvider.otherwise('/login');
     });

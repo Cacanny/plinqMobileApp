@@ -21,7 +21,7 @@
             "orderid": "123",
             "status": "Nieuw",
             "plandatum": "27-05-2015",
-            "tijd": "10:00",
+            "tijd": "09:00",
             "omschrijving": "Installatie",
             "klant": {
     	    "klantid": "75321",
@@ -116,7 +116,7 @@
             "orderid": "124",
             "status": "Nieuw",
             "plandatum": "27-05-2015",
-            "tijd": "10:59",
+            "tijd": "10:00",
             "omschrijving": "Installatie",
             "klant": {
     	    "klantid": "12321",
@@ -151,7 +151,7 @@
         {
             "orderid": "125",
             "status": "Nieuw",
-            "plandatum": "27-05-2015",
+            "plandatum": "28-05-2015",
             "omschrijving": "Reparatie",
             "tijd": "11:00",
             "klant": {

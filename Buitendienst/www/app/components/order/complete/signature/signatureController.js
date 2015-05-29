@@ -42,7 +42,7 @@
                     var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
                     var destination = "handtekening";
                     $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
-                    OrderService.setStartDate($scope.order.orderid, startDate, destination);
+                    OrderService.setOrderDate($scope.order.orderid, startDate, destination);
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);

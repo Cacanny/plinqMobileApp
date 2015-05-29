@@ -2,8 +2,8 @@ angular.module('directory.orderService', [])
 
     .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup, $ionicLoading) {
 
-        var orders;
         var signature = false;
+        var fromPlanning = false;
 
         return {
             startLoadingScreen: function() {
@@ -16,14 +16,23 @@ angular.module('directory.orderService', [])
                 $ionicLoading.hide();
             },
 
+            cameFromPlanning: function() {
+                return fromPlanning;
+            },
+
+            setCameFromPlanning: function() {
+                fromPlanning = true;
+            },
+
             getOrders: function () {
-                orders = PlanningService.getPlanning();
+                var orders = PlanningService.getPlanning();
                 var deferred = $q.defer();
                 deferred.resolve(orders);
                 return deferred.promise;
             },
 
             findByOrderId: function (_orderId) {
+                var orders = PlanningService.getPlanning();
                 var deferred = $q.defer();
                 for (var x = 0; x < orders.length; x++) {
                     if (orders[x].orderid == _orderId) {
@@ -32,6 +41,13 @@ angular.module('directory.orderService', [])
                     }
                 }
                 deferred.resolve(order);
+                return deferred.promise;
+            },
+
+            getUser: function () {
+                var parsedItem = JSON.parse($window.localStorage.getItem('account'));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem.naam);
                 return deferred.promise;
             },
 
@@ -71,11 +87,6 @@ angular.module('directory.orderService', [])
                 } else {
                     return true;
                 }
-            },
-
-            getOrderTime: function(_orderId, destination) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));  
-                return parsedItem[destination].datum;
             },
 
             setFollowup: function (orderid, text) {
@@ -183,10 +194,15 @@ angular.module('directory.orderService', [])
                 }
             },
 
-            setStartDate: function (orderid, dateTime, destination) {
+            setOrderDate: function (orderid, dateTime, destination) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem[destination].datum = dateTime;
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
+            getOrderDate: function(_orderId, destination) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));  
+                return parsedItem[destination].datum;
             },
 
             setStartLocation: function (orderid, geoLocation) {

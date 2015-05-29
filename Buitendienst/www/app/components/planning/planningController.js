@@ -97,6 +97,9 @@
             // Stop all possible intervals
             $interval.cancel($scope.intervalQueue);
             $interval.cancel($scope.highlightInterval);
+
+            // Tell the orderview that he came from the planningview
+            OrderService.setCameFromPlanning();
         });
 
         $scope.$on('$ionicView.afterLeave', function(){
@@ -164,24 +167,27 @@
 
         function getAll() {
             OrderService.getOrders().then(function (orders) {
-                // Fill $scope.orders with the orders from the LocalStorage ('getplanning')
-                $scope.orders = orders;
-                setupLocalStorage(orders);  
+                OrderService.getUser().then(function(user){
+                    // Fill $scope.orders with the orders from the LocalStorage ('getplanning')
+                    $scope.orders = orders;
+                    setupLocalStorage(orders, user);  
 
-                checkOrderStatus();
+                    checkOrderStatus();
 
-                highlightOrder();
-
-                $scope.highlightInterval = $interval(function(){
                     highlightOrder();
-                }, 60000);
+
+                    $scope.highlightInterval = $interval(function(){
+                        highlightOrder();
+                    }, 60000);
+
+                });
             });
         }
 
         // Create some empty keys in localStorage for all the orders
-        function setupLocalStorage(orders) {
+        function setupLocalStorage(orders, user) {
             for(var i = 0; i < orders.length; i += 1) {
-                PlanningService.createEmptyOrder(orders[i]);
+                PlanningService.createEmptyOrder(orders[i], user);
             }
         }  
 
@@ -254,6 +260,7 @@
 
             // Update time
             var date = new Date();
+            $scope.date = convertDate(date);
             $scope.updateTime = convertTime(date);
         }
 

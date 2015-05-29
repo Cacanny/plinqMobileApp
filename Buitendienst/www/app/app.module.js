@@ -6,6 +6,8 @@ angular.module('directory', [
         'ngCordova',
         'ionicLazyLoad',
         'directory.appRoutes',
+        'directory.menuController',
+        'directory.menuService',
         'directory.loginController',
         'directory.loginService',
         'directory.planningService',

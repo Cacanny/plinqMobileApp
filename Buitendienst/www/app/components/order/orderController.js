@@ -3,6 +3,10 @@
     .controller('OrderCtrl', function ($scope, $timeout, $stateParams, OrderService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
         $scope.$on('$ionicView.afterEnter', function(){
             OrderService.endLoadingScreen();
+
+            if(!OrderService.cameFromPlanning()) {
+                window.location.replace('/#/login');
+            }
         });
 
         OrderService.findByOrderId($stateParams.orderId).then(function (order) {
@@ -10,8 +14,8 @@
 
             $scope.orderIsStarted = OrderService.checkIfStarted($scope.order.orderid);
             $scope.orderState = OrderService.checkIfStartedAndNotFinished($scope.order.orderid);
-            $scope.startTime = OrderService.getOrderTime($scope.order.orderid, 'start');
-            $scope.endTime = OrderService.getOrderTime($scope.order.orderid, 'eind');
+            $scope.startTime = OrderService.getOrderDate($scope.order.orderid, 'start');
+            $scope.endTime = OrderService.getOrderDate($scope.order.orderid, 'eind');
          
             if (!$scope.orderIsStarted) {
                 $scope.startTime = "Niet gestart";
@@ -27,29 +31,62 @@
                 }
             });
 
+            calculateWorkedHours();
         });
         
         // Function makes sending the order available and stores timer and geolocation
         $scope.startOrder = function () {
             $scope.enableAll();
             var date = new Date();
-            var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
-            var destination = "start";
+            var startDate = $scope.convertDate(date) + ' ' + $scope.convertTime(date);
+            var destination = 'start';
             $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
             
-            OrderService.setStartDate($scope.order.orderid, startDate, destination);
-            $scope.startTime = OrderService.getOrderTime($scope.order.orderid, destination);
+            OrderService.setOrderDate($scope.order.orderid, startDate, destination);
+            $scope.startTime = OrderService.getOrderDate($scope.order.orderid, destination);
             $scope.orderIsStarted = true;
         }
 
         $scope.endOrder = function() {
             var date = new Date();
-            var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
-            var destination = "eind";
+            var endDate = $scope.convertDate(date) + ' ' + $scope.convertTime(date);
+            var destination = 'eind';
             $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
-            OrderService.setStartDate($scope.order.orderid, startDate, destination);
-            $scope.endTime = OrderService.getOrderTime($scope.order.orderid, destination);
+            
+            OrderService.setOrderDate($scope.order.orderid, endDate, destination);
+            $scope.endTime = OrderService.getOrderDate($scope.order.orderid, destination);
             $scope.orderState = false;
+
+            calculateWorkedHours();
+        }
+
+        function calculateWorkedHours() {
+            var startTime = OrderService.getOrderDate($scope.order.orderid, 'start');
+            var endTime = OrderService.getOrderDate($scope.order.orderid, 'eind');
+
+            if(startTime && endTime) {
+                var start = startTime.substring(startTime.indexOf(' ')+1)
+                var end = endTime.substring(endTime.indexOf(' ')+1)
+
+                var startDate = new Date(new Date().toDateString() + ' ' + start);
+                var endDate = new Date(new Date().toDateString() + ' ' + end);
+
+                var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                var diffMins = Math.ceil(timeDiff / (1000 * 60)); 
+
+                var totalHours = 0;
+                var totalMinutes = diffMins;
+
+                while((totalMinutes-60) >= 0) {
+                    totalHours++
+                    totalMinutes -= 60;
+                }
+
+                $scope.workedHours = totalHours + ' uur, ' + totalMinutes + ' minuten';
+
+            } else {
+                $scope.workedHours = '0 uur, 0 minuten';
+            }
         }
  
         $scope.convertTime = function (inputFormat) {
