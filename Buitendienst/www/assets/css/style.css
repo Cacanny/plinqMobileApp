@@ -2,6 +2,54 @@ body {
     cursor: url('../img/finger.png'), auto;
 }
 
+.loginwrapper {
+    max-width: 500px !important;
+    width: 500px !important;
+    min-width: 500px !important;
+    max-height: 250px !important;
+    height: 250px !important;
+    min-height: 250px !important;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    margin: -125px 0 0 -250px;
+}
+
+.pincodewrapper {
+    max-width: 500px !important;
+    width: 500px !important;
+    min-width: 500px !important;
+    max-height: 500px !important;
+    height: 500px !important;
+    min-height: 500px !important;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    margin: -250px 0 0 -250px;
+}
+
+.wrongpincode {
+    color: #ef473a;
+    text-align: center;
+}
+
+.button-stretch {
+    width: 100%;
+}
+ 
+.col-offset-15 {
+    margin-left: 15%;
+}
+
+.logo {
+    float: right;
+    margin-right: 50px;
+}
+
 .item-divider {
     background-color: #FAFAFA !important;
 }

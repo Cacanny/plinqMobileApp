@@ -1,18 +1,19 @@
 ﻿angular.module('directory.planningController', [])
 
-    .controller('PlanningCtrl', function ($scope, $rootScope, $interval, $window, $ionicPlatform, $cordovaNetwork, $cordovaLocalNotification, $ionicLoading, $ionicPopup, PlanningService, OrderService, $state) {
+    .controller('PlanningCtrl', function ($scope, $rootScope, $timeout, $interval, $window, $ionicPlatform, $cordovaNetwork, $cordovaLocalNotification, $ionicLoading, $ionicPopup, PlanningService, OrderService, $state) {
         PlanningService.setInitialQueue();
         startNotificationInterval();
 
         // Some initial variables
         $scope.orders = [];
         $scope.queueLength = 0;
-        $scope.updateTime = 'Nooit'
+        $scope.updateTime = 'Nooit';
+        $scope.planningAvailable = false;
 
         //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
         // $window.localStorage.clear();
-        // refresh();
-        // $scope.connection = 'Online';
+        refresh();
+        $scope.connection = 'Online';
 
         $scope.$on('$ionicView.afterEnter', function(){
             // Get queue
@@ -64,7 +65,7 @@
         } 
 
         function refreshAllIntervals() {
-            // Try to send orders in the queue if there is any
+            // Try to send orders in the queue if there is any every 15 seconds
             $scope.intervalQueue = $interval(function(){
                 if($scope.queueArr.length > 0) {
                     sendQueue();
@@ -76,8 +77,14 @@
         $scope.$on('$ionicView.afterEnter', function(){
             document.addEventListener("deviceready", function () {
                 if(navigator.connection.type !== Connection.NONE){
-                    // Get the planning and werkzaamheden/materialen
-                    refresh();
+
+                    // Only when the application is first started
+                    if(!$scope.planningAvailable) {
+                        // Get the planning and werkzaamheden/materialen
+                        refresh();
+
+                        $scope.planningAvailable = true;
+                    }
 
                     performOnlineFunction();
                 } else {
@@ -88,6 +95,15 @@
 
         $scope.$on('$ionicView.beforeLeave', function(){
             // Stop all possible intervals
+            $interval.cancel($scope.intervalQueue);
+            $interval.cancel($scope.highlightInterval);
+
+            // Tell the orderview that he came from the planningview
+            OrderService.setCameFromPlanning();
+        });
+
+        $scope.$on('$ionicView.afterLeave', function(){
+            // Extra check to stop all possible intervals
             $interval.cancel($scope.intervalQueue);
             $interval.cancel($scope.highlightInterval);
         });
@@ -151,24 +167,27 @@
 
         function getAll() {
             OrderService.getOrders().then(function (orders) {
-                // Fill $scope.orders with the orders from the LocalStorage ('getplanning')
-                $scope.orders = orders;
-                setupLocalStorage(orders);  
+                OrderService.getUser().then(function(user){
+                    // Fill $scope.orders with the orders from the LocalStorage ('getplanning')
+                    $scope.orders = orders;
+                    setupLocalStorage(orders, user);  
 
-                checkOrderStatus();
+                    checkOrderStatus();
 
-                highlightOrder();
-
-                $scope.highlightInterval = $interval(function(){
                     highlightOrder();
-                }, 60000);
+
+                    $scope.highlightInterval = $interval(function(){
+                        highlightOrder();
+                    }, 60000);
+
+                });
             });
         }
 
         // Create some empty keys in localStorage for all the orders
-        function setupLocalStorage(orders) {
+        function setupLocalStorage(orders, user) {
             for(var i = 0; i < orders.length; i += 1) {
-                PlanningService.createEmptyOrder(orders[i]);
+                PlanningService.createEmptyOrder(orders[i], user);
             }
         }  
 
@@ -231,6 +250,7 @@
             $ionicLoading.show({
                 template: "<ion-spinner icon='android'></ion-spinner><br/> Actuele planning wordt opgehaald..."
             });
+
             PlanningService.setPlanning().then(function () {
                 // Get the orders
                 getAll();
@@ -238,11 +258,9 @@
                 $ionicLoading.hide();
             });
 
-            // // Get the 'werkzaamheden' and the 'materialen' 
-            // PlanningService.setActivities();
-
             // Update time
             var date = new Date();
+            $scope.date = convertDate(date);
             $scope.updateTime = convertTime(date);
         }
 
@@ -252,7 +270,11 @@
 
         // Navigate to other state using ng-click
         $scope.details = function (id) {
-            $state.go('app.order', { orderId: id });
+            // Give a loading screenm  
+            OrderService.startLoadingScreen();
+            $timeout(function(){
+                $state.go('app.order', { orderId: id });
+            }, 50);
         }
 
         // Get the current date and convert it to dd-mm-yyyy format

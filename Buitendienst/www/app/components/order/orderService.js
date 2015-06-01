@@ -1,19 +1,38 @@
 angular.module('directory.orderService', [])
 
-    .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup) {
+    .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup, $ionicLoading) {
 
-        var orders;
         var signature = false;
+        var fromPlanning = false;
 
         return {
+            startLoadingScreen: function() {
+                $ionicLoading.show({
+                    template: "Order wordt geladen..."
+                });
+            },
+
+            endLoadingScreen: function() {
+                $ionicLoading.hide();
+            },
+
+            cameFromPlanning: function() {
+                return fromPlanning;
+            },
+
+            setCameFromPlanning: function() {
+                fromPlanning = true;
+            },
+
             getOrders: function () {
-                orders = PlanningService.getPlanning();
+                var orders = PlanningService.getPlanning();
                 var deferred = $q.defer();
                 deferred.resolve(orders);
                 return deferred.promise;
             },
 
             findByOrderId: function (_orderId) {
+                var orders = PlanningService.getPlanning();
                 var deferred = $q.defer();
                 for (var x = 0; x < orders.length; x++) {
                     if (orders[x].orderid == _orderId) {
@@ -22,6 +41,13 @@ angular.module('directory.orderService', [])
                     }
                 }
                 deferred.resolve(order);
+                return deferred.promise;
+            },
+
+            getUser: function () {
+                var parsedItem = JSON.parse($window.localStorage.getItem('account'));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem.naam);
                 return deferred.promise;
             },
 
@@ -63,11 +89,6 @@ angular.module('directory.orderService', [])
                 }
             },
 
-            getOrderTime: function(_orderId, destination) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));  
-                return parsedItem[destination].datum;
-            },
-
             setFollowup: function (orderid, text) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem.vervolgactie = text;
@@ -95,22 +116,18 @@ angular.module('directory.orderService', [])
 
                 $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
 
-                return $http.post("test2.json", parsedItem) // CHANGE test.json TO THE API URL
+                return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
                         // Success!
                         console.log(response);
                     })
                     .error(function () {
-                        var alertPopup;
-
-                        //Check if there is already a popup in the screen, if so: close it first
-                        if(alertPopup) {
-                            alertPopup.close();
+                        if(status !== 'Queue') {
+                            var alertPopup = $ionicPopup.alert({
+                                title: '<b>Fout!</b>',
+                                template: 'Er is iets fout gegaan bij het verzenden van de order! <br/><br/>Order ' + _orderId + ' wordt in de wachtrij gezet. Er wordt automatisch geprobeerd deze order opnieuw te verzenden (bij internetconnectie).'
+                            });
                         }
-                        alertPopup = $ionicPopup.alert({
-                            title: '<b>Fout!</b>',
-                            template: 'Er is iets fout gegaan bij het verzenden van de order! <br/><br/>Order ' + _orderId + ' wordt in de wachtrij gezet. Er wordt automatisch geprobeerd deze order opnieuw te verzenden (bij internetconnectie).'
-                        });
 
                         // Add the order to the queue if it's not already in there
                         var queue = JSON.parse($window.localStorage.getItem('queue'));
@@ -177,10 +194,15 @@ angular.module('directory.orderService', [])
                 }
             },
 
-            setStartDate: function (orderid, dateTime, destination) {
+            setOrderDate: function (orderid, dateTime, destination) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
                 parsedItem[destination].datum = dateTime;
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+            },
+
+            getOrderDate: function(_orderId, destination) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));  
+                return parsedItem[destination].datum;
             },
 
             setStartLocation: function (orderid, geoLocation) {

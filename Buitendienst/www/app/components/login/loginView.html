@@ -1,0 +1,90 @@
+<ion-view side="center">
+    <ion-content has-bouncing="false">
+        <img class="logo" src="assets/img/logo.png" alt="PLINQ BV"> 
+        <div class="loginwrapper" ng-if="notLoggedIn">
+            <div class="title">
+                <h2>Buitendienst Mobile App</h2>
+                <h3 class="positive">Login</h3><br/>
+            </div>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input type="text" placeholder="Gebruikersnaam" ng-model="data.username">
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="Wachtwoord" ng-model="data.password">
+                </label>
+                 <button class="button button-block button-positive" ng-click="login(data)">Log in</button>
+            </div>
+        </div>
+        <div class="pincodewrapper" ng-if="!notLoggedIn">
+            <div class="title">
+                <h2>Buitendienst Mobile App</h2>
+                <h3 class="positive">Pincode</h3><br/><br/>
+            </div>
+            <div>
+              <div class="wrongpincode" ng-if="passCodeError">Onjuiste pincode!</div>
+              <div ng-if="!passCodeError">&nbsp;</div>
+              <div class="row" style="text-align: center">
+                  <div class="col col-10 col-offset-15" style="border-bottom: 1px solid black">
+                      <h3 class="positive">&nbsp;{{passcode.substring(0, 1)}}</h3>
+                  </div>
+                  <div class="col col-10 col-offset-10" style="border-bottom: 1px solid black">
+                      <h3 class="positive">&nbsp;{{passcode.substring(1, 2)}}</h3>
+                  </div>
+                  <div class="col col-10 col-offset-10" style="border-bottom: 1px solid black">
+                      <h3 class="positive">&nbsp;{{passcode.substring(2, 3)}}</h3>
+                  </div>
+                  <div class="col col-10 col-offset-10" style="border-bottom: 1px solid black">
+                      <h3 class="positive">&nbsp;{{passcode.substring(3, 4)}}</h3>
+                  </div>
+              </div>
+          </div>
+          <div style="margin-top: 50px">
+              <div class="row">
+                  <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="add(1)">1</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(2)">2</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(3)">3</button>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="add(4)">4</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(5)">5</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(6)">6</button>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch" ng-click="add(7)">7</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(8)">8</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(9)">9</button>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col col-20 col-offset-20">
+                      <button class="button button-light button-stretch"></button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button button-light button-stretch" ng-click="add(0)">0</button>
+                  </div>
+                  <div class="col col-20">
+                      <button class="button icon ion-arrow-left-a button-light button-stretch" ng-click="delete()"></button>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </ion-content>
+</ion-view>
