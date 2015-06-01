@@ -55,7 +55,6 @@
                     targetHeight: 768,
                     saveToPhotoAlbum: true
                 };
-                alert(defaultOptions);
 
                 // allow overriding the default options
                 options = angular.extend(defaultOptions, options);
@@ -76,7 +75,7 @@
                 };
 
                 // open camera via cordova
-                navigator.camera.captureImage(success, fail, options);
+                navigator.camera.getPicture(success, fail, options);
 
             }
 
