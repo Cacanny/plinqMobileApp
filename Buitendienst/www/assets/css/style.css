@@ -294,6 +294,10 @@ textarea {
     font-size: 16px;
 }
 
+textarea[disabled], textarea[disabled="disabled"] {
+    background-color: white;
+}
+
 .signature-back-button {
     font-size: 17px !important;
     border: 0 !important;

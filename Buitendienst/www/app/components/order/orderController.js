@@ -1,11 +1,11 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $timeout, $stateParams, OrderService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
+    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
         $scope.$on('$ionicView.afterEnter', function(){
             OrderService.endLoadingScreen();
 
             if(!OrderService.cameFromPlanning()) {
-                window.location.replace('/#/login');
+                $window.location.replace('#/login');
             }
         });
 
@@ -128,7 +128,7 @@
                         if (comment) {
                             comment.disabled = true;
                         }
-                    }, 1);
+                    }, 100);
                 });
             }
         }

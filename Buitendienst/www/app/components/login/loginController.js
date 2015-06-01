@@ -1,6 +1,9 @@
 angular.module('directory.loginController', [])
 
-    .controller('LoginCtrl', function ($scope, LoginService, $ionicPopup, $timeout) {
+    .controller('LoginCtrl', function ($scope, $window, LoginService, $ionicPopup, $timeout) {
+        $window.localStorage.clear();
+        var actualPasscode = ""; 
+
         $scope.$on('$ionicView.afterEnter', function(){
             LoginService.setInitialAccountDetails();
             $scope.notLoggedIn = true;
@@ -11,33 +14,36 @@ angular.module('directory.loginController', [])
                     $scope.notLoggedIn = false;
                 }
             });
+
+            LoginService.getPassCode().then(function(code){
+                actualPasscode = code;
+            });
         });
 
         $scope.data = {};
 
         $scope.login = function(data) {
-            // First, retreive the user
-            LoginService.getUser(data.username, data.password).then(function(response){   
+            if(data.username && data.password) {
+                // First, retreive the user
+                LoginService.getUser(data.username, data.password).then(function(response){   
 
-                // Then check if the user is authorized  
-                LoginService.login(response).then(function(authenticated) {
-                    $scope.notLoggedIn = false;
-                }, function(err) {
-                    var alertPopup = $ionicPopup.alert({
-                        title: '<b>Login mislukt!</b>',
-                        template: 'Controleer alstublieft uw logingegevens.'
+                    // Then check if the user is authorized  
+                    LoginService.login(response).then(function(authenticated) {
+                        $scope.data.username = '';
+                        $scope.data.password = '';
+                        $scope.notLoggedIn = false;
+                    }, function(err) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: '<b>Login mislukt!</b>',
+                            template: 'Controleer alstublieft uw logingegevens.'
+                        });
                     });
                 });
-            });
+            }
         }
 
         $scope.passCodeError = false;
         $scope.passcode = "";
-        var actualPasscode = "";
-
-        LoginService.getPassCode().then(function(code){
-            actualPasscode = code;
-        }); 
 
         $scope.add = function(value) {
             $scope.passCodeError = false;
@@ -46,7 +52,7 @@ angular.module('directory.loginController', [])
                 if($scope.passcode.length == 4) {
                     $timeout(function() {
                         if($scope.passcode === actualPasscode) {
-                            window.location.replace('/#/app/planning');
+                            $window.location.replace('#/app/planning');
                         } else {
                             $scope.passcode = "";
                             $scope.passCodeError = true;

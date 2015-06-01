@@ -12,8 +12,8 @@
 
         //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
         // $window.localStorage.clear();
-        refresh();
-        $scope.connection = 'Online';
+        // refresh();
+        $scope.connection = 'Onbekend';
 
         $scope.$on('$ionicView.afterEnter', function(){
             // Get queue

@@ -25,7 +25,7 @@
             },
 
             setPlanning: function () {
-                return $http.get("orders.json")
+                return $http.get("orders.json") // Change this to actual URL -> maybe add the USER to URL?
                     .success(function (response) {
                         $window.localStorage.setItem('activities', JSON.stringify(response.basis));
                         $window.localStorage.setItem('getplanning', JSON.stringify(response.orders));
