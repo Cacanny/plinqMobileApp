@@ -80,7 +80,7 @@ angular.module('directory.photoController', [])
                   // update some ng-src directive
                   $scope.picSrc = "data:image/jpeg;base64," + imageData;
                   $scope.allPhotos.push($scope.picSrc);
-                  // PhotoService.saveImageToFile($scope.picSrc);
+                  PhotoService.uploadImage(imageData);
                   PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
               })
               .catch(function (err) {

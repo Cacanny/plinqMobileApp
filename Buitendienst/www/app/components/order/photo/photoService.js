@@ -35,7 +35,6 @@
                         $rootScope.$apply(function () {
                             // strip beginning from string
                             var encodedData = reader.result.replace(/data:image\/jpeg;base64,/, '');
-                            console.log(encodedData);
                             deferred.resolve(encodedData);
                         });
                     };
@@ -45,6 +44,10 @@
 
             } else {
 
+                // function clearCache() {
+                //     navigator.camera.cleanup();
+                // }
+
                 // set some default options
                 var defaultOptions = {
                     quality: 75,
@@ -53,7 +56,7 @@
                     allowEdit: false,
                     targetWidth: 1024,
                     targetHeight: 768,
-                    saveToPhotoAlbum: true
+                    // saveToPhotoAlbum: true
                 };
 
                 // allow overriding the default options
@@ -83,6 +86,34 @@
 
         },
 
+        uploadImage: function(fileURI) {
+            var win = function (r) {
+                // clearCache();
+                retries = 0;
+                alert('Done! ' + r);
+            }
+         
+            var fail = function (error) {
+                if (retries == 0) {
+                    retries++;
+                    setTimeout(function() {
+                        onCapturePhoto(fileURI)
+                    }, 1000);
+                } else {
+                    retries = 0;
+                    // clearCache();
+                    alert('Whoops. Something wrong happens!');
+                }
+            }
+         
+            var options = new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+            options.params = {}; // if we need to send parameters to the server request
+            var ft = new FileTransfer();
+            ft.upload(fileURI, encodeURI("http://isp-admin-dev.plinq.nl/upload/"), win, fail, options);
+        },
 
         //Converts data uri to Blob. Necessary for uploading images.
         //@see
