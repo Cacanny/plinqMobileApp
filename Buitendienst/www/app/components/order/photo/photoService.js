@@ -76,7 +76,7 @@
                 };
 
                 // open camera via cordova
-                navigator.camera.getPicture(success, fail, options);
+                navigator.camera.captureImage(success, fail, options);
 
             }
 
