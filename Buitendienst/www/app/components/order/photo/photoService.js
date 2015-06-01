@@ -48,7 +48,7 @@
                 // set some default options
                 var defaultOptions = {
                     quality: 75,
-                    destinationType: Camera.DestinationType.DATA_URL,
+                    destinationType: Camera.DestinationType.FILE_URI,
                     sourceType: Camera.PictureSourceType.CAMERA,
                     allowEdit: false,
                     targetWidth: 1024,
@@ -63,7 +63,6 @@
                 var success = function (imageData) {
                     $rootScope.$apply(function () {
                         deferred.resolve(imageData);
-
                     });
                 };
 
@@ -100,9 +99,9 @@
             return new Blob([new Uint8Array(array)], { type: mimeString });
         },
 
-        setPhotoImage: function (orderid, image) {
+        setPhotoImage: function (orderid, images) {
             var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
-            parsedItem.fotos = image;
+            parsedItem.fotos = images;
             $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
         },
 
@@ -113,9 +112,9 @@
             return deferred.promise;
         },
 
-        deletePhotoImage: function (orderid, image) {
+        deletePhotoImage: function (orderid, images) {
             var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
-            parsedItem.fotos = image;
+            parsedItem.fotos = images;
             $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
         }
 

@@ -26,10 +26,9 @@
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
     </feature>
-<plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
-<feature name="http://api.phonegap.com/1.0/camera"/>
-<feature name="http://api.phonegap.com/1.0/file"/> 
+    <plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/file"/> 
 
     <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
-    <gap:plugin name="de.appplant.cordova.plugin.local-notification" version="0.7.8" />
 </widget>
