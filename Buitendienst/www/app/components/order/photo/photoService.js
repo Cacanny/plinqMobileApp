@@ -132,7 +132,8 @@
             // options.params = {}; // if we need to send parameters to the server request
             // var ft = new FileTransfer();
             // ft.upload(fileURI, encodeURI("http://isp-admin-dev.plinq.nl/upload/"), win, fail, options);
-        
+            
+            alert('nu in de upload functie');
             var options = {
                 fileKey: "photo",
                 fileName: fileURI.substr(fileURI.lastIndexOf('/') + 1),
