@@ -143,8 +143,8 @@
             };
 
             document.addEventListener("deviceready", function () {
-                alert($cordovaFileTransfer);
-                $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload/", fileURI, options).then(function(result) {
+                alert(JSON.stringify($cordovaFileTransfer));
+                $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload", fileURI, options).then(function(result) {
                     alert("SUCCESS: " + JSON.stringify(result));
                 }, function(err) {
                     alert("ERROR: " + JSON.stringify(err));
