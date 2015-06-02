@@ -49,18 +49,18 @@
                 // }
 
                 // set some default options
-                var defaultOptions = {
+                var options = {
                     quality: 75,
                     destinationType: Camera.DestinationType.FILE_URI,
                     sourceType: Camera.PictureSourceType.CAMERA,
                     allowEdit: false,
                     targetWidth: 1024,
                     targetHeight: 768,
-                    // saveToPhotoAlbum: true
+                    popoverOptions: CameraPopoverOptions
                 };
 
                 // allow overriding the default options
-                options = angular.extend(defaultOptions, options);
+                // var o0tions = angular.extend(defaultOptions, options);
 
                 // success callback
                 var success = function (imageData) {
@@ -141,9 +141,10 @@
                 chunkedMode: false,
                 mimeType: "image/jpeg"
             };
-            
+
             document.addEventListener("deviceready", function () {
-                $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload", fileURI, options).then(function(result) {
+                alert($cordovaFileTransfer);
+                $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload/", fileURI, options).then(function(result) {
                     alert("SUCCESS: " + JSON.stringify(result));
                 }, function(err) {
                     alert("ERROR: " + JSON.stringify(err));

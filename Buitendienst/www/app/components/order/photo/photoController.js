@@ -76,7 +76,7 @@ angular.module('directory.photoController', [])
         $scope.takePicture = function () {
             PhotoService.getPicture()
               .then(function (imageData) {
-                alert('foto was succesvol, nu uploaden');
+                alert('foto was succesvol, nu uploaden ' + imageData);
                   // imageData is your base64-encoded image
                   // update some ng-src directive
                   $scope.picSrc = "data:image/jpeg;base64," + imageData;
