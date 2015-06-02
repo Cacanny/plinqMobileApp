@@ -115,11 +115,9 @@ angular.module('directory.photoController', [])
             var fail = function(err) {
                 alert("Fail!");
             }
-
+            alert('nu de options');
             var options = new FileUploadOptions();
-            if(options === 'undefined') {
-                alert('niet bekend');
-            }
+            alert(JSON.stringify(options));
             options.fileKey = "file";
             options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
@@ -127,6 +125,7 @@ angular.module('directory.photoController', [])
             options.params = {};
 
             var ft = new FileTransfer();
+            alert(JSON.stringify(ft));
             ft.upload(fileURI, encodeURI("http://isp-admin-dev.plinq.nl/upload"), win, fail, options);
         }
 
