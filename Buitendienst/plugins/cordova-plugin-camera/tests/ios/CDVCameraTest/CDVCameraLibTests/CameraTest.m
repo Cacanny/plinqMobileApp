@@ -65,9 +65,7 @@
     
     // No arguments, check whether the defaults are set
     args = @[];
-    CDVInvokedUrlCommand* command = [[CDVInvokedUrlCommand alloc] initWithArguments:args callbackId:@"dummy" className:@"myclassname" methodName:@"mymethodname"];
-    
-    options = [CDVPictureOptions createFromTakePictureArguments:command];
+    options = [CDVPictureOptions createFromTakePictureArguments:args];
     
     XCTAssertEqual([options.quality intValue], 50);
     XCTAssertEqual(options.destinationType, (int)DestinationTypeFileUri);
@@ -101,9 +99,7 @@
              popoverOptions,
              @(UIImagePickerControllerCameraDeviceFront),
              ];
-    
-    command = [[CDVInvokedUrlCommand alloc] initWithArguments:args callbackId:@"dummy" className:@"myclassname" methodName:@"mymethodname"];
-    options = [CDVPictureOptions createFromTakePictureArguments:command];
+    options = [CDVPictureOptions createFromTakePictureArguments:args];
     
     XCTAssertEqual([options.quality intValue], 49);
     XCTAssertEqual(options.destinationType, (int)DestinationTypeDataUrl);
@@ -145,9 +141,7 @@
              popoverOptions,
              @(UIImagePickerControllerCameraDeviceFront),
              ];
-    
-    CDVInvokedUrlCommand* command = [[CDVInvokedUrlCommand alloc] initWithArguments:args callbackId:@"dummy" className:@"myclassname" methodName:@"mymethodname"];
-    pictureOptions = [CDVPictureOptions createFromTakePictureArguments:command];
+    pictureOptions = [CDVPictureOptions createFromTakePictureArguments:args];
     
     if ([UIImagePickerController isSourceTypeAvailable:pictureOptions.sourceType]) {
         picker = [CDVCameraPicker createFromPictureOptions:pictureOptions];
@@ -176,9 +170,7 @@
           popoverOptions,
           @(UIImagePickerControllerCameraDeviceFront),
           ];
-    
-    command = [[CDVInvokedUrlCommand alloc] initWithArguments:args callbackId:@"dummy" className:@"myclassname" methodName:@"mymethodname"];
-    pictureOptions = [CDVPictureOptions createFromTakePictureArguments:command];
+    pictureOptions = [CDVPictureOptions createFromTakePictureArguments:args];
 
     if ([UIImagePickerController isSourceTypeAvailable:pictureOptions.sourceType]) {
         picker = [CDVCameraPicker createFromPictureOptions:pictureOptions];
@@ -206,9 +198,7 @@
              popoverOptions,
              @(UIImagePickerControllerCameraDeviceFront),
              ];
-    
-    command = [[CDVInvokedUrlCommand alloc] initWithArguments:args callbackId:@"dummy" className:@"myclassname" methodName:@"mymethodname"];
-    pictureOptions = [CDVPictureOptions createFromTakePictureArguments:command];
+    pictureOptions = [CDVPictureOptions createFromTakePictureArguments:args];
     
     if ([UIImagePickerController isSourceTypeAvailable:pictureOptions.sourceType]) {
         picker = [CDVCameraPicker createFromPictureOptions:pictureOptions];

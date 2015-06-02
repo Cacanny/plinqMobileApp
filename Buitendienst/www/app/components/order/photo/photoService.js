@@ -78,22 +78,23 @@
 
                 // open camera via cordova
                 // navigator.camera.getPicture(success, fail, options);
-
-                $cordovaCamera.getPicture(options).then(
-                    function(imageData) {
-                        alert('gelukt');
-                        // $rootScope.$apply(function () {
-                            deferred.resolve(imageData);
-                        // });
-                        // $ionicLoading.show({template: 'Succes! Foto is gemaakt.', duration:500});
-                    },
-                    function(err){
-                         alert('gefaald');
-                        // $rootScope.$apply(function () {
-                            deferred.reject(err);
-                        // });
-                        // $ionicLoading.show({template: 'Error: Camera kon niet geopend worden.', duration:500});
-                    });
+                document.addEventListener("deviceready", function () {
+                    $cordovaCamera.getPicture(options).then(
+                        function(imageData) {
+                            alert('gelukt');
+                            // $rootScope.$apply(function () {
+                                deferred.resolve(imageData);
+                            // });
+                            // $ionicLoading.show({template: 'Succes! Foto is gemaakt.', duration:500});
+                        },
+                        function(err){
+                             alert('gefaald');
+                            // $rootScope.$apply(function () {
+                                deferred.reject(err);
+                            // });
+                            // $ionicLoading.show({template: 'Error: Camera kon niet geopend worden.', duration:500});
+                        });
+                }, false);
 
             }
 
@@ -133,21 +134,23 @@
             // var ft = new FileTransfer();
             // ft.upload(fileURI, encodeURI("http://isp-admin-dev.plinq.nl/upload/"), win, fail, options);
             
-            alert('nu in de upload functie');
+            alert('nu in de upload functie ' + fileURI);
             var options = {
                 fileKey: "photo",
                 fileName: fileURI.substr(fileURI.lastIndexOf('/') + 1),
                 chunkedMode: false,
                 mimeType: "image/jpeg"
             };
-
-            $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload", fileURI, options).then(function(result) {
-                alert("SUCCESS: " + JSON.stringify(result));
-            }, function(err) {
-                alert("ERROR: " + JSON.stringify(err));
-            }, function (progress) {
-                // constant progress updates
-            });
+            
+            document.addEventListener("deviceready", function () {
+                $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload", fileURI, options).then(function(result) {
+                    alert("SUCCESS: " + JSON.stringify(result));
+                }, function(err) {
+                    alert("ERROR: " + JSON.stringify(err));
+                }, function (progress) {
+                    // constant progress updates
+                });
+            }, false);
         },
 
         //Converts data uri to Blob. Necessary for uploading images.
