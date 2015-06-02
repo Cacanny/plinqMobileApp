@@ -26,22 +26,22 @@
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
     </feature>
-    <plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
+<!--     <plugin name="Camera" value="org.apache.cordova.CameraLauncher" /> -->
     <feature name="File">
         <param name="ios-package" value="CDVFile" />
     </feature>
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>
-    <feature name="File">
+<!--     <feature name="File">
         <param name="android-package" value="org.apache.cordova.FileUtils" />
     </feature>
     <feature name="FileTransfer">
         <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
-    </feature>
+    </feature> -->
 
-    <feature name="http://api.phonegap.com/1.0/camera"/>
-    <feature name="http://api.phonegap.com/1.0/file"/> 
+<!--     <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>  -->
 
     <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
 </widget>
