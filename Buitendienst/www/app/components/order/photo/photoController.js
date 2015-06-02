@@ -96,7 +96,7 @@ angular.module('directory.photoController', [])
                 function(imageData) {
                     alert('foto is gemaakt');
                     $scope.picSrc = "data:image/jpeg;base64," + imageData;
-                    scope.allPhotos.push($scope.picSrc);
+                    $scope.allPhotos.push($scope.picSrc);
 
                     uploadPicture(imageData);
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
