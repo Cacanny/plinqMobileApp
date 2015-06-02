@@ -81,22 +81,24 @@
 
                 $cordovaCamera.getPicture(options).then(
                     function(imageData) {
+                        alert('gelukt');
                         $rootScope.$apply(function () {
                             deferred.resolve(imageData);
                         });
-                        $ionicLoading.show({template: 'Succes! Foto is gemaakt.', duration:500});
+                        // $ionicLoading.show({template: 'Succes! Foto is gemaakt.', duration:500});
                     },
                     function(err){
+                         alert('gefaald');
                         $rootScope.$apply(function () {
                             deferred.reject(err);
                         });
-                        $ionicLoading.show({template: 'Error: Camera kon niet geopend worden.', duration:500});
+                        // $ionicLoading.show({template: 'Error: Camera kon niet geopend worden.', duration:500});
                     });
 
             }
 
-                //return a promise
-                return deferred.promise;
+            //return a promise
+            return deferred.promise;
         },
 
         uploadImage: function(fileURI) {
