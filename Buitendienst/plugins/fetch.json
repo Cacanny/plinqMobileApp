@@ -1,8 +1,9 @@
 {
     "cordova-plugin-file-transfer": {
         "source": {
-            "type": "registry",
-            "id": "cordova-plugin-file-transfer"
+            "type": "git",
+            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
@@ -59,6 +60,15 @@
         "source": {
             "type": "registry",
             "id": "org.apache.cordova.statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-file": {
+        "source": {
+            "type": "git",
+            "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}

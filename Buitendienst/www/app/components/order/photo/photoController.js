@@ -107,6 +107,7 @@ angular.module('directory.photoController', [])
         }
 
         function uploadPicture(fileURI) {
+            alert('in de functie ' + fileURI);
             var win = function(result) {
                 alert('Done!');
             }
@@ -114,6 +115,7 @@ angular.module('directory.photoController', [])
             var fail = function(err) {
                 alert("Fail!");
             }
+
             var options = new FileUploadOptions();
             if(options === 'undefined') {
                 alert('niet bekend');
