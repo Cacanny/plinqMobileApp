@@ -30,9 +30,6 @@ exports.defineAutoTests = function () {
     var isIndexedDBShim = isBrowser && !isChrome;   // Firefox and IE for example
 
     var isWindows = (cordova.platformId === "windows" || cordova.platformId === "windows8");
-    
-    var MEDIUM_TIMEOUT = 15000;
-    var LONG_TIMEOUT = 60000;
 
     describe('File API', function () {
         // Adding a Jasmine helper matcher, to report errors when comparing to FileError better.
@@ -2194,14 +2191,11 @@ exports.defineAutoTests = function () {
                 reader.onloadend = verifier;
                 reader.readAsText(blob);
             });
-            function writeDummyFile(writeBinary, callback, done, fileContents) {
+            function writeDummyFile(writeBinary, callback, done) {
                 var fileName = "dummy.txt",
                 fileEntry = null,
-                // use default string if file data is not provided
-                fileData = fileContents !== undefined ? fileContents :
-                    '\u20AC\xEB - There is an exception to every rule. Except this one.',
-                fileDataAsBinaryString = fileContents !== undefined ? fileContents :
-                    '\xe2\x82\xac\xc3\xab - There is an exception to every rule. Except this one.',
+                fileData = '\u20AC\xEB - There is an exception to every rule. Except this one.',
+                fileDataAsBinaryString = '\xe2\x82\xac\xc3\xab - There is an exception to every rule. Except this one.',
                 createWriter = function (fe) {
                     fileEntry = fe;
                     fileEntry.createWriter(writeFile, failed.bind(null, done, 'fileEntry.createWriter - Error reading file: ' + fileName));
@@ -2219,7 +2213,7 @@ exports.defineAutoTests = function () {
                 // create a file, write to it, and read it in again
                 createFile(fileName, createWriter, failed.bind(null, done, 'createFile - Error creating file: ' + fileName));
             }
-            function runReaderTest(funcName, writeBinary, done, verifierFunc, sliceStart, sliceEnd, fileContents) {
+            function runReaderTest(funcName, writeBinary, done, verifierFunc, sliceStart, sliceEnd) {
                 writeDummyFile(writeBinary, function (fileEntry, file, fileData, fileDataAsBinaryString) {
                     var verifier = function (evt) {
                         expect(evt).toBeDefined();
@@ -2236,7 +2230,7 @@ exports.defineAutoTests = function () {
                         file = file.slice(sliceStart, file.size, file.type);
                     }
                     reader[funcName](file);
-                }, done, fileContents);
+                }, done);
             }
             function arrayBufferEqualsString(ab, str) {
                 var buf = new Uint8Array(ab);
@@ -2251,13 +2245,6 @@ exports.defineAutoTests = function () {
                     expect(evt.target.result).toBe(fileData);
                     done();
                 });
-            });
-            it("file.spec.84.1 should read JSON file properly, readAsText", function (done) {
-                var testObject = {key1: "value1", key2: 2};
-                runReaderTest('readAsText', false, done, function (evt, fileData, fileDataAsBinaryString) {
-                    expect(evt.target.result).toEqual(JSON.stringify(testObject));
-                    done();
-                }, undefined, undefined, JSON.stringify(testObject));
             });
             it("file.spec.85 should read file properly, Data URI", function (done) {
                 runReaderTest('readAsDataURL', true, done, function (evt, fileData, fileDataAsBinaryString) {
@@ -3459,7 +3446,7 @@ exports.defineAutoTests = function () {
             describe('asset: URLs', function() {
                 it("file.spec.141 filePaths.applicationStorage", function() {
                     expect(cordova.file.applicationDirectory).toEqual('file:///android_asset/');
-                }, MEDIUM_TIMEOUT);
+                });
                 it("file.spec.142 assets should be enumerable", function(done) {
                     resolveLocalFileSystemURL('file:///android_asset/www/', function(entry) {
                         var reader = entry.createReader();
@@ -3468,7 +3455,7 @@ exports.defineAutoTests = function () {
                             done();
                         }, failed.bind(null, done, 'reader.readEntries - Error during reading of entries from assets directory'));
                     }, failed.bind(null, done, 'resolveLocalFileSystemURL failed for assets'));
-                }, LONG_TIMEOUT);
+                });
                 it("file.spec.143 copyTo: asset -> temporary", function(done) {
                     var file2 = "entry.copy.file2b",
                     fullPath = joinURL(temp_root.fullPath, file2),
@@ -3491,7 +3478,7 @@ exports.defineAutoTests = function () {
                     temp_root.getFile(file2, {}, function (entry) {
                         entry.remove(transfer, failed.bind(null, done, 'entry.remove - Error removing file: ' + file2));
                     }, transfer);
-                }, MEDIUM_TIMEOUT);
+                });
             });
             it("file.spec.144 copyTo: asset directory", function (done) {
                 var srcUrl = 'file:///android_asset/www/plugins/cordova-plugin-file';
@@ -3526,7 +3513,7 @@ exports.defineAutoTests = function () {
                         }, failed.bind(null, done, 'directory.copyTo - Error copying directory'));
                     }, failed.bind(null, done, 'resolving src dir'));
                 }, failed.bind(null, done, 'deleteEntry - Error removing directory : ' + dstDir));
-            }, LONG_TIMEOUT);
+            });
         }
     });
 
