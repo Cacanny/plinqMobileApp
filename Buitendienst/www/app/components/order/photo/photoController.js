@@ -92,7 +92,7 @@ angular.module('directory.photoController', [])
                 destinationType: Camera.DestinationType.FILE_URL,
                 sourceType: Camera.PictureSourceType.CAMERA
             }
-            
+
             $cordovaCamera.getPicture(options).then(
                 function(imageData) {
                     // alert('foto is gemaakt');
@@ -110,7 +110,7 @@ angular.module('directory.photoController', [])
         function uploadPicture(fileURL) {
             // alert('in de functie ' + fileURI);
             var win = function(result) {
-                alert('Done!');
+                alert('Succes! ' + result);
             }
 
             var fail = function(err) {
@@ -118,14 +118,14 @@ angular.module('directory.photoController', [])
             }
             // alert(File);
             // alert(FileTransfer);
-            alert('nu de options');
+            // alert('nu de options');
             var options = new FileUploadOptions();
             options.fileKey = "file";
             options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
             options.chunkedMode = true;
             options.params = {};
-            alert(JSON.stringify(options));
+            // alert(JSON.stringify(options));
             var ft = new FileTransfer();
             alert(JSON.stringify(ft));
             ft.upload(fileURL, encodeURI("http://isp-admin-dev.plinq.nl/upload"), win, fail, options);
