@@ -20,9 +20,9 @@
     <preference name="BackupWebStorage" value="none"/>
     <preference name="Orientation" value="landscape" />
     <preference name="Fullscreen" value="true" />
-    <feature name="StatusBar">
+<!--     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true"/>
-    </feature>
+    </feature> -->
     <feature name="NetworkStatus">
         <param name="ios-package" value="CDVConnection" />
     </feature>
