@@ -92,11 +92,12 @@ angular.module('directory.photoController', [])
                 destinationType: Camera.DestinationType.FILE_URL,
                 sourceType: Camera.PictureSourceType.CAMERA
             }
+            
             $cordovaCamera.getPicture(options).then(
                 function(imageData) {
-                    alert('foto is gemaakt');
-                    $scope.picSrc = "data:image/jpeg;base64," + imageData;
-                    $scope.allPhotos.push($scope.picSrc);
+                    // alert('foto is gemaakt');
+                    // $scope.picSrc = imageData;
+                    $scope.allPhotos.push(imageData);
 
                     uploadPicture(imageData);
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
@@ -106,8 +107,8 @@ angular.module('directory.photoController', [])
                 })
         }
 
-        function uploadPicture(fileURI) {
-            alert('in de functie ' + fileURI);
+        function uploadPicture(fileURL) {
+            // alert('in de functie ' + fileURI);
             var win = function(result) {
                 alert('Done!');
             }
@@ -115,20 +116,19 @@ angular.module('directory.photoController', [])
             var fail = function(err) {
                 alert("Fail!");
             }
-            alert(File);
-            alert(FileTransfer);
+            // alert(File);
+            // alert(FileTransfer);
             alert('nu de options');
             var options = new FileUploadOptions();
-            alert(JSON.stringify(options));
             options.fileKey = "file";
-            options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+            options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
             options.chunkedMode = true;
             options.params = {};
-
+            alert(JSON.stringify(options));
             var ft = new FileTransfer();
             alert(JSON.stringify(ft));
-            ft.upload(fileURI, encodeURI("http://isp-admin-dev.plinq.nl/upload"), win, fail, options);
+            ft.upload(fileURL, encodeURI("http://isp-admin-dev.plinq.nl/upload"), win, fail, options);
         }
 
         // Deletes the currently selected photo 

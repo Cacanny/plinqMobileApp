@@ -16,12 +16,16 @@
         $scope.connection = 'Onbekend';
 
         $scope.$on('$ionicView.afterEnter', function(){
+            $scope.planningAvailable = false;
+
             // Get queue
             PlanningService.getQueue().then(function(_queueArr){
                 $scope.queueArr = _queueArr;
                 $scope.queueLength = _queueArr.length;
                 // sendQueue(); // Delete this after browser testing
             });
+
+            checkOrderStatus();
         });
         
         $scope.viewQueue = function() {

@@ -116,7 +116,7 @@ angular.module('directory.orderService', [])
 
                 $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
 
-                return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
+                return $http.post("test22.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
                         // Success!
                         console.log(response);
