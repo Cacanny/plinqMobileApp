@@ -110,7 +110,7 @@ angular.module('directory.photoController', [])
         function uploadPicture(fileURL) {
             // alert('in de functie ' + fileURI);
             var win = function(result) {
-                alert('Succes! ' + result);
+                alert('Succes! ' + JSON.stringify(result));
             }
 
             var fail = function(err) {
@@ -127,7 +127,7 @@ angular.module('directory.photoController', [])
             options.params = {};
             // alert(JSON.stringify(options));
             var ft = new FileTransfer();
-            alert(JSON.stringify(ft));
+            // alert(JSON.stringify(ft));
             ft.upload(fileURL, encodeURI("http://isp-admin-dev.plinq.nl/upload"), win, fail, options);
         }
 
