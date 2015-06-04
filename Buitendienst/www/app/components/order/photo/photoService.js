@@ -1,5 +1,5 @@
 ﻿angular.module('directory.photoService', [])
-.factory('PhotoService', function ($rootScope, $q, $cordovaCamera, $ionicLoading, $window, $cordovaFile, $cordovaFileTransfer) {
+.factory('PhotoService', function ($rootScope, $q, $ionicLoading, $window) {
 
     var images;
     var IMAGE_STORAGE_KEY = 'images';
@@ -43,130 +43,11 @@
                 fileInput.click();
 
             } else {
-
-                // function clearCache() {
-                //     navigator.camera.cleanup();
-                // }
-
-                // set some default options
-                var options = {
-                    quality: 75,
-                    destinationType: Camera.DestinationType.FILE_URI,
-                    sourceType: Camera.PictureSourceType.CAMERA,
-                    allowEdit: false,
-                    targetWidth: 1024,
-                    targetHeight: 768,
-                    popoverOptions: CameraPopoverOptions
-                };
-
-                // allow overriding the default options
-                // var o0tions = angular.extend(defaultOptions, options);
-
-                // success callback
-                var success = function (imageData) {
-                    $rootScope.$apply(function () {
-                        deferred.resolve(imageData);
-                    });
-                };
-
-                // fail callback
-                var fail = function (message) {
-                    $rootScope.$apply(function () {
-                        deferred.reject(message);
-                    });
-                };
-
-                // open camera via cordova
-                // navigator.camera.getPicture(success, fail, options);
-                document.addEventListener("deviceready", function () {
-                    $cordovaCamera.getPicture(options).then(
-                        function(imageData) {
-                            alert('gelukt');
-                            // $rootScope.$apply(function () {
-                                deferred.resolve(imageData);
-                            // });
-                            // $ionicLoading.show({template: 'Succes! Foto is gemaakt.', duration:500});
-                        },
-                        function(err){
-                             alert('gefaald');
-                            // $rootScope.$apply(function () {
-                                deferred.reject(err);
-                            // });
-                            // $ionicLoading.show({template: 'Error: Camera kon niet geopend worden.', duration:500});
-                        });
-                }, false);
-
+                
             }
 
             //return a promise
             return deferred.promise;
-        },
-
-        uploadImage: function(fileURI) {
-            // var win = function (r) {
-            //     // clearCache();
-            //     // retries = 0;
-            //     alert('Done! ' + r);
-            // }
-         
-            // var fail = function (error) {
-            //     // if (retries == 0) {
-            //     //     retries++;
-            //     //     setTimeout(function() {
-            //     //         onCapturePhoto(fileURI)
-            //     //     }, 1000);
-            //     // } else {
-            //     //     retries = 0;
-            //     //     // clearCache();
-            //     //     alert('Whoops. Something wrong happens!');
-            //     // }
-
-            //     alert('Whoops. Something wrong happens!');
-            // }
-         
-            // var options = new FileUploadOptions();
-            // options.fileKey = "file";
-            // options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-            // options.mimeType = "image/jpeg";
-            // options.chunkedMode = true;
-            // options.headers = {Connection: "close"};
-            // options.params = {}; // if we need to send parameters to the server request
-            // var ft = new FileTransfer();
-            // ft.upload(fileURI, encodeURI("http://isp-admin-dev.plinq.nl/upload/"), win, fail, options);
-            
-            alert('nu in de upload functie ' + fileURI);
-            var options = {
-                fileKey: "photo",
-                fileName: fileURI.substr(fileURI.lastIndexOf('/') + 1),
-                chunkedMode: false,
-                mimeType: "image/jpeg"
-            };
-
-            document.addEventListener("deviceready", function () {
-                alert(JSON.stringify($cordovaFileTransfer));
-                $cordovaFileTransfer.upload("http://isp-admin-dev.plinq.nl/upload", fileURI, options).then(function(result) {
-                    alert("SUCCESS: " + JSON.stringify(result));
-                }, function(err) {
-                    alert("ERROR: " + JSON.stringify(err));
-                }, function (progress) {
-                    // constant progress updates
-                });
-            }, false);
-        },
-
-        //Converts data uri to Blob. Necessary for uploading images.
-        //@see
-        // http://stackoverflow.com/questions/4998908/convert-data-uri-to-file-then-append-to-formdata
-        //@param  {String} dataURI
-        //@return {Blob}
-        dataURItoBlob: function (dataURI) {
-            var binary = atob(dataURI.split(',')[1]);
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-            var array = [];
-            for (var i = 0; i < binary.length; i++) {
-                array.push(binary.charCodeAt(i));
-            }
-            return new Blob([new Uint8Array(array)], { type: mimeString });
         },
 
         setPhotoImage: function (orderid, images) {

@@ -74,19 +74,6 @@ angular.module('directory.photoController', [])
 
         // Camera function 
         $scope.takePicture = function () {
-            // PhotoService.getPicture()
-            //   .then(function (imageData) {
-            //     alert('foto was succesvol, nu uploaden ' + imageData);
-            //       // imageData is your base64-encoded image
-            //       // update some ng-src directive
-            //       $scope.picSrc = "data:image/jpeg;base64," + imageData;
-            //       $scope.allPhotos.push($scope.picSrc);
-            //       PhotoService.uploadImage(imageData);
-            //       PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-            //   })
-            //   .catch(function (err) {
-            //       console.log(err);
-            //   });
             var options = {
                 quality: 50,
                 destinationType: Camera.DestinationType.FILE_URL,
@@ -95,20 +82,17 @@ angular.module('directory.photoController', [])
 
             $cordovaCamera.getPicture(options).then(
                 function(imageData) {
-                    // alert('foto is gemaakt');
-                    // $scope.picSrc = imageData;
                     $scope.allPhotos.push(imageData);
 
                     uploadPicture(imageData);
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
                 },
                 function(err){
-                    alert('foto is niet gemaakt');
+                    alert('Error: Foto kon niet worden gemaakt.');
                 })
         }
 
         function uploadPicture(fileURL) {
-            // alert('in de functie ' + fileURI);
             var win = function(result) {
                 alert('Succes! ' + JSON.stringify(result));
             }
@@ -116,19 +100,16 @@ angular.module('directory.photoController', [])
             var fail = function(err) {
                 alert("Fail!");
             }
-            // alert(File);
-            // alert(FileTransfer);
-            // alert('nu de options');
+
             var options = new FileUploadOptions();
             options.fileKey = "file";
-            options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+            options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
             options.chunkedMode = true;
             options.params = {};
-            // alert(JSON.stringify(options));
+
             var ft = new FileTransfer();
-            // alert(JSON.stringify(ft));
-            ft.upload(fileURL, encodeURI("http://isp-admin-dev.plinq.nl/upload"), win, fail, options);
+            ft.upload(fileURL, encodeURI("http://isp-admin-dev.plinq.nl/upload/"), win, fail, options);
         }
 
         // Deletes the currently selected photo 
