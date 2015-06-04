@@ -74,36 +74,36 @@ angular.module('directory.photoController', [])
 
         // Camera function 
         $scope.takePicture = function () {
-            PhotoService.getPicture()
-              .then(function (imageData) {
-                alert('foto was succesvol, nu uploaden ' + imageData);
-                  // imageData is your base64-encoded image
-                  // update some ng-src directive
-                  $scope.picSrc = "data:image/jpeg;base64," + imageData;
-                  $scope.allPhotos.push($scope.picSrc);
-                  PhotoService.uploadImage(imageData);
-                  PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-              })
-              .catch(function (err) {
-                  console.log(err);
-              });
-            // var options = {
-            //     quality: 50,
-            //     destinationType: Camera.DestinationType.FILE_URL,
-            //     sourceType: Camera.PictureSourceType.CAMERA
-            // }
-            // $cordovaCamera.getPicture(options).then(
-            //     function(imageData) {
-            //         alert('foto is gemaakt');
-            //         $scope.picSrc = "data:image/jpeg;base64," + imageData;
-            //         $scope.allPhotos.push($scope.picSrc);
+            // PhotoService.getPicture()
+            //   .then(function (imageData) {
+            //     alert('foto was succesvol, nu uploaden ' + imageData);
+            //       // imageData is your base64-encoded image
+            //       // update some ng-src directive
+            //       $scope.picSrc = "data:image/jpeg;base64," + imageData;
+            //       $scope.allPhotos.push($scope.picSrc);
+            //       PhotoService.uploadImage(imageData);
+            //       PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
+            //   })
+            //   .catch(function (err) {
+            //       console.log(err);
+            //   });
+            var options = {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URL,
+                sourceType: Camera.PictureSourceType.CAMERA
+            }
+            $cordovaCamera.getPicture(options).then(
+                function(imageData) {
+                    alert('foto is gemaakt');
+                    $scope.picSrc = "data:image/jpeg;base64," + imageData;
+                    $scope.allPhotos.push($scope.picSrc);
 
-            //         uploadPicture(imageData);
-            //         PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
-            //     },
-            //     function(err){
-            //         alert('foto is niet gemaakt');
-            //     })
+                    uploadPicture(imageData);
+                    PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
+                },
+                function(err){
+                    alert('foto is niet gemaakt');
+                })
         }
 
         function uploadPicture(fileURI) {
@@ -115,6 +115,8 @@ angular.module('directory.photoController', [])
             var fail = function(err) {
                 alert("Fail!");
             }
+            alert(File);
+            alert(FileTransfer);
             alert('nu de options');
             var options = new FileUploadOptions();
             alert(JSON.stringify(options));
