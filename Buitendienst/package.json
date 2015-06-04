@@ -20,16 +20,15 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "org.apache.cordova.device",
-    "org.apache.cordova.console",
     "com.ionic.keyboard",
-    "cordova-plugin-camera",
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
-    "org.apache.cordova.geolocation",
-    "org.apache.cordova.network-information",
-    "org.apache.cordova.statusbar",
-    "org.apache.cordova.file"
+    "cordova-plugin-camera",
+    "cordova-plugin-console",
+    "cordova-plugin-device",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-network-information",
+    "cordova-plugin-statusbar"
   ],
   "cordovaPlatforms": []
 }

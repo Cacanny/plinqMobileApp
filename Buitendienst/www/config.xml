@@ -29,9 +29,11 @@
 <!--     <plugin name="Camera" value="org.apache.cordova.CameraLauncher" /> -->
     <feature name="File">
         <param name="ios-package" value="CDVFile" />
+        <param name="android-package" value="org.apache.cordova.FileUtils" />
     </feature>
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
     </feature>
 <!--     <feature name="File">
         <param name="android-package" value="org.apache.cordova.FileUtils" />
