@@ -26,6 +26,7 @@ angular.module('directory', [
         'directory.detailsDirective',
         'directory.subscriptionDirective',
         'directory.subscriptionController',
+        'directory.subscriptionService',
         'directory.ticketDirective',
         'directory.ticketController',
         'directory.ticketFilter',

@@ -1,6 +1,6 @@
 angular.module('directory.subscriptionController', [])
 
-    .controller('SubscriptionCtrl', function ($scope, $filter) {   
+    .controller('SubscriptionCtrl', function ($scope, SubscriptionService) {   
         
         // Determine if tabs should be showed or not
     	$scope.showInternet = true;
@@ -15,5 +15,13 @@ angular.module('directory.subscriptionController', [])
         }
         if (JSON.stringify($scope.order.klant.abonnement.telefoon) === '{}') {
             $scope.showTelefoon = false;
+        }
+
+        $scope.activatePorting = function() {
+            var porting = {
+                orderid: $scope.order.orderid, portering: 'activeren'
+            }
+            
+            SubscriptionService.sendPortingTrue(porting);
         }
     });
