@@ -8,10 +8,6 @@ angular.module('directory.photoController', [])
             $scope.allPhotos = photos;
         });
 
-        //$ionicPlatform.ready(function () {
-        //    $scope.allPhotos = PhotoService.images();
-        //    $scope.$apply();
-        //});
 
         // If the photo tab needs to be opened
         $scope.showPhotoBool = false;
@@ -67,10 +63,6 @@ angular.module('directory.photoController', [])
             }
         });
 
-        $scope.urlForImage = function (imageName) {
-            var trueOrigin = cordova.file.dataDirectory + imageName;
-            return trueOrigin;
-        }
 
         // Camera function 
         $scope.takePicture = function () {
@@ -84,32 +76,12 @@ angular.module('directory.photoController', [])
                 function(imageData) {
                     $scope.allPhotos.push(imageData);
 
-                    uploadPicture(imageData);
+                    //uploadPicture(imageData);
                     PhotoService.setPhotoImage($scope.order.orderid, $scope.allPhotos);
                 },
                 function(err){
                     alert('Error: Foto kon niet worden gemaakt.');
                 })
-        }
-
-        function uploadPicture(fileURL) {
-            var win = function(result) {
-                alert('Succes! ' + JSON.stringify(result));
-            }
-
-            var fail = function(err) {
-                alert("Fail!");
-            }
-
-            var options = new FileUploadOptions();
-            options.fileKey = 'image';
-            options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
-            options.mimeType = 'image/jpeg';
-            options.chunkedMode = true;
-            options.params = {};
-
-            var ft = new FileTransfer();
-            ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
         }
 
         // Deletes the currently selected photo 
