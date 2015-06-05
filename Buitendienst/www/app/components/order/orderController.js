@@ -292,7 +292,7 @@
                 try {
                     photoQueue = photos;
                 } catch(e){
-                    alert(e);
+                    alert("Fout!" + e);
                 }
                 
             });
@@ -305,25 +305,25 @@
             }
 
 
-            function uploadPicture(fileURL) {
-                var win = function (result) {
-                    alert('Succes! ' + JSON.stringify(result));
-                }
+            //function uploadPicture(fileURL) {
+            //    var win = function (result) {
+            //        alert('Succes! ' + JSON.stringify(result));
+            //    }
 
-                var fail = function (err) {
-                    alert("Fail!");
-                }
+            //    var fail = function (err) {
+            //        alert("Fail!");
+            //    }
 
-                var options = new FileUploadOptions();
-                options.fileKey = 'image';
-                options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
-                options.mimeType = 'image/jpeg';
-                options.chunkedMode = true;
-                options.params = {};
+            //    var options = new FileUploadOptions();
+            //    options.fileKey = 'image';
+            //    options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
+            //    options.mimeType = 'image/jpeg';
+            //    options.chunkedMode = true;
+            //    options.params = {};
 
-                var ft = new FileTransfer();
-                ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
-            }
+            //    var ft = new FileTransfer();
+            //    ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
+            //}
         }
 
         // Ionic Modal
