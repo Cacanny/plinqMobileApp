@@ -1,6 +1,6 @@
 ﻿angular.module('directory.planningService', [])
 
-    .factory('PlanningService', function ($window, $http, $q, $ionicPopup) {
+    .factory('PlanningService', function ($window, $http, $q, $ionicPopup, OrderService) {
 
         return {
             getActivities: function () {
@@ -36,7 +36,10 @@
             },
             
             getPlanning: function () {
-                return JSON.parse($window.localStorage.getItem('getplanning') || '{}');
+                var parsedItem = JSON.parse($window.localStorage.getItem('getplanning'));
+                var deferred = $q.defer();
+                deferred.resolve(parsedItem);
+                return deferred.promise;
             },
 
             createEmptyOrder: function (order, user) {
@@ -65,9 +68,31 @@
                         },
                         monteur: user
                     }
-                    // Add 'Monteur' in werkbon
                     $window.localStorage.setItem('order' + order.orderid, JSON.stringify(fullOrder));
                 }
+            },
+
+            getCreatedLocalStorageOrders: function() {
+                var orderArr = [];
+                for(var index = 0; index < $window.localStorage.length; index += 1) {
+                    var key = $window.localStorage.key(index);
+                    
+                    if(key.indexOf('order') > -1) {
+                        orderArr.push(key.match(/\d+/)[0]);
+                    }
+                }
+                var deferred = $q.defer();
+                deferred.resolve(orderArr);
+                return deferred.promise;
+            },
+
+            deleteOrderFromLocalStorage: function(_orderId) {
+                OrderService.inQueueBool(_orderId).then(function(bool){
+                    if(!bool){
+                        // Order is not in queue, so delete it!
+                        $window.localStorage.removeItem('order' + _orderId);
+                    }
+                });
             },
 
             giveAlert: function(time) {

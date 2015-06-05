@@ -69,6 +69,6 @@
             $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
         }
 
-    };
+    }
 
 });

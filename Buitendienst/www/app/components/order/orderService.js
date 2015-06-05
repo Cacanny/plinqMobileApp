@@ -1,6 +1,6 @@
 angular.module('directory.orderService', [])
 
-    .factory('OrderService', function (PlanningService, $q, $window, $http, $ionicPopup, $ionicLoading) {
+    .factory('OrderService', function ($q, $window, $http, $ionicPopup, $ionicLoading) {
 
         var signature = false;
         var fromPlanning = false;
@@ -24,15 +24,8 @@ angular.module('directory.orderService', [])
                 fromPlanning = true;
             },
 
-            getOrders: function () {
-                var orders = PlanningService.getPlanning();
-                var deferred = $q.defer();
-                deferred.resolve(orders);
-                return deferred.promise;
-            },
-
             findByOrderId: function (_orderId) {
-                var orders = PlanningService.getPlanning();
+                var orders = JSON.parse($window.localStorage.getItem('getplanning'));
                 var deferred = $q.defer();
                 for (var x = 0; x < orders.length; x++) {
                     if (orders[x].orderid == _orderId) {
@@ -116,7 +109,7 @@ angular.module('directory.orderService', [])
 
                 $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
 
-                return $http.post("test22.json", parsedItem) // CHANGE test.json TO THE API URL
+                return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
                         // Success!
                         console.log(response);
@@ -159,6 +152,15 @@ angular.module('directory.orderService', [])
                 var deferred = $q.defer();
                 deferred.resolve(bool);
                 return deferred.promise;
+            },
+
+            deleteOrderFromQueue: function(_orderId) {
+                var queue = JSON.parse($window.localStorage.getItem('queue'));
+                var index = queue.indexOf(_orderId);
+                if (index > -1) {
+                    queue.splice(index, 1);
+                }
+                $window.localStorage.setItem('queue', JSON.stringify(queue));
             },
 
             getOrderStatus: function (_orderId) {

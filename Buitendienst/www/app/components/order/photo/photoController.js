@@ -99,6 +99,7 @@ angular.module('directory.photoController', [])
 
             var fail = function(err) {
                 alert("Fail!");
+                // Try to send image again
             }
 
             var options = new FileUploadOptions();

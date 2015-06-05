@@ -170,7 +170,7 @@
         }
 
         function getAll() {
-            OrderService.getOrders().then(function (orders) {
+            PlanningService.getPlanning().then(function (orders) {
                 OrderService.getUser().then(function(user){
                     // Fill $scope.orders with the orders from the LocalStorage ('getplanning')
                     $scope.orders = orders;
@@ -191,15 +191,25 @@
         }
 
         // Delete the created orders (made at function setupLocalStorage) the next day
+        // Since 'getplanning' will only contain orders in the future, we can compare the 'getplanning' orders with the orders created in LS,
+        // and delete orders which are not in the 'getplanning'
         function deleteOrdersOlderThanOneDay() {
-             var datenow = new Date();
-             console.log(datenow);
-             for(var index = 0; index < $scope.orders.length; index += 1) {
-                if($scope.orders[index].plandatum ) {
-
+             var deleteOrder = false;
+             PlanningService.getCreatedLocalStorageOrders().then(function(orderArr){
+                for(var index = 0; index < orderArr.length; index += 1){
+                    
+                    var orderIsAvailableInGetPlanning = false;
+                    for(var x = 0; x < $scope.orders.length; x += 1) {
+                        if(orderArr[index] === $scope.orders[x].orderid) {
+                            orderIsAvailableInGetPlanning = true;
+                        }
+                    }
+                    if(!orderIsAvailableInGetPlanning){
+                        PlanningService.deleteOrderFromLocalStorage(orderArr[index]);
+                    }
                 }
-                console.log($scope.orders[index].plandatum);
-             }
+             });
+
         }
 
         // Create some empty keys in localStorage for all the orders

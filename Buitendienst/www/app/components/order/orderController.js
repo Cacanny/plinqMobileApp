@@ -223,7 +223,7 @@
 
             // The actual sending of the order via the service
             OrderService.postOrder($scope.order.orderid, status, datum).then(function (res) {
-                $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
+                $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid); //true
 
                 if (status === 'Afgerond') {
                     $scope.order.status = 'Afgerond';
@@ -232,6 +232,14 @@
                     $scope.order.status = 'In behandeling';
                 }
                 showAlert(alertMessage, alertTitle);
+
+                // If order was in queue also, delete it from queue.
+                OrderService.inQueueBool($scope.order.orderid).then(function(bool){
+                    if(bool){
+                        OrderService.deleteOrderFromQueue($scope.order.orderid);
+                    }
+                });
+
                 console.log(res);
             });
         }
