@@ -287,7 +287,13 @@
 
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
                 alert("IK heb wat opgehaald uit de Photoservice");
-                var photoQueue = photos;
+                try {
+                    var photoQueue = [];
+                    photoQueue = photos;
+                } catch(e){
+                    alert(e);
+                }
+                
             });
 
             alert(JSON.stringify(photoQueue));
