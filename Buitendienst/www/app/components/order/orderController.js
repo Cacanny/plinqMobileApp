@@ -285,10 +285,11 @@
         $scope.uploadPicturesQueue = function () {
             alert("Ik ben nu in de uploadpicturesQueue function");
 
+            var photoQueue = [];
+
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
                 alert("IK heb wat opgehaald uit de Photoservice");
                 try {
-                    var photoQueue = [];
                     photoQueue = photos;
                 } catch(e){
                     alert(e);
