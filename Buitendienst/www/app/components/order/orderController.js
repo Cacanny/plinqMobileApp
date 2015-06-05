@@ -1,10 +1,10 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
-        $scope.$on('$ionicView.afterEnter', function(){
+    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
+        $scope.$on('$ionicView.afterEnter', function () {
             OrderService.endLoadingScreen();
 
-            if(!OrderService.cameFromPlanning()) {
+            if (!OrderService.cameFromPlanning()) {
                 $window.location.replace('#/login');
             }
         });
@@ -16,11 +16,11 @@
             $scope.orderState = OrderService.checkIfStartedAndNotFinished($scope.order.orderid);
             $scope.startTime = OrderService.getOrderDate($scope.order.orderid, 'start');
             $scope.endTime = OrderService.getOrderDate($scope.order.orderid, 'eind');
-         
+
             if (!$scope.orderIsStarted) {
                 $scope.startTime = "Niet gestart";
                 $scope.disableAll();
-            } 
+            }
 
             // If order is in queue, display the orderstatus different
             OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
@@ -33,7 +33,7 @@
 
             calculateWorkedHours();
         });
-        
+
         // Function makes sending the order available and stores timer and geolocation
         $scope.startOrder = function () {
             $scope.enableAll();
@@ -41,18 +41,18 @@
             var startDate = $scope.convertDate(date) + ' ' + $scope.convertTime(date);
             var destination = 'start';
             $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
-            
+
             OrderService.setOrderDate($scope.order.orderid, startDate, destination);
             $scope.startTime = OrderService.getOrderDate($scope.order.orderid, destination);
             $scope.orderIsStarted = true;
         }
 
-        $scope.endOrder = function() {
+        $scope.endOrder = function () {
             var date = new Date();
             var endDate = $scope.convertDate(date) + ' ' + $scope.convertTime(date);
             var destination = 'eind';
             $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
-            
+
             OrderService.setOrderDate($scope.order.orderid, endDate, destination);
             $scope.endTime = OrderService.getOrderDate($scope.order.orderid, destination);
             $scope.orderState = false;
@@ -64,20 +64,20 @@
             var startTime = OrderService.getOrderDate($scope.order.orderid, 'start');
             var endTime = OrderService.getOrderDate($scope.order.orderid, 'eind');
 
-            if(startTime && endTime) {
-                var start = startTime.substring(startTime.indexOf(' ')+1)
-                var end = endTime.substring(endTime.indexOf(' ')+1)
+            if (startTime && endTime) {
+                var start = startTime.substring(startTime.indexOf(' ') + 1)
+                var end = endTime.substring(endTime.indexOf(' ') + 1)
 
                 var startDate = new Date(new Date().toDateString() + ' ' + start);
                 var endDate = new Date(new Date().toDateString() + ' ' + end);
 
                 var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-                var diffMins = Math.ceil(timeDiff / (1000 * 60)); 
+                var diffMins = Math.ceil(timeDiff / (1000 * 60));
 
                 var totalHours = 0;
                 var totalMinutes = diffMins;
 
-                while((totalMinutes-60) >= 0) {
+                while ((totalMinutes - 60) >= 0) {
                     totalHours++
                     totalMinutes -= 60;
                 }
@@ -88,7 +88,7 @@
                 $scope.workedHours = '0 uur, 0 minuten';
             }
         }
- 
+
         $scope.convertTime = function (inputFormat) {
             function pad(s) { return (s < 10) ? '0' + s : s; }
             var d = new Date(inputFormat);
@@ -115,10 +115,10 @@
         $scope.disableAll = function () {
             // Check if the order has been sent with the 'Afgerond' status, if so, disable everything
             $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
-            
+
             if ($scope.orderFinished || !$scope.orderIsStarted) {
                 angular.element(document).ready(function () {
-                    $timeout(function(){
+                    $timeout(function () {
                         var elements = document.getElementsByClassName('removeAfterFinish');
                         for (var index = 0; index < elements.length; index += 1) {
                             elements[index].style.display = 'none';
@@ -133,7 +133,7 @@
             }
         }
 
-        $scope.enableAll = function() {
+        $scope.enableAll = function () {
             angular.element(document).ready(function () {
                 var elements = document.getElementsByClassName('removeAfterFinish');
 
@@ -217,6 +217,8 @@
 
             $scope.order.status = 'In wachtrij';
             $scope.endOrder();
+            alert("Ik ga nu uploaden zometween, nu nog in de sendorder functie");
+            $scope.uploadPicturesQueue();
 
             var date = new Date();
             var datum = $scope.convertDate(date) + " " + $scope.convertTime(date);
@@ -285,6 +287,51 @@
                     ]
                 });
             });
+        }
+
+        // Function that uploads a fileURL to a certain address, this time it's a queue with an array full of images.
+        $scope.uploadPicturesQueue = function () {
+            alert("Ik ben nu in de uploadpicturesQueue function");
+
+            var photoQueue = [];
+
+            PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
+                alert("IK heb wat opgehaald uit de Photoservice");
+                try {
+                    photoQueue = photos;
+                } catch(e){
+                    alert("Fout!" + e);
+                }
+                
+            });
+
+            alert(JSON.stringify(photoQueue));
+
+            for (i = 0; i < photoQueue.length; i++) {
+                //uploadImage(photoQueue[i]);
+                alert(photoQueue[i]);
+            }
+
+
+            //function uploadPicture(fileURL) {
+            //    var win = function (result) {
+            //        alert('Succes! ' + JSON.stringify(result));
+            //    }
+
+            //    var fail = function (err) {
+            //        alert("Fail!");
+            //    }
+
+            //    var options = new FileUploadOptions();
+            //    options.fileKey = 'image';
+            //    options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
+            //    options.mimeType = 'image/jpeg';
+            //    options.chunkedMode = true;
+            //    options.params = {};
+
+            //    var ft = new FileTransfer();
+            //    ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
+            //}
         }
 
         // Ionic Modal
