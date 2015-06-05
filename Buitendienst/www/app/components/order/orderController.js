@@ -291,6 +291,7 @@
                 alert("IK heb wat opgehaald uit de Photoservice");
                 try {
                     photoQueue = photos;
+                    alert('Goed! er zit iets in namelijk:' + photoQueue);
                 } catch(e){
                     alert("Fout!" + e);
                 }
@@ -298,6 +299,7 @@
             });
 
             alert(JSON.stringify(photoQueue));
+            alert("IK ga nu for loopen, ja dus niet");
 
             for (i = 0; i < photoQueue.length; i++) {
                 //uploadImage(photoQueue[i]);
