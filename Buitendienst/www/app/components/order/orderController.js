@@ -287,11 +287,11 @@
                 var photoQueue = photos;
             });
 
-            console.log(JSON.stringify(photoQueue));
+            alert(JSON.stringify(photoQueue));
 
             for (i = 0; i < photoQueue.length; i++) {
                 //uploadImage(photoQueue[i]);
-                console.log(photoQueue[i]);
+                alert(photoQueue[i]);
             }
 
 
