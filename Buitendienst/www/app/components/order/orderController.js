@@ -295,16 +295,17 @@
                 } catch(e){
                     alert("Fout!" + e);
                 }
+                alert(JSON.stringify(photoQueue));
+                alert("IK ga nu for loopen, ja dus niet");
+
+                for (i = 0; i < photoQueue.length; i++) {
+                //uploadImage(photoQueue[i]);
+                alert(photoQueue[i]);
+                 }
                 
             });
 
-            alert(JSON.stringify(photoQueue));
-            alert("IK ga nu for loopen, ja dus niet");
-
-            for (i = 0; i < photoQueue.length; i++) {
-                //uploadImage(photoQueue[i]);
-                alert(photoQueue[i]);
-            }
+        
 
 
             //function uploadPicture(fileURL) {
