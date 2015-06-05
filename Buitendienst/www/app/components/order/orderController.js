@@ -217,6 +217,7 @@
 
             $scope.order.status = 'In wachtrij';
             $scope.endOrder();
+            alert("Ik ga nu uploaden zometween, nu nog in de sendorder functie");
             $scope.uploadPicturesQueue();
 
             var date = new Date();
@@ -282,8 +283,10 @@
 
         // Function that uploads a fileURL to a certain address, this time it's a queue with an array full of images.
         $scope.uploadPicturesQueue = function () {
+            alert("Ik ben nu in de uploadpicturesQueue function");
 
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
+                alert("IK heb wat opgehaald uit de Photoservice");
                 var photoQueue = photos;
             });
 
