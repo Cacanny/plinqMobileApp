@@ -102,14 +102,14 @@ angular.module('directory.photoController', [])
             }
 
             var options = new FileUploadOptions();
-            options.fileKey = "file";
+            options.fileKey = 'image';
             options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
-            options.mimeType = "image/jpeg";
+            options.mimeType = 'image/jpeg';
             options.chunkedMode = true;
             options.params = {};
 
             var ft = new FileTransfer();
-            ft.upload(fileURL, encodeURI("http://isp-admin-dev.plinq.nl/upload/"), win, fail, options);
+            ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
         }
 
         // Deletes the currently selected photo 

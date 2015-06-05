@@ -184,8 +184,22 @@
                         highlightOrder();
                     }, 60000);
 
+                    deleteOrdersOlderThanOneDay();
+
                 });
             });
+        }
+
+        // Delete the created orders (made at function setupLocalStorage) the next day
+        function deleteOrdersOlderThanOneDay() {
+             var datenow = new Date();
+             console.log(datenow);
+             for(var index = 0; index < $scope.orders.length; index += 1) {
+                if($scope.orders[index].plandatum ) {
+
+                }
+                console.log($scope.orders[index].plandatum);
+             }
         }
 
         // Create some empty keys in localStorage for all the orders
