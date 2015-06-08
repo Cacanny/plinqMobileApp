@@ -290,23 +290,18 @@
 
         // Function that uploads a fileURL to a certain address, this time it's a queue with an array full of images.
         $scope.uploadPicturesQueue = function () {
-            alert("Ik ben nu in de uploadpicturesQueue function");
 
             var photoQueue = [];
 
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
                 try {
                     photoQueue = photos;
-                    alert('Goed! er zit iets in namelijk:' + photoQueue);
                 } catch(e){
                     alert("Fout!" + e);
                 }
 
-                alert(JSON.stringify(photoQueue));
-
-                for (i = 0; i < photoQueue.length; i++) {
+                for (var i = 0; i < photoQueue.length; i += 1) {
                     uploadPicture(photoQueue[i]);
-                    alert(photoQueue[i]);
                  }
                 
             });
@@ -315,6 +310,7 @@
 
 
         function uploadPicture(fileURL) {
+            alert("Upload Picture function, ik heb de volgende fileurl :" + fileURL);
             var win = function (result) {
                 alert('Succes! ' + JSON.stringify(result));
             }
@@ -324,7 +320,7 @@
             }
 
             var options = new FileUploadOptions();
-            options.fileKey = 'image';
+            options.fileKey = 'file';
             options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
             options.mimeType = 'image/jpeg';
             options.chunkedMode = true;
