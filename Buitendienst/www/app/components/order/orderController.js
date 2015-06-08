@@ -1,6 +1,6 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
+    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, $ionicModal, $ionicLoading, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
         $scope.$on('$ionicView.afterEnter', function () {
             OrderService.endLoadingScreen();
 
@@ -235,8 +235,8 @@
                 showAlert(alertMessage, alertTitle);
 
                 // If order was in queue also, delete it from queue.
-                OrderService.inQueueBool($scope.order.orderid).then(function(bool){
-                    if(bool){
+                OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
+                    if (bool) {
                         OrderService.deleteOrderFromQueue($scope.order.orderid);
                     }
                 });
@@ -290,41 +290,41 @@
 
         // Function that uploads a fileURL to a certain address, this time it's a queue with an array full of images.
         $scope.uploadPicturesQueue = function () {
-            alert("Ik ben nu in de uploadpicturesQueue function");
 
             var photoQueue = [];
 
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
                 try {
                     photoQueue = photos;
-                    alert('Goed! er zit iets in namelijk:' + photoQueue);
-                } catch(e){
+                } catch (e) {
                     alert("Fout!" + e);
                 }
+                if (photoQueue != '') {
 
-                alert(JSON.stringify(photoQueue));
-
-                for (var i = 0; i < photoQueue.length; i += 1) {
-                    uploadPicture(photoQueue[i]);
-                    alert(photoQueue[i]);
-                 }
-                
+                    $ionicLoading.show({
+                        template: 'Uploading Images...'
+                    });
+                    for (var i = 0; i < photoQueue.length; i += 1) {
+                        uploadPicture(photoQueue[i]);
+                    }
+                }
             });
 
         }
 
 
         function uploadPicture(fileURL) {
+
             var win = function (result) {
-                alert('Succes! ' + JSON.stringify(result));
+                console.log('Succes! ' + JSON.stringify(result));
             }
 
             var fail = function (err) {
-                alert("Fail!");
+                console.log("Fail!" + err);
             }
 
             var options = new FileUploadOptions();
-            options.fileKey = 'image';
+            options.fileKey = 'file';
             options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
             options.mimeType = 'image/jpeg';
             options.chunkedMode = true;
