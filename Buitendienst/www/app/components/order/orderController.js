@@ -299,13 +299,21 @@
                 } catch (e) {
                     alert("Fout!" + e);
                 }
-                if (photoQueue != '') {
+                //if (photoQueue != '') {
+                var message = "Uploading Images";
+                // Show the loading overlay and text
 
+                if (photoQueue != '') {
                     $ionicLoading.show({
-                        template: 'Uploading Images...'
+
+                        // The text to display in the loading indicator
+                        template: "<ion-spinner icon='android'></ion-spinner><br/> Foto's worden geüpload..."
                     });
+
+
                     for (var i = 0; i < photoQueue.length; i += 1) {
-                        uploadPicture(photoQueue[i]);
+                        console.log(photoQueue);
+                        uploadPicture(photoQueue[i], photoQueue.length, i);
                     }
                 }
             });
@@ -313,10 +321,15 @@
         }
 
 
-        function uploadPicture(fileURL) {
+        function uploadPicture(fileURL, numberOfPhotos, index) {
 
             var win = function (result) {
                 console.log('Succes! ' + JSON.stringify(result));
+                index += 1;
+                if (index == numberOfPhotos) {
+                    $ionicLoading.hide();
+                }
+
             }
 
             var fail = function (err) {
