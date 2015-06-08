@@ -1,6 +1,6 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, $ionicModal, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
+    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, $ionicModal, $ionicLoading, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
         $scope.$on('$ionicView.afterEnter', function () {
             OrderService.endLoadingScreen();
 
@@ -235,8 +235,8 @@
                 showAlert(alertMessage, alertTitle);
 
                 // If order was in queue also, delete it from queue.
-                OrderService.inQueueBool($scope.order.orderid).then(function(bool){
-                    if(bool){
+                OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
+                    if (bool) {
                         OrderService.deleteOrderFromQueue($scope.order.orderid);
                     }
                 });
@@ -296,27 +296,31 @@
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
                 try {
                     photoQueue = photos;
-                } catch(e){
+                } catch (e) {
                     alert("Fout!" + e);
                 }
+                if (photoQueue != '') {
 
-                for (var i = 0; i < photoQueue.length; i += 1) {
-                    uploadPicture(photoQueue[i]);
-                 }
-                
+                    $ionicLoading.show({
+                        template: 'Uploading Images...'
+                    });
+                    for (var i = 0; i < photoQueue.length; i += 1) {
+                        uploadPicture(photoQueue[i]);
+                    }
+                }
             });
 
         }
 
 
         function uploadPicture(fileURL) {
-            alert("Upload Picture function, ik heb de volgende fileurl :" + fileURL);
+
             var win = function (result) {
-                alert('Succes! ' + JSON.stringify(result));
+                console.log('Succes! ' + JSON.stringify(result));
             }
 
             var fail = function (err) {
-                alert("Fail!");
+                console.log("Fail!" + err);
             }
 
             var options = new FileUploadOptions();
