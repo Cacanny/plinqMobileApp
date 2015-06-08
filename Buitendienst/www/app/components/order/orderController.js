@@ -304,7 +304,7 @@
 
                 alert(JSON.stringify(photoQueue));
 
-                for (i = 0; i < photoQueue.length; i++) {
+                for (var i = 0; i < photoQueue.length; i += 1) {
                     uploadPicture(photoQueue[i]);
                     alert(photoQueue[i]);
                  }
