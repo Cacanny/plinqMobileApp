@@ -217,7 +217,6 @@
 
             $scope.order.status = 'In wachtrij';
             $scope.endOrder();
-            alert("Ik ga nu uploaden zometween, nu nog in de sendorder functie");
             $scope.uploadPicturesQueue();
 
             var date = new Date();
@@ -296,45 +295,43 @@
             var photoQueue = [];
 
             PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
-                alert("IK heb wat opgehaald uit de Photoservice");
                 try {
                     photoQueue = photos;
                     alert('Goed! er zit iets in namelijk:' + photoQueue);
                 } catch(e){
                     alert("Fout!" + e);
                 }
+
                 alert(JSON.stringify(photoQueue));
-                alert("IK ga nu for loopen, ja dus niet");
 
                 for (i = 0; i < photoQueue.length; i++) {
-                //uploadImage(photoQueue[i]);
-                alert(photoQueue[i]);
+                    uploadPicture(photoQueue[i]);
+                    alert(photoQueue[i]);
                  }
                 
             });
 
-        
+        }
 
 
-            //function uploadPicture(fileURL) {
-            //    var win = function (result) {
-            //        alert('Succes! ' + JSON.stringify(result));
-            //    }
+        function uploadPicture(fileURL) {
+            var win = function (result) {
+                alert('Succes! ' + JSON.stringify(result));
+            }
 
-            //    var fail = function (err) {
-            //        alert("Fail!");
-            //    }
+            var fail = function (err) {
+                alert("Fail!");
+            }
 
-            //    var options = new FileUploadOptions();
-            //    options.fileKey = 'image';
-            //    options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
-            //    options.mimeType = 'image/jpeg';
-            //    options.chunkedMode = true;
-            //    options.params = {};
+            var options = new FileUploadOptions();
+            options.fileKey = 'image';
+            options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
+            options.mimeType = 'image/jpeg';
+            options.chunkedMode = true;
+            options.params = {};
 
-            //    var ft = new FileTransfer();
-            //    ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
-            //}
+            var ft = new FileTransfer();
+            ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
         }
 
         // Ionic Modal
