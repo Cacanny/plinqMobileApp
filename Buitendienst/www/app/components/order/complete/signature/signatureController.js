@@ -43,6 +43,9 @@
                     var destination = "handtekening";
                     $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
                     OrderService.setOrderDate($scope.order.orderid, startDate, destination);
+
+                    uploadPicture(dataURItoBlob(sigImg));
+                    uploadPicture(sigImg);
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
@@ -58,6 +61,36 @@
                 } else {
                     canvas.height = window.innerHeight - 96;
                 }
+            }
+
+            function dataURItoBlob(dataURI) {
+                var binary = atob(dataURI.split(',')[1]);
+                var array = [];
+                for(var i = 0; i < binary.length; i++) {
+                    array.push(binary.charCodeAt(i));
+                }
+                return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+            }
+
+            function uploadPicture(fileURL) {
+                // console.log(fileURL);
+               var win = function (result) {
+                   alert('Succes! ' + JSON.stringify(result));
+               }
+
+               var fail = function (err) {
+                   alert("Fail!");
+               }
+
+               var options = new FileUploadOptions();
+               options.fileKey = 'file';
+               options.fileName = 'order' + $scope.order.orderid + '_signature_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
+               options.mimeType = 'image/jpeg';
+               options.chunkedMode = true;
+               options.params = {};
+
+               var ft = new FileTransfer();
+               ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
             }
         });
     
