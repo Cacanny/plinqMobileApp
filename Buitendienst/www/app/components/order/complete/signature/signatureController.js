@@ -1,6 +1,6 @@
 ﻿angular.module('directory.signatureController', [])
 
-    .controller('SignatureCtrl', function ($scope, CompleteService, OrderService) {
+    .controller('SignatureCtrl', function ($scope, $window, CompleteService, OrderService) {
         angular.element(document).ready(function () {
             
             // $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
@@ -44,8 +44,18 @@
                     $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
                     OrderService.setOrderDate($scope.order.orderid, startDate, destination);
 
-                    uploadPicture(dataURItoBlob(sigImg));
-                    uploadPicture(sigImg);
+                    alert(canvas);
+                    alert($window.canvas2ImagePlugin);
+                    alert(JSON.stringify($window.canvas2ImagePlugin));
+                    $window.canvas2ImagePlugin.saveImageDataToLibrary(
+                        function(msg){
+                            alert(JSON.stringify(msg));
+                        },
+                        function(err){
+                            alert(JSON.stringify(err));
+                        },
+                        canvas
+                    );
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);
@@ -79,7 +89,7 @@
                }
 
                var fail = function (err) {
-                   alert("Fail!");
+                   alert("Fail! " + JSON.stringify(err));
                }
 
                var options = new FileUploadOptions();
