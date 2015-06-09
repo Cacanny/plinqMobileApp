@@ -45,18 +45,21 @@
                     $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
                     OrderService.setOrderDate($scope.order.orderid, startDate, destination);
 
-                    alert(document.getElementById('signatureCanvas'));
-                    alert($window.canvas2ImagePlugin);
-                    alert(JSON.stringify($window.canvas2ImagePlugin));
-                    $window.canvas2ImagePlugin.saveImageDataToLibrary(
-                        function(msg){
-                            alert(JSON.stringify(msg));
-                        },
-                        function(err){
-                            alert(JSON.stringify(err));
-                        },
-                        document.getElementById('signatureCanvas')
-                    );
+                    // alert(document.getElementById('signatureCanvas'));
+                    // alert($window.canvas2ImagePlugin);
+                    // alert(JSON.stringify($window.canvas2ImagePlugin));
+                    if($window.canvas2ImagePlugin) {
+                        alert('ik kom er wel in');
+                        $window.canvas2ImagePlugin.saveImageDataToLibrary(
+                            function(msg){
+                                alert(JSON.stringify(msg));
+                            },
+                            function(err){
+                                alert(JSON.stringify(err));
+                            },
+                            document.getElementById('signatureCanvas')
+                        );
+                    }
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);

@@ -1,7 +1,7 @@
 angular.module('directory.loginController', [])
 
     .controller('LoginCtrl', function ($scope, $window, LoginService, $ionicPopup, $timeout) {
-        $window.localStorage.clear();
+        // $window.localStorage.clear();
         var actualPasscode = ""; 
 
         $scope.$on('$ionicView.afterEnter', function(){
