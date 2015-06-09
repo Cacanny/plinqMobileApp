@@ -86,7 +86,7 @@
 
                var options = new FileUploadOptions();
                options.fileKey = 'file';
-               options.fileName = 'order' + $scope.order.orderid + '_signature_.' + fileURL.substr(fileURL.lastIndexOf('.') + 1);;
+               options.fileName = 'order' + $scope.order.orderid + '_signature.png';
                options.mimeType = 'image/jpeg';
                options.chunkedMode = true;
                options.params = {};
