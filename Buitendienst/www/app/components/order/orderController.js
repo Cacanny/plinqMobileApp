@@ -249,11 +249,14 @@
 
         }
 
+        $scope.counterPhotos = 0;
+
         // Function that uploads a fileURL (picture) to a certain address,
         function uploadPicture(fileURL, numberOfPhotos, index, status, alertMessage, alertTitle) {
 
             var win = function (result) {
                 console.log('Succes! ' + JSON.stringify(result));
+                $scope.counterPhotos += 1;
                 index += 1;
                 if (index === numberOfPhotos) {
                     $ionicLoading.hide();
@@ -263,7 +266,12 @@
             }
 
             var fail = function (err) {
-                console.log("Fail!" + err);
+                console.log("Fail!" + JSON.stringify(err));        
+                index += 1;
+                if (index === numberOfPhotos) {
+                    $ionicLoading.hide();
+                    postOrder(status, alertMessage, alertTitle)
+                }
             }
 
             var options = new FileUploadOptions();
@@ -348,15 +356,6 @@
                 });
             });
         }
-
-        
-        //function prepareUploadPictures() {
-
-           
-
-        //}
-
-    
 
         // Ionic Modal
         $ionicModal.fromTemplateUrl('modal', {
