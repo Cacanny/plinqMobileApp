@@ -19,6 +19,7 @@
             resizeCanvas();
             var signaturePad = new SignaturePad(canvas);
             signaturePad.backgroundColor = "white";
+            signaturePad.penColor = "pink";
 
             signaturePad.minWidth = 2;
             signaturePad.maxWidth = 4.5;
@@ -44,7 +45,7 @@
                     $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
                     OrderService.setOrderDate($scope.order.orderid, startDate, destination);
 
-                    alert(canvas);
+                    alert(document.getElementById('signatureCanvas'));
                     alert($window.canvas2ImagePlugin);
                     alert(JSON.stringify($window.canvas2ImagePlugin));
                     $window.canvas2ImagePlugin.saveImageDataToLibrary(
@@ -54,7 +55,7 @@
                         function(err){
                             alert(JSON.stringify(err));
                         },
-                        canvas
+                        document.getElementById('signatureCanvas')
                     );
                 } else {
                     var sigImg = '';
