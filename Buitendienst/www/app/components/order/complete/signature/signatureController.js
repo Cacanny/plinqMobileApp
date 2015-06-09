@@ -49,13 +49,12 @@
                     // alert($window.canvas2ImagePlugin);
                     // alert(JSON.stringify($window.canvas2ImagePlugin));
                     if($window.canvas2ImagePlugin) {
-                        alert('ik kom er wel in');
                         $window.canvas2ImagePlugin.saveImageDataToLibrary(
                             function(msg){
-                                alert(JSON.stringify(msg));
+                                uploadPicture(msg);
                             },
                             function(err){
-                                alert(JSON.stringify(err));
+                                alert('Fout! Handtekening kon niet succesvol opgeslagen worden, probeer opnieuw.');
                             },
                             document.getElementById('signatureCanvas')
                         );
