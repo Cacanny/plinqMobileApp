@@ -199,10 +199,10 @@
             });
         }
 
+        // Saving the order
         $scope.sendOrder = function (status) {
             myPopup.close();
-            //TODO: Delete order from LocalStorage?
-
+    
             var alertTitle = 'Succes!';
             var alertMessage = 'Order ' + $scope.order.orderid + ' is succesvol verzonden.<br/>';
 
@@ -212,17 +212,78 @@
                 OrderService.getFollowup($scope.order.orderid).then(function (text) {
                     alertMessage += '<br/>Vervolgactie: ' + text + '<br/>';
                     alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd en opnieuw verstuurd worden.';
-                })
+                });
             }
 
             $scope.order.status = 'In wachtrij';
             $scope.endOrder();
-            $scope.uploadPicturesQueue();
+            var photoQueue = [];
+
+            PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
+                try {
+                    photoQueue = photos;
+                } catch (e) {
+                    alert("Fout!" + e);
+                }
+                //if (photoQueue != '') {
+                var message = "Uploading Images";
+                // Show the loading overlay and text
+
+                if (photoQueue != '') {
+                    $ionicLoading.show({
+
+                        // The text to display in the loading indicator
+                        template: "<ion-spinner icon='android'></ion-spinner><br/> Foto's worden geüpload..."
+                    });
+
+
+                    for (var i = 0; i < photoQueue.length; i += 1) {
+                        console.log(photoQueue);
+                        uploadPicture(photoQueue[i], photoQueue.length, i, status, alertMessage, alertTitle);
+                    }
+                } else {
+                    postOrder(status, alertMessage, alertTitle);
+                }
+                
+            });
+
+        }
+
+        // Function that uploads a fileURL (picture) to a certain address,
+        function uploadPicture(fileURL, numberOfPhotos, index, status, alertMessage, alertTitle) {
+
+            var win = function (result) {
+                console.log('Succes! ' + JSON.stringify(result));
+                index += 1;
+                if (index === numberOfPhotos) {
+                    $ionicLoading.hide();
+                    postOrder(status, alertMessage, alertTitle)
+                }
+
+            }
+
+            var fail = function (err) {
+                console.log("Fail!" + err);
+            }
+
+            var options = new FileUploadOptions();
+            options.fileKey = 'file';
+            options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
+            options.mimeType = 'image/jpeg';
+            options.chunkedMode = true;
+            options.params = {};
+
+            var ft = new FileTransfer();
+            ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
+        }
+
+        // Function for actual sending of the order via the service
+        function postOrder(status, alertMessage, alertTitle) {
 
             var date = new Date();
             var datum = $scope.convertDate(date) + " " + $scope.convertTime(date);
 
-            // The actual sending of the order via the service
+            
             OrderService.postOrder($scope.order.orderid, status, datum).then(function (res) {
                 $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid); //true
 
@@ -288,64 +349,14 @@
             });
         }
 
-        // Function that uploads a fileURL to a certain address, this time it's a queue with an array full of images.
-        $scope.uploadPicturesQueue = function () {
+        
+        //function prepareUploadPictures() {
 
-            var photoQueue = [];
+           
 
-            PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
-                try {
-                    photoQueue = photos;
-                } catch (e) {
-                    alert("Fout!" + e);
-                }
-                //if (photoQueue != '') {
-                var message = "Uploading Images";
-                // Show the loading overlay and text
+        //}
 
-                if (photoQueue != '') {
-                    $ionicLoading.show({
-
-                        // The text to display in the loading indicator
-                        template: "<ion-spinner icon='android'></ion-spinner><br/> Foto's worden geüpload..."
-                    });
-
-
-                    for (var i = 0; i < photoQueue.length; i += 1) {
-                        console.log(photoQueue);
-                        uploadPicture(photoQueue[i], photoQueue.length, i);
-                    }
-                }
-            });
-
-        }
-
-
-        function uploadPicture(fileURL, numberOfPhotos, index) {
-
-            var win = function (result) {
-                console.log('Succes! ' + JSON.stringify(result));
-                index += 1;
-                if (index == numberOfPhotos) {
-                    $ionicLoading.hide();
-                }
-
-            }
-
-            var fail = function (err) {
-                console.log("Fail!" + err);
-            }
-
-            var options = new FileUploadOptions();
-            options.fileKey = 'file';
-            options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
-            options.mimeType = 'image/jpeg';
-            options.chunkedMode = true;
-            options.params = {};
-
-            var ft = new FileTransfer();
-            ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
-        }
+    
 
         // Ionic Modal
         $ionicModal.fromTemplateUrl('modal', {
