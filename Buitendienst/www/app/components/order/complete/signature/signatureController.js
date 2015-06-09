@@ -19,7 +19,6 @@
             resizeCanvas();
             var signaturePad = new SignaturePad(canvas);
             signaturePad.backgroundColor = "white";
-            signaturePad.penColor = "pink";
 
             signaturePad.minWidth = 2;
             signaturePad.maxWidth = 4.5;
@@ -45,10 +44,9 @@
                     $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
                     OrderService.setOrderDate($scope.order.orderid, startDate, destination);
 
-                    // alert(document.getElementById('signatureCanvas'));
-                    // alert($window.canvas2ImagePlugin);
-                    // alert(JSON.stringify($window.canvas2ImagePlugin));
                     if($window.canvas2ImagePlugin) {
+                        // This doesn't work with IonicView
+                        // TODO: test this with iOS PGB
                         $window.canvas2ImagePlugin.saveImageDataToLibrary(
                             function(msg){
                                 uploadPicture(msg);
@@ -76,15 +74,6 @@
                 }
             }
 
-            function dataURItoBlob(dataURI) {
-                var binary = atob(dataURI.split(',')[1]);
-                var array = [];
-                for(var i = 0; i < binary.length; i++) {
-                    array.push(binary.charCodeAt(i));
-                }
-                return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
-            }
-
             function uploadPicture(fileURL) {
                 // console.log(fileURL);
                var win = function (result) {
@@ -97,7 +86,7 @@
 
                var options = new FileUploadOptions();
                options.fileKey = 'file';
-               options.fileName = 'order' + $scope.order.orderid + '_signature_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
+               options.fileName = 'order' + $scope.order.orderid + '_signature';
                options.mimeType = 'image/jpeg';
                options.chunkedMode = true;
                options.params = {};
