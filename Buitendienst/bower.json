@@ -1,5 +1,5 @@
 {
-  "name": "Buitendienst2",
+  "name": "Buitendienst",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0-rc.2",

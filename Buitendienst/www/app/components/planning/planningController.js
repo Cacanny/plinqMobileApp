@@ -9,20 +9,13 @@
         $scope.queueLength = 0;
         $scope.updateTime = 'Nooit';
         $scope.planningAvailable = false;
-
-        //!!!!!!!!! Only for testing in browser, otherwise remove it !!!!!!!!! 
-        // $window.localStorage.clear();
-        // refresh();
         $scope.connection = 'Onbekend';
 
         $scope.$on('$ionicView.afterEnter', function(){
-            $scope.planningAvailable = false;
-
             // Get queue
             PlanningService.getQueue().then(function(_queueArr){
                 $scope.queueArr = _queueArr;
                 $scope.queueLength = _queueArr.length;
-                // sendQueue(); // Delete this after browser testing
             });
 
             checkOrderStatus();
@@ -298,7 +291,7 @@
 
         // Navigate to other state using ng-click
         $scope.details = function (id) {
-            // Give a loading screenm  
+            // Give a loading screen  
             OrderService.startLoadingScreen();
             $timeout(function(){
                 $state.go('app.order', { orderId: id });

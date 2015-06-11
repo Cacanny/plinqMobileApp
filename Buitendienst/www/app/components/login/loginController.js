@@ -2,6 +2,14 @@ angular.module('directory.loginController', [])
 
     .controller('LoginCtrl', function ($scope, $window, LoginService, $ionicPopup, $timeout) {
         // $window.localStorage.clear();
+        // $window.localStorage.removeItem("account");
+        $window.localStorage.removeItem("queue");
+        $window.localStorage.removeItem("activities");
+        $window.localStorage.removeItem("getplanning");
+        $window.localStorage.removeItem("order123");
+        $window.localStorage.removeItem("order124");
+        $window.localStorage.removeItem("order125");
+
         var actualPasscode = ""; 
 
         $scope.$on('$ionicView.afterEnter', function(){

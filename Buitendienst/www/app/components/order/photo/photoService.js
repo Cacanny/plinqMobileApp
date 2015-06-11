@@ -50,13 +50,13 @@
         //    return deferred.promise;
         //},
 
-        setPhotoImage: function (orderid, images) {
+        setPhotoImages: function (orderid, images) {
             var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
             parsedItem.fotos = images;
             $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
         },
 
-        getPhotoImage: function (orderid) {
+        getPhotoImages: function (orderid) {
             var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
             var deferred = $q.defer();
             deferred.resolve(parsedItem.fotos);
