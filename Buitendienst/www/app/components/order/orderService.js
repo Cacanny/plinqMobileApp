@@ -1,9 +1,68 @@
 angular.module('directory.orderService', [])
 
-    .factory('OrderService', function ($q, $window, $http, $ionicPopup, $ionicLoading) {
+    .factory('OrderService', function ($q, $window, $http, $ionicPopup, $ionicLoading, $timeout) {
 
         var signature = false;
         var fromPlanning = false;
+
+        var uploadPhoto = function(_orderId, photoArr, photoArrIndex, countSuccessPhotos, cameFromOrder) {
+            if(photoArrIndex < photoArr.length) {
+                // Upload the photo
+
+                if(cameFromOrder) {
+                    if(photoArr.length === 1) {
+                        // Then this is only the signature
+                        $ionicLoading.show({
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
+                        });
+                    } else {
+                        $ionicLoading.show({
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + photoArr.length + '</b> foto\'s geüpload.'
+                        });
+                    }
+                }
+
+                 var win = function (result) {
+                    // Success, so upload the next one
+                    uploadPhoto(_orderId, photoArr, photoArrIndex + 1, countSuccessPhotos + 1);
+                }
+
+                var fail = function (err) {
+                    // Fail, so try uploading the same photo again
+                    uploadPhoto(_orderId, photoArr, photoArrIndex, countSuccessPhotos);
+                }
+
+                var fileURL = photoArr[photoArrIndex].url;
+                var fileName = photoArr[photoArrIndex].name;
+                var options = new FileUploadOptions();
+                options.fileKey = 'file';
+                options.fileName = fileName;
+                options.mimeType = 'image/jpeg';
+                options.chunkedMode = true;
+                options.params = {};
+
+                var ft = new FileTransfer();
+                ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
+            } else {
+                // All photos have been uploaded
+                if(cameFromOrder) {
+                    if(photoArr.length === 1) {
+                        // Then this is only the signature
+                        $ionicLoading.show({
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
+                        });
+                    } else {
+                        $ionicLoading.show({
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + photoArr.length + '</b> van <b>' + photoArr.length + '</b> foto\'s geüpload.'
+                        });
+                    }
+
+                    $timeout(function(){
+                        $ionicLoading.hide();
+                    }, 300);
+                }
+            }
+        }
 
         return {
             startLoadingScreen: function() {
@@ -82,17 +141,21 @@ angular.module('directory.orderService', [])
                 }
             },
 
-            setFollowup: function (orderid, text) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+            setFollowup: function (_orderId, text) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
                 parsedItem.vervolgactie = text;
-                $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
+                $window.localStorage.setItem('order' + _orderId, JSON.stringify(parsedItem));
             },
 
-            getFollowup: function (orderid) {
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
+            getFollowup: function (_orderId) {
+                var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));
                 var deferred = $q.defer();
                 deferred.resolve(parsedItem.vervolgactie);
                 return deferred.promise;
+            },
+
+            uploadPhotos: function(_orderId, photoArr, photoArrIndex, countSuccessPhotos, cameFromOrder) {
+                uploadPhoto(_orderId, photoArr, photoArrIndex, countSuccessPhotos, cameFromOrder);
             },
 
             postOrder: function (_orderId, status, datum) {
@@ -111,8 +174,7 @@ angular.module('directory.orderService', [])
 
                 return $http.post("test.json", parsedItem) // CHANGE test.json TO THE API URL
                     .success(function (response) {
-                        // Success!
-                        console.log(response);
+                        // Success! The controller that called this function will handle it.
                     })
                     .error(function () {
                         if(status !== 'Queue') {

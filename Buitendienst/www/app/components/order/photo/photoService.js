@@ -1,9 +1,6 @@
 ﻿angular.module('directory.photoService', [])
 .factory('PhotoService', function ($rootScope, $q, $ionicLoading, $window) {
 
-    var images;
-    var IMAGE_STORAGE_KEY = 'images';
-
     return {
 
         // Function

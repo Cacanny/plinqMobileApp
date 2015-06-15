@@ -1,6 +1,6 @@
 ﻿angular.module('directory.orderController', [])
 
-    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, $ionicModal, $ionicLoading, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
+    .controller('OrderCtrl', function ($scope, $timeout, $window, $stateParams, OrderService, PhotoService, CompleteService, $ionicModal, $ionicLoading, $ionicPlatform, $ionicPopup, $cordovaGeolocation) {
         $scope.$on('$ionicView.afterEnter', function () {
             OrderService.endLoadingScreen();
 
@@ -21,6 +21,11 @@
                 $scope.startTime = "Niet gestart";
                 $scope.disableAll();
             }
+
+            // Check if the order status was changed
+            OrderService.getOrderStatus($scope.order.orderid).then(function(status){
+                $scope.order.status = status;
+            });
 
             // If order is in queue, display the orderstatus different
             OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
@@ -156,22 +161,20 @@
             var alertMessage = '';
             var alertTitle = 'Fout!';
 
-            OrderService.inQueueBool($scope.order.orderid).then(function (bool) {
-                if ($scope.orderFinished && !bool) {
-                    alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
+            if ($scope.orderFinished && !bool) {
+                alertMessage = 'Deze order is al <b>volledig afgerond</b>, het is niet mogelijk deze order nogmaals te verzenden!';
+                showAlert(alertMessage, alertTitle);
+            } else {
+                // Check if the signature is available
+                var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
+
+                if (!signatureAvailable) {
+                    alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
                     showAlert(alertMessage, alertTitle);
                 } else {
-                    // Check if the signature is available
-                    var signatureAvailable = OrderService.checkForSignature($scope.order.orderid);
-
-                    if (!signatureAvailable) {
-                        alertMessage = 'Het is niet mogelijk deze order te verzenden zonder een handtekening van de klant!';
-                        showAlert(alertMessage, alertTitle);
-                    } else {
-                        chooseOrderStatus();
-                    }
+                    chooseOrderStatus();
                 }
-            });
+            }
         }
 
 
@@ -199,7 +202,7 @@
             });
         }
 
-        // Saving the order
+        // Sending the order and uploading photo's + signature
         $scope.sendOrder = function (status) {
             myPopup.close();
     
@@ -209,89 +212,20 @@
             if (status === 'Afgerond') {
                 alertMessage += '<br/>Deze order is <b>volledig afgerond</b> en kan niet meer gewijzigd of verstuurd worden.';
             } else {
-                OrderService.getFollowup($scope.order.orderid).then(function (text) {
-                    alertMessage += '<br/>Vervolgactie: ' + text + '<br/>';
+                OrderService.getFollowup($scope.order.orderid).then(function (_text) {
+                    alertMessage += '<br/>Vervolgactie: ' + _text + '<br/>';
                     alertMessage += '<br/>Deze order is <b>in behandeling</b> en kan nog gewijzigd en opnieuw verstuurd worden.';
                 });
             }
 
-            $scope.order.status = 'In wachtrij';
             $scope.endOrder();
-            var photoQueue = [];
-
-            PhotoService.getPhotoImage($scope.order.orderid).then(function (photos) {
-                try {
-                    photoQueue = photos;
-                } catch (e) {
-                    alert("Fout!" + e);
-                }
-                //if (photoQueue != '') {
-                var message = "Uploading Images";
-                // Show the loading overlay and text
-
-                if (photoQueue != '') {
-                    $ionicLoading.show({
-
-                        // The text to display in the loading indicator
-                        template: "<ion-spinner icon='android'></ion-spinner><br/> Foto's worden geüpload..."
-                    });
-
-
-                    for (var i = 0; i < photoQueue.length; i += 1) {
-                        console.log(photoQueue);
-                        uploadPicture(photoQueue[i], photoQueue.length, i, status, alertMessage, alertTitle);
-                    }
-                } else {
-                    postOrder(status, alertMessage, alertTitle);
-                }
-                
-            });
-
-        }
-
-        $scope.counterPhotos = 0;
-
-        // Function that uploads a fileURL (picture) to a certain address,
-        function uploadPicture(fileURL, numberOfPhotos, index, status, alertMessage, alertTitle) {
-
-            var win = function (result) {
-                console.log('Succes! ' + JSON.stringify(result));
-                $scope.counterPhotos += 1;
-                index += 1;
-                if (index === numberOfPhotos) {
-                    $ionicLoading.hide();
-                    postOrder(status, alertMessage, alertTitle)
-                }
-
-            }
-
-            var fail = function (err) {
-                console.log("Fail!" + JSON.stringify(err));        
-                index += 1;
-                if (index === numberOfPhotos) {
-                    $ionicLoading.hide();
-                    postOrder(status, alertMessage, alertTitle)
-                }
-            }
-
-            var options = new FileUploadOptions();
-            options.fileKey = 'file';
-            options.fileName = 'order' + $scope.order.orderid + '_' + fileURL.substr(fileURL.lastIndexOf('/') + 1);
-            options.mimeType = 'image/jpeg';
-            options.chunkedMode = true;
-            options.params = {};
-
-            var ft = new FileTransfer();
-            ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
-        }
-
-        // Function for actual sending of the order via the service
-        function postOrder(status, alertMessage, alertTitle) {
 
             var date = new Date();
             var datum = $scope.convertDate(date) + " " + $scope.convertTime(date);
 
+            $scope.order.status = 'In wachtrij';
             
+            // Actual sending of the order via the service
             OrderService.postOrder($scope.order.orderid, status, datum).then(function (res) {
                 $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid); //true
 
@@ -311,6 +245,16 @@
                 });
 
                 console.log(res);
+
+                // Because the order was succesfully sent, we can now upload the photos and signature!
+                PhotoService.getPhotoImages($scope.order.orderid).then(function (photos) {
+                    // Get the signature and add it to the array of photos
+                    CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
+                        // Remember, the signature will always be the last one in the list!
+                        photos.push(signature);
+                        OrderService.uploadPhotos($scope.order.orderid, photos, 0, 0, true);
+                    });
+                });
             });
         }
 
@@ -335,7 +279,7 @@
                     title: '<b>Vervolgactie</b>',
                     template: 'Voer een vervolgactie in:<br/>'
                                 + '<div class="item item-input">'
-                                + '<textarea id="followup" rows="8">' + text + '</textarea>'
+                                + '<textarea id="followup" rows="8" autofocus>' + text + '</textarea>'
                                 + '</div>',
                     buttons: [
                           { text: 'Cancel' },

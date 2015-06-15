@@ -1,6 +1,6 @@
 ﻿angular.module('directory.planningController', [])
 
-    .controller('PlanningCtrl', function ($scope, $rootScope, $timeout, $interval, $window, $ionicPlatform, $cordovaNetwork, $cordovaLocalNotification, $ionicLoading, $ionicPopup, PlanningService, OrderService, $state) {
+    .controller('PlanningCtrl', function ($scope, $rootScope, $timeout, $interval, $window, $ionicPlatform, $cordovaNetwork, $cordovaLocalNotification, $ionicLoading, $ionicPopup, PlanningService, OrderService, PhotoService, $state) {
         PlanningService.setInitialQueue();
         startNotificationInterval();
 
@@ -16,6 +16,7 @@
             PlanningService.getQueue().then(function(_queueArr){
                 $scope.queueArr = _queueArr;
                 $scope.queueLength = _queueArr.length;
+                refreshQueueInterval();
             });
 
             checkOrderStatus();
@@ -48,9 +49,23 @@
                 // Foreach order in the queue send it, and remove it from the queue
                 for(var index = $scope.queueArr.length - 1; index >= 0; index -= 1) {
                     OrderService.postOrder($scope.queueArr[index], 'Queue', datum).then(function(res){
-                        $scope.queueArr.splice(index, 1);
+                        // Because the order was succesfully sent, we can now upload the photos and signature!
+                        uploadPhotos(res.config.data.orderid);
+
+                        // Now update the queue
+                        for(var x = 0; x < $scope.queueArr.length; x += 1) {
+                            if($scope.queueArr[x] === res.config.data.orderid) {
+                                $scope.queueArr.splice(x, 1);
+                            }
+                        }
+
+                        // Update queue length for view
                         $scope.queueLength = $scope.queueArr.length;
+
+                        // Set the updated queue in LocalStorage
                         PlanningService.setQueue($scope.queueArr);
+
+                        // Update the status of the order in the view
                         checkOrderStatus();
 
                         console.log(res);
@@ -59,9 +74,20 @@
             } else {
                 $interval.cancel($scope.intervalQueue);
             }
-        } 
+        }
 
-        function refreshAllIntervals() {
+        function uploadPhotos(_orderId) {
+            PhotoService.getPhotoImages(_orderId).then(function (photos) {
+                // Get the signature and add it to the array of photos
+                CompleteService.getSignatureImage(_orderId).then(function(signature){
+                    // Remember, the signature will always be the last one in the array!
+                    photos.push(signature);
+                    OrderService.uploadPhotos(_orderId, photos, 0, 0, false);
+                });
+            });
+        }
+
+        function refreshQueueInterval() {
             // Try to send orders in the queue if there is any every 15 seconds
             $scope.intervalQueue = $interval(function(){
                 if($scope.queueArr.length > 0) {
@@ -109,8 +135,8 @@
         function performOnlineFunction() {
             $scope.connection = 'Online';
 
-            // Initial intervals
-            refreshAllIntervals();
+            // Initial queue interval
+            refreshQueueInterval();
         }
 
         // Function that needs to be performed with Offline connection
@@ -217,9 +243,10 @@
             var intervalNotification = $interval(function(){
                 var date = convertDate(new Date()); // dd-MM-jjjj
                 var now = convertTime(new Date()); // HH:mm
-                var orderTime = convertTime(getAlertTime(new Date(new Date().toDateString() + ' ' + $scope.orders[2].tijd), 15)); // HH:mm (15 minutes before order time)
                 
                 for(var index = 0; index < $scope.orders.length; index += 1){
+                    var orderTime = convertTime(getAlertTime(new Date(new Date().toDateString() + ' ' + $scope.orders[index].tijd), 15)); // HH:mm (15 minutes before order time)
+                
                     if(orderTime === now && $scope.orders[index].plandatum === date) {
                         PlanningService.giveAlert($scope.orders[index].tijd);
                     }

@@ -5,9 +5,9 @@ angular.module('directory.completeService', [])
         var _canvas;
 
         return {
-            setSignatureImage: function(orderid, signature) {
+            setSignatureImage: function(orderid, signatureObject) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
-                parsedItem.handtekening.image = signature;
+                parsedItem.handtekening.image = signatureObject;
                 $window.localStorage.setItem('order' + orderid, JSON.stringify(parsedItem));
             },
 

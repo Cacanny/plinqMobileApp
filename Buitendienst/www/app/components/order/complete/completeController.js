@@ -2,7 +2,7 @@ angular.module('directory.completeController', [])
 
     .controller('CompleteCtrl', function ($scope, $rootScope, CompleteService) {
         CompleteService.getSignatureImage($scope.order.orderid).then(function (signature) {
-            $scope._signatureImage = signature;
+            $scope._signatureImage = signature.dataURL;
         });
 
         $scope.openSignature = function() {
@@ -17,7 +17,7 @@ angular.module('directory.completeController', [])
                 signaturePad.maxWidth = 4.5;
 
                 CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
-                    signaturePad.fromDataURL(signature);
+                    signaturePad.fromDataURL(signature.dataURL);
                 });
             }
         }

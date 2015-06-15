@@ -26,7 +26,7 @@
             CompleteService.setCanvas(canvas);
 
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
-                signaturePad.fromDataURL(signature);
+                signaturePad.fromDataURL(signature.dataURL);
             });
 
             $scope.clearCanvas = function () {
@@ -36,20 +36,18 @@
             $scope.saveCanvas = function () {
                 if(!signaturePad.isEmpty()) {
                     var sigImg = signaturePad.toDataURL();
-                    CompleteService.setSignatureImage($scope.order.orderid, sigImg);
-                   
-                    var date = new Date();
-                    var startDate = $scope.convertDate(date) + " " + $scope.convertTime(date);
-                    var destination = "handtekening";
-                    $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
-                    OrderService.setOrderDate($scope.order.orderid, startDate, destination);
 
                     if($window.canvas2ImagePlugin) {
-                        // This doesn't work with IonicView
+                        // This doesn't work with IonicView! Plugin is not supported, but Android with PhoneGapBuild does work
                         // TODO: test this with iOS PGB
                         $window.canvas2ImagePlugin.saveImageDataToLibrary(
-                            function(msg){
-                                uploadPicture(msg);
+                            function(_fileURL){
+
+                                var signatureObject = {
+                                    dataURL: signaturePad.toDataURL(), fileURL: _fileURL
+                                }
+
+                                CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
                             },
                             function(err){
                                 alert('Fout! Handtekening kon niet succesvol opgeslagen worden, probeer opnieuw.');
@@ -57,6 +55,13 @@
                             document.getElementById('signatureCanvas')
                         );
                     }
+                    // CompleteService.setSignatureImage($scope.order.orderid, sigImg);
+                   
+                    var date = new Date();
+                    var startDate = $scope.convertDate(date) + ' ' + $scope.convertTime(date);
+                    var destination = 'handtekening';
+                    $scope.setCurrentGeoLocation(destination, $scope.order.orderid);
+                    OrderService.setOrderDate($scope.order.orderid, startDate, destination);
                 } else {
                     var sigImg = '';
                     CompleteService.setSignatureImage($scope.order.orderid, sigImg);

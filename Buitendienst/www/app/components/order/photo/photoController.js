@@ -89,9 +89,6 @@ angular.module('directory.photoController', [])
 
                         //uploadPicture(imageData);
                         PhotoService.setPhotoImages($scope.order.orderid, $scope.allPhotos);
-                    },
-                    function(err){
-                        alert('Error: Foto kon niet worden gemaakt.');
                     });
             // }
         }
