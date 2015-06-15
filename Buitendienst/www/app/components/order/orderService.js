@@ -26,7 +26,7 @@ angular.module('directory.orderService', [])
                             $ionicLoading.show({
                                 template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
                             });
-                        }, 500);
+                        }, 1000);
                     } else {
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
@@ -58,12 +58,10 @@ angular.module('directory.orderService', [])
             } else {
                 // All photos have been uploaded
                 if(cameFromOrder) {
-                    if(photoArrIndex === (photoArr.length - 1)) {
-                        // This is the last one in the array, so it is the signature
-                        $ionicLoading.show({
-                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
-                        });
-                    }
+                    // This is the last one in the array, so it is the signature
+                    $ionicLoading.show({
+                        template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
+                    });
 
                     $timeout(function(){
                         $ionicLoading.hide();
