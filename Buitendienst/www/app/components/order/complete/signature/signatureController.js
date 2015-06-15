@@ -1,6 +1,6 @@
 ﻿angular.module('directory.signatureController', [])
 
-    .controller('SignatureCtrl', function ($scope, $window, CompleteService, OrderService) {
+    .controller('SignatureCtrl', function ($scope, $rootScope, $window, CompleteService, OrderService) {
         angular.element(document).ready(function () {
             
             // $scope.orderFinished = OrderService.checkIfFinished($scope.order.orderid);
@@ -36,17 +36,19 @@
             $scope.saveCanvas = function () {
                 if(!signaturePad.isEmpty()) {
 
-                    // Always set the signature
-                    var signatureObject = {
-                        dataURL: signaturePad.toDataURL(), fileURL: '_fileURL', name: 'order' + $scope.order.orderid + '_signature.png'
-                    }
+                    // // Always set the signature
+                    // var signatureObject = {
+                    //     dataURL: signaturePad.toDataURL(), fileURL: '_fileURL', name: 'order' + $scope.order.orderid + '_signature.png'
+                    // }
 
-                    CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
+                    // CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
 
                     // If possible, overwrite the fileURL
                     if($window.canvas2ImagePlugin) {
                         // This doesn't work with IonicView! Plugin is not supported, but Android with PhoneGapBuild does work
-                        // TODO: test this with iOS PGB
+                        // TODO: test this with iOS + PGB
+
+                        // When it's ready, overwrite the signatureObject and set it
                         $window.canvas2ImagePlugin.saveImageDataToLibrary(
                             function(_fileURL){
 
@@ -55,6 +57,7 @@
                                 }
 
                                 CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
+                                $rootScope.closeSignature();
                             },
                             function(err){
                                 alert('Fout! Handtekening kon niet succesvol opgeslagen worden, probeer opnieuw.');
