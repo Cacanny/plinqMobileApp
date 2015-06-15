@@ -18,7 +18,7 @@ angular.module('directory.orderService', [])
 
                         // First we want to tell the user that all his photo's were uploaded
                         $ionicLoading.show({
-                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + totalPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
                         });
 
                         // Now we can tell that the signature is being uploaded
