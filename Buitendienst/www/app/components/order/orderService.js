@@ -9,15 +9,17 @@ angular.module('directory.orderService', [])
             if(photoArrIndex < photoArr.length) {
                 // Upload the photo
 
+                // If the order page is uploading, then show a loading screen, otherwise run it in the background (for queue)
                 if(cameFromOrder) {
-                    if(photoArr.length === 1) {
-                        // Then this is only the signature
+                    if(photoArr.length === 1 || photoArrIndex === (photoArr.length - 1)) {
+                        // This is the signature
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
                         });
                     } else {
+                        var totalPhotos = photoArr.length - 1; // Don't count the signature!
                         $ionicLoading.show({
-                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + photoArr.length + '</b> foto\'s geüpload.'
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
                         });
                     }
                 }
@@ -46,8 +48,8 @@ angular.module('directory.orderService', [])
             } else {
                 // All photos have been uploaded
                 if(cameFromOrder) {
-                    if(photoArr.length === 1) {
-                        // Then this is only the signature
+                    if(photoArr.length === || photoArrIndex === (photoArr.length - 1)) {
+                        // This is the signature
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
                         });

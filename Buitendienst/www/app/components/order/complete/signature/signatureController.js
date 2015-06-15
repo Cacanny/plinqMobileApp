@@ -35,8 +35,15 @@
 
             $scope.saveCanvas = function () {
                 if(!signaturePad.isEmpty()) {
-                    var sigImg = signaturePad.toDataURL();
 
+                    // Always set the signature
+                    var signatureObject = {
+                        dataURL: signaturePad.toDataURL(), fileURL: '_fileURL', name: 'order' + $scope.order.orderid + '_signature.png'
+                    }
+
+                    CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
+
+                    // If possible, overwrite the fileURL
                     if($window.canvas2ImagePlugin) {
                         // This doesn't work with IonicView! Plugin is not supported, but Android with PhoneGapBuild does work
                         // TODO: test this with iOS PGB
@@ -55,7 +62,6 @@
                             document.getElementById('signatureCanvas')
                         );
                     }
-                    // CompleteService.setSignatureImage($scope.order.orderid, sigImg);
                    
                     var date = new Date();
                     var startDate = $scope.convertDate(date) + ' ' + $scope.convertTime(date);
