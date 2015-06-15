@@ -11,13 +11,23 @@ angular.module('directory.orderService', [])
 
                 // If the order page is uploading, then show a loading screen, otherwise run it in the background (for queue)
                 if(cameFromOrder) {
+                    var totalPhotos = photoArr.length - 1; // Don't count the signature!
+
                     if(photoArrIndex === (photoArr.length - 1)) {
                         // This is the last one in the array, so it is the signature
+
+                        // First we want to tell the user that all his photo's were uploaded
                         $ionicLoading.show({
-                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
                         });
+
+                        // Now we can tell that the signature is being uploaded
+                        $timeout(function(){
+                            $ionicLoading.show({
+                                template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
+                            });
+                        }, 300);
                     } else {
-                        var totalPhotos = photoArr.length - 1; // Don't count the signature!
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
                         });
@@ -54,12 +64,6 @@ angular.module('directory.orderService', [])
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
                         });
                     }
-                    // } else {
-                    //     var totalPhotos = photoArr.length - 1; // Don't count the signature!
-                    //     $ionicLoading.show({
-                    //         template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + totalPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
-                    //     });
-                    // }
 
                     $timeout(function(){
                         $ionicLoading.hide();
