@@ -26,7 +26,7 @@ angular.module('directory.orderService', [])
                             $ionicLoading.show({
                                 template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
                             });
-                        }, 300);
+                        }, 500);
                     } else {
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
@@ -67,7 +67,7 @@ angular.module('directory.orderService', [])
 
                     $timeout(function(){
                         $ionicLoading.hide();
-                    }, 300);
+                    }, 500);
                 }
             }
         }
@@ -275,17 +275,6 @@ angular.module('directory.orderService', [])
             getOrderDate: function(_orderId, destination) {
                 var parsedItem = JSON.parse($window.localStorage.getItem('order' + _orderId));  
                 return parsedItem[destination].datum;
-            },
-
-            setStartLocation: function (orderid, geoLocation) {
-                console.log("setStartLocation :")
-                console.log(geoLocation);
-                var parsedItem = JSON.parse($window.localStorage.getItem('order' + orderid));
-                parsedItem.start.latitude = geoLocation.latitude;
-                console.log(parsedItem);
-                parsedItem.start.longitude = geoLocation.longitude;
-                console.log(parsedItem);
-
             }
         }
     });
