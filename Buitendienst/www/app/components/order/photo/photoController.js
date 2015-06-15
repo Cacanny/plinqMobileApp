@@ -84,7 +84,7 @@ angular.module('directory.photoController', [])
                 $cordovaCamera.getPicture(options).then(
                     function(imageData) {
                         $scope.allPhotos.push({
-                            name: 'order' + $scope.order.orderid + '_' + imageData.substr(imageData.lastIndexOf('/') + 1), url: imageData
+                            name: 'order' + $scope.order.orderid + '_' + imageData.substr(imageData.lastIndexOf('/') + 1), fileURL: imageData
                         });
 
                         //uploadPicture(imageData);

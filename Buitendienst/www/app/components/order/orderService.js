@@ -32,7 +32,7 @@ angular.module('directory.orderService', [])
                     uploadPhoto(_orderId, photoArr, photoArrIndex, countSuccessPhotos);
                 }
 
-                var fileURL = photoArr[photoArrIndex].url;
+                var fileURL = photoArr[photoArrIndex].fileURL;
                 var fileName = photoArr[photoArrIndex].name;
                 var options = new FileUploadOptions();
                 options.fileKey = 'file';

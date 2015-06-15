@@ -44,7 +44,7 @@
                             function(_fileURL){
 
                                 var signatureObject = {
-                                    dataURL: signaturePad.toDataURL(), fileURL: _fileURL
+                                    dataURL: signaturePad.toDataURL(), fileURL: _fileURL, name: 'order' + $scope.order.orderid + '_signature.png'
                                 }
 
                                 CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
@@ -77,27 +77,6 @@
                 } else {
                     canvas.height = window.innerHeight - 96;
                 }
-            }
-
-            function uploadPicture(fileURL) {
-                // console.log(fileURL);
-               var win = function (result) {
-                   alert('Succes! ' + JSON.stringify(result));
-               }
-
-               var fail = function (err) {
-                   alert("Fail! " + JSON.stringify(err));
-               }
-
-               var options = new FileUploadOptions();
-               options.fileKey = 'file';
-               options.fileName = 'order' + $scope.order.orderid + '_signature.png';
-               options.mimeType = 'image/jpeg';
-               options.chunkedMode = true;
-               options.params = {};
-
-               var ft = new FileTransfer();
-               ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
             }
         });
     
