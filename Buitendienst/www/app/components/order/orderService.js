@@ -26,12 +26,12 @@ angular.module('directory.orderService', [])
 
                  var win = function (result) {
                     // Success, so upload the next one
-                    uploadPhoto(_orderId, photoArr, photoArrIndex + 1, countSuccessPhotos + 1);
+                    uploadPhoto(_orderId, photoArr, photoArrIndex + 1, countSuccessPhotos + 1, cameFromOrder);
                 }
 
                 var fail = function (err) {
                     // Fail, so try uploading the same photo again
-                    uploadPhoto(_orderId, photoArr, photoArrIndex, countSuccessPhotos);
+                    uploadPhoto(_orderId, photoArr, photoArrIndex, countSuccessPhotos, cameFromOrder);
                 }
 
                 var fileURL = photoArr[photoArrIndex].fileURL;
@@ -53,11 +53,13 @@ angular.module('directory.orderService', [])
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
                         });
-                    } else {
-                        $ionicLoading.show({
-                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + photoArr.length + '</b> van <b>' + photoArr.length + '</b> foto\'s geüpload.'
-                        });
                     }
+                    // } else {
+                    //     var totalPhotos = photoArr.length - 1; // Don't count the signature!
+                    //     $ionicLoading.show({
+                    //         template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + totalPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
+                    //     });
+                    // }
 
                     $timeout(function(){
                         $ionicLoading.hide();
@@ -69,7 +71,7 @@ angular.module('directory.orderService', [])
         return {
             startLoadingScreen: function() {
                 $ionicLoading.show({
-                    template: "Order wordt geladen..."
+                    template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Order wordt geladen...'
                 });
             },
 
