@@ -15,18 +15,9 @@ angular.module('directory.orderService', [])
 
                     if(photoArrIndex === (photoArr.length - 1)) {
                         // This is the last one in the array, so it is the signature
-
-                        // First we want to tell the user that all his photo's were uploaded
                         $ionicLoading.show({
-                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + totalPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
+                            template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + totalPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.<br/>Handtekening wordt geüpload.'
                         });
-
-                        // Now we can tell that the signature is being uploaded
-                        $timeout(function(){
-                            $ionicLoading.show({
-                                template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening wordt geüpload.'
-                            });
-                        }, 1000);
                     } else {
                         $ionicLoading.show({
                             template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Er zijn <b>' + countSuccessPhotos + '</b> van <b>' + totalPhotos + '</b> foto\'s geüpload.'
@@ -65,7 +56,7 @@ angular.module('directory.orderService', [])
 
                     $timeout(function(){
                         $ionicLoading.hide();
-                    }, 1500);
+                    }, 500);
                 }
             }
         }
