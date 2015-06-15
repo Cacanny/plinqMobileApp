@@ -256,6 +256,16 @@
                     });
                 });
             });
+
+            // Because the order was succesfully sent, we can now upload the photos and signature!
+                PhotoService.getPhotoImages($scope.order.orderid).then(function (photos) {
+                    // Get the signature and add it to the array of photos
+                    CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
+                        // Remember, the signature will always be the last one in the list!
+                        photos.push(signature);
+                        OrderService.uploadPhotos($scope.order.orderid, photos, 0, 0, true);
+                    });
+                });
         }
 
         $scope.askConfirmation = function () {

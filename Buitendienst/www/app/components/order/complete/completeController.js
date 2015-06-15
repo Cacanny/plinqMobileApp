@@ -26,7 +26,7 @@ angular.module('directory.completeController', [])
             $scope.modal.hide();
             
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
-            	$scope._signatureImage = signature;
+            	$scope._signatureImage = signature.dataURL;
             });              
         }	
     });
