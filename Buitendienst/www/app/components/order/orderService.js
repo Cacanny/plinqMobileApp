@@ -65,7 +65,7 @@ angular.module('directory.orderService', [])
 
                     $timeout(function(){
                         $ionicLoading.hide();
-                    }, 500);
+                    }, 1500);
                 }
             }
         }
