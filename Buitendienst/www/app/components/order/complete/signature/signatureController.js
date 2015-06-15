@@ -26,7 +26,8 @@
             CompleteService.setCanvas(canvas);
 
             CompleteService.getSignatureImage($scope.order.orderid).then(function(signature){
-                signaturePad.fromDataURL(signature.dataURL);
+                // This is actually not from a dataURL but from a fileURL
+                signaturePad.fromDataURL(signature.fileURL);
             });
 
             $scope.clearCanvas = function () {
@@ -36,14 +37,6 @@
             $scope.saveCanvas = function () {
                 if(!signaturePad.isEmpty()) {
 
-                    // // Always set the signature
-                    // var signatureObject = {
-                    //     dataURL: signaturePad.toDataURL(), fileURL: '_fileURL', name: 'order' + $scope.order.orderid + '_signature.png'
-                    // }
-
-                    // CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
-
-                    // If possible, overwrite the fileURL
                     if($window.canvas2ImagePlugin) {
                         // This doesn't work with IonicView! Plugin is not supported, but Android with PhoneGapBuild does work
                         // TODO: test this with iOS + PGB
@@ -53,7 +46,7 @@
                             function(_fileURL){
 
                                 var signatureObject = {
-                                    dataURL: signaturePad.toDataURL(), fileURL: _fileURL, name: 'order' + $scope.order.orderid + '_signature.png'
+                                    fileURL: _fileURL, name: 'order' + $scope.order.orderid + '_signature.png'
                                 }
 
                                 CompleteService.setSignatureImage($scope.order.orderid, signatureObject);
