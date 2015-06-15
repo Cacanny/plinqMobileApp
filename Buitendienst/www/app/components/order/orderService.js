@@ -47,14 +47,17 @@ angular.module('directory.orderService', [])
                 var ft = new FileTransfer();
                 ft.upload(fileURL, encodeURI('http://isp-admin-dev.plinq.nl/upload/'), win, fail, options);
             } else {
+                alert('laatste foto');
                 // All photos have been uploaded
                 if(cameFromOrder) {
+                    alert('nu showen');
                     // This is the last one in the array, so it is the signature
                     $ionicLoading.show({
                         template: '<ion-spinner icon=\'android\'></ion-spinner><br/>Handtekening is geüpload.'
                     });
 
                     $timeout(function(){
+                        alert('nu hiden');
                         $ionicLoading.hide();
                     }, 500);
                 }
