@@ -31,7 +31,7 @@
                         $window.localStorage.setItem('getplanning', JSON.stringify(response.orders));
                     })
                     .error(function () {
-                        alert('ERROR: Planning kon niet worden opgehaald, herstart de applicatie.');
+                        alert('ERROR: Planning kon niet worden opgehaald, controleer uw internetverbinding.');
                     });
             },
             
